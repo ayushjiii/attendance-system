@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Apply for Leave{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6">
+
+        <h3>Apply for Leave</h3>
+        <p class="text-muted">
+            ⚠️ Leave requests must be submitted at least
+            <strong>36 hours</strong> before the leave date.
+            Requests submitted with less notice are automatically rejected.
+        </p>
+
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label">Leave Date</label>
+                        {{ form.leave_date }}
+                        {% if form.leave_date.errors %}
+                        <div class="text-danger small">{{ form.leave_date.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Leave Type</label>
+                        {{ form.leave_type }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Reason</label>
+                        {{ form.reason }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Additional Note (optional)</label>
+                        {{ form.note }}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Submit Leave Request
+                    </button>
+                    <a href="{% url 'leave_management:my_leaves' %}" class="btn btn-outline-secondary ms-2">Cancel</a>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

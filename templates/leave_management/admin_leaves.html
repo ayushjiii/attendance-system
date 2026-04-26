@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %}All Leave Requests{% endblock %}
+
+{% block content %}
+
+<h3>All Leave Requests</h3>
+
+<!-- Filter by status -->
+<form method="get" class="row g-2 mb-4">
+    <div class="col-auto">
+        <select name="status" class="form-select">
+            <option value="">All Statuses</option>
+            {% for value, label in status_choices %}
+            <option value="{{ value }}" {% if status_filter==value %}selected{% endif %}>
+                {{ label }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <a href="{% url 'leave_management:admin_leaves' %}" class="btn btn-outline-secondary">Clear</a>
+    </div>
+</form>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Employee</th>
+            <th>Department</th>
+            <th>Leave Date</th>
+            <th>Type</th>
+            <th>Reason</th>
+            <th>Submitted</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for leave in leaves %}
+        <tr>
+            <td>
+                {{ leave.employee.get_full_name }}<br>
+                <small class="text-muted">{{ leave.employee.employee_id }}</small>
+            </td>
+            <td>{{ leave.employee.department }}</td>
+            <td>{{ leave.leave_date|date:"d M Y" }}</td>
+            <td>{{ leave.get_leave_type_display }}</td>
+            <td>{{ leave.reason }}</td>
+            <td>{{ leave.submitted_at|date:"d M H:i" }}</td>
+            <td>
+                <span class="badge
+                    {% if leave.status == 'approved' %}bg-success
+                    {% elif leave.status == 'pending' %}bg-warning text-dark
+                    {% elif leave.status == 'rejected' %}bg-danger
+                    {% else %}bg-secondary{% endif %}">
+                    {{ leave.get_status_display }}
+                </span>
+            </td>
+            <td>
+                {% if leave.status == 'pending' %}
+                <a href="{% url 'leave_management:approve' leave.id %}" class="btn btn-success btn-sm">Approve</a>
+                <a href="{% url 'leave_management:reject' leave.id %}" class="btn btn-danger btn-sm ms-1">Reject</a>
+                {% else %}
+                <span class="text-muted small">
+                    {{ leave.admin_comment|truncatechars:40|default:"—" }}
+                </span>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="8" class="text-center text-muted">No leave requests found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

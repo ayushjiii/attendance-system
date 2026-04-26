@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}My Attendance History{% endblock %}
+
+{% block content %}
+
+<h3>My Attendance History</h3>
+
+<!-- Month filter form -->
+<form method="get" class="row g-2 mb-4">
+    <div class="col-auto">
+        <input type="month" name="month" value="{{ month }}" class="form-control">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <a href="{% url 'attendance:history' %}" class="btn btn-outline-secondary">Clear</a>
+    </div>
+</form>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Date</th>
+            <th>Check In</th>
+            <th>Check Out</th>
+            <th>Hours Worked</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for record in records %}
+        <tr>
+            <td>{{ record.date|date:"d M Y (D)" }}</td>
+            <td>{{ record.check_in_time|default:"-" }}</td>
+            <td>{{ record.check_out_time|default:"-" }}</td>
+            <td>{{ record.total_working_hours|default:"-" }}</td>
+            <td>
+                <span class="badge
+                    {% if record.attendance_status == 'present' %}bg-success
+                    {% elif record.attendance_status == 'late' %}bg-warning text-dark
+                    {% elif record.attendance_status == 'absent' %}bg-danger
+                    {% elif record.attendance_status == 'on_leave' %}bg-info
+                    {% else %}bg-secondary{% endif %}">
+                    {{ record.get_attendance_status_display }}
+                </span>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" class="text-center text-muted">
+                No records found{% if month %} for this month{% endif %}.
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
