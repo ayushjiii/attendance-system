@@ -110,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -127,8 +127,14 @@ STATIC_URL = 'static/'
 AUTH_USER_MODEL = 'accounts.Employee'
 
 # Email - prints to terminal for now (good for development)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-ADMIN_EMAIL = 'admin@yourcompany.com'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'ayushbeladiya65@gmail.com'
+EMAIL_HOST_PASSWORD = 'grbb bepz nmnu jnel'
+DEFAULT_FROM_EMAIL = 'ayushbeladiya65@gmail.com'
+ADMIN_EMAIL = 'ayushbeladiya65@gmail.com'
 
 # Templates folder (create a 'templates' folder in your project root)
 TEMPLATES[0]['DIRS'] = [BASE_DIR / 'templates']

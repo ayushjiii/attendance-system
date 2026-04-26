@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load attendance_filters %}
 {% block title %}My Attendance History{% endblock %}
 
 {% block content %}
@@ -30,9 +31,9 @@
         {% for record in records %}
         <tr>
             <td>{{ record.date|date:"d M Y (D)" }}</td>
-            <td>{{ record.check_in_time|default:"-" }}</td>
-            <td>{{ record.check_out_time|default:"-" }}</td>
-            <td>{{ record.total_working_hours|default:"-" }}</td>
+            <td>{{ record.check_in_time|time:"H:i A" }}</td>
+            <td>{{ record.check_out_time|time:"H:i A" }}</td>
+            <td>{{ record.total_working_hours|format_hours}}</td>
             <td>
                 <span class="badge
                     {% if record.attendance_status == 'present' %}bg-success

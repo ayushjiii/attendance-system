@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load attendance_filters %}
+{% block title %}Monthly Report{% endblock %}
+
+{% block content %}
+<h3>Monthly Attendance Report</h3>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <input type="month" name="month" value="{{ month_str }}" class="form-control">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">View</button>
+        <a href="{% url 'reports:export_csv' %}?month={{ month_str }}" class="btn btn-outline-success ms-2">Export
+            CSV</a>
+        <a href="{% url 'reports:export_excel' %}?month={{ month_str }}" class="btn btn-outline-primary ms-2">Export
+            Excel</a>
+    </div>
+</form>
+
+<p class="text-muted">Working days this month: <strong>{{ working_days }}</strong></p>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Employee</th>
+            <th>Department</th>
+            <th>Present</th>
+            <th>Late</th>
+            <th>Absent</th>
+            <th>Approved Leaves</th>
+            <th>Total Hours</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in report_data %}
+        <tr>
+            <td>
+    <a href="{% url 'reports:employee_detail' row.employee.id %}?month={{ month_str }}">
+        {{ row.employee.get_full_name }}
+    </a>
+</td>
+            <td>{{ row.employee.department }}</td>
+            <td>{{ row.present_days }}</td>
+            <td>{{ row.late_days }}</td>
+            <td>{{ row.absent_days }}</td>
+            <td>{{ row.approved_leaves }}</td>
+            <td>{{ row.total_hours|format_hours }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">No data for this month.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

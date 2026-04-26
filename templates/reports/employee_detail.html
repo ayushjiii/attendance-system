@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load attendance_filters %}
+{% block title %}{{ employee.get_full_name }} - Report{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h3>{{ employee.get_full_name }}</h3>
+        <p class="text-muted mb-0">
+            {{ employee.employee_id }} &bull; {{ employee.department }}
+        </p>
+    </div>
+    <a href="{% url 'reports:monthly_report' %}?month={{ month_str }}"
+       class="btn btn-outline-secondary">← Back to Report</a>
+</div>
+
+<!-- Month selector -->
+<form method="get" class="row g-2 mb-4">
+    <div class="col-auto">
+        <input type="month" name="month" value="{{ month_str }}" class="form-control">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">View</button>
+    </div>
+</form>
+
+<!-- Summary cards -->
+<div class="row g-3 mb-4">
+    <div class="col-md-2">
+        <div class="card text-center border-success">
+            <div class="card-body py-2">
+                <h4 class="text-success">{{ present_count }}</h4>
+                <small>Present</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center border-danger">
+            <div class="card-body py-2">
+                <h4 class="text-danger">{{ absent_count }}</h4>
+                <small>Absent</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center border-warning">
+            <div class="card-body py-2">
+                <h4 class="text-warning">{{ leave_count }}</h4>
+                <small>On Leave</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center border-info">
+            <div class="card-body py-2">
+                <h4 class="text-info">{{ avg_hours|format_hours }}</h4>
+                <small>Avg Hours/Day</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center border-primary">
+            <div class="card-body py-2">
+                <h4 class="text-primary">{{ avg_checkin }}</h4>
+                <small>Avg Check-in</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center">
+            <div class="card-body py-2">
+                <h4>{{ total_hours|format_hours }}</h4>
+                <small>Total Hours</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Daily Hours Worked</h6>
+                <canvas id="hoursChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Check-in Time (minutes past midnight)</h6>
+                <canvas id="checkinChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="alert alert-info mb-4">
+    <strong>Summary:</strong> {{ description }}
+</div>
+
+<!-- Daily breakdown table -->
+<h5>Daily Breakdown</h5>
+<table class="table table-sm table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Date</th>
+            <th>Day</th>
+            <th>Status</th>
+            <th>Check In</th>
+            <th>Check Out</th>
+            <th>Hours</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in daily_data %}
+        <tr class="
+            {% if row.status == 'Absent' %}table-danger
+            {% elif row.status == 'On Leave' %}table-warning
+            {% elif row.status == 'Upcoming' %}table-secondary
+            {% else %}table-success
+            {% endif %}">
+            <td>{{ row.date|date:"d M Y" }}</td>
+            <td>{{ row.day }}</td>
+            <td>{{ row.status }}</td>
+            <td>{{ row.check_in }}</td>
+            <td>{{ row.check_out }}</td>
+            <td>{{ row.hours|format_hours }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const labels = {{ chart_labels|safe }};
+    const hours = {{ chart_hours|safe }};
+    const checkin = {{ chart_checkin|safe }};
+
+    new Chart(document.getElementById('hoursChart'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Hours Worked',
+                data: hours,
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+            }]
+        },
+        options: {
+            scales: { y: { beginAtZero: true, max: 12 } },
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    new Chart(document.getElementById('checkinChart'), {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Check-in (mins past midnight)',
+                data: checkin,
+                borderColor: 'rgba(255, 99, 132, 0.9)',
+                tension: 0.3,
+                spanGaps: true,
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    min: 480,
+                    max: 660,
+                    ticks: {
+                        callback: val => `${Math.floor(val/60)}:${String(val%60).padStart(2,'0')}`
+                    }
+                }
+            },
+            plugins: { legend: { display: false } }
+        }
+    });
+</script>
+
+{% endblock %}

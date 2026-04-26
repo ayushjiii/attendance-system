@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
-from datetime import datetime, date
+from datetime import datetime, date, time as time_type
+
 
 from .models import AttendanceRecord
 from .utils import get_client_ip, is_office_ip, is_within_office_radius, get_device_info
@@ -101,21 +102,19 @@ def check_in_view(request):
     record.check_in_time = now
     record.ip_address = ip
     record.device_info = get_device_info(request)
-
     if latitude and longitude:
         record.gps_latitude = latitude
         record.gps_longitude = longitude
 
-    # Mark as late if after 9:30 AM (adjust this time for your office)
-    from datetime import time as time_type
-    office_start = time_type(9, 30)
-    if now > office_start:
+    # Mark as late if check-in is after 10:00 AM
+    late_threshold = time_type(10, 0)  # 10:00 AM
+    if now > late_threshold:
         record.attendance_status = 'late'
     else:
         record.attendance_status = 'present'
 
     record.save()
-
+    
     messages.success(
         request,
         f'Checked in successfully at {now.strftime("%H:%M")}.'

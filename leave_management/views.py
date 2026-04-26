@@ -106,6 +106,44 @@ http://127.0.0.1:8000/leave/admin/leaves/
         pass  # In production, log this properly
 
 
+def _send_status_notification_email(leave_request):
+    """
+    Send email to employee when their leave is approved or rejected.
+    """
+    employee = leave_request.employee
+    status = leave_request.get_status_display()
+    
+    subject = f'Leave Request {status} - {leave_request.leave_date}'
+    
+    message = f"""
+Dear {employee.get_full_name()},
+
+Your leave request has been {status.lower()}.
+
+Details:
+  Leave Date   : {leave_request.leave_date}
+  Leave Type   : {leave_request.get_leave_type_display()}
+  Reason       : {leave_request.reason}
+  Status       : {status}
+  Admin Comment: {leave_request.admin_comment or 'No comment provided'}
+
+{"You are approved for leave on this date." if leave_request.status == 'approved' else "Please contact your manager if you have questions."}
+
+Regards,
+HR / Admin Team
+    """
+
+    try:
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[employee.email],
+            fail_silently=True,
+        )
+    except Exception:
+        pass
+
 @login_required
 def my_leaves_view(request):
     """
@@ -158,6 +196,7 @@ def approve_leave_view(request, leave_id):
         leave.status = 'approved'
         leave.admin_comment = comment
         leave.save()
+        _send_status_notification_email(leave)
         messages.success(
             request,
             f'Leave approved for {leave.employee.get_full_name()} on {leave.leave_date}.'
@@ -188,6 +227,7 @@ def reject_leave_view(request, leave_id):
         leave.status = 'rejected'
         leave.admin_comment = comment
         leave.save()
+        _send_status_notification_email(leave)
         messages.warning(
             request,
             f'Leave rejected for {leave.employee.get_full_name()} on {leave.leave_date}.'

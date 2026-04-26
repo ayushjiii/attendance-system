@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load attendance_filters %}
 {% block title %}All Leave Requests{% endblock %}
 
 {% block content %}
@@ -11,7 +12,7 @@
         <select name="status" class="form-select">
             <option value="">All Statuses</option>
             {% for value, label in status_choices %}
-            <option value="{{ value }}" {% if status_filter==value %}selected{% endif %}>
+            <option value="{{ value }}" {% if status_filter == value %} selected {% endif %}>
                 {{ label }}
             </option>
             {% endfor %}
@@ -47,7 +48,7 @@
             <td>{{ leave.leave_date|date:"d M Y" }}</td>
             <td>{{ leave.get_leave_type_display }}</td>
             <td>{{ leave.reason }}</td>
-            <td>{{ leave.submitted_at|date:"d M H:i" }}</td>
+            <td>{{ leave.submitted_at|date:"d M H:i A" }}</td>
             <td>
                 <span class="badge
                     {% if leave.status == 'approved' %}bg-success

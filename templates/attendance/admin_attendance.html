@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load attendance_filters %}
+{% block title %}All Attendance{% endblock %}
+
+{% block content %}
+<h3>All Attendance Records</h3>
+
+<form method="get" class="row g-2 mb-4">
+    <div class="col-auto">
+        <input type="text" name="employee" value="{{ employee_search }}"
+               class="form-control" placeholder="Search employee...">
+    </div>
+    <div class="col-auto">
+        <input type="date" name="date" value="{{ date_filter }}" class="form-control">
+    </div>
+    <div class="col-auto">
+        <input type="month" name="month" value="{{ month_filter }}" class="form-control">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <a href="{% url 'attendance:admin_attendance' %}" class="btn btn-outline-secondary">Clear</a>
+    </div>
+</form>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Employee</th>
+            <th>Department</th>
+            <th>Date</th>
+            <th>Check In</th>
+            <th>Check Out</th>
+            <th>Hours</th>
+            <th>Status</th>
+            <th>IP Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for record in records %}
+        <tr>
+            <td>{{ record.employee.get_full_name }} ({{ record.employee.employee_id }})</td>
+            <td>{{ record.employee.department }}</td>
+            <td>{{ record.date|date:"d M Y" }}</td>
+            <td>{{ record.check_in_time|time:"h:i A"|default:"-" }}</td>
+            <td>{{ record.check_out_time|time:"h:i A"|default:"-" }}</td>
+            <td>{{ record.total_working_hours|format_hours }}</td>
+            <td>
+                {% if record.attendance_status == 'present' %}
+                    <span class="badge bg-success">Present</span>
+                {% elif record.attendance_status == 'late' %}
+                    <span class="badge bg-warning text-dark">Late</span>
+                {% elif record.attendance_status == 'absent' %}
+                    <span class="badge bg-danger">Absent</span>
+                {% else %}
+                    <span class="badge bg-secondary">{{ record.get_attendance_status_display }}</span>
+                {% endif %}
+            </td>
+            <td><small>{{ record.ip_address|default:"-" }}</small></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="8">No records found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
