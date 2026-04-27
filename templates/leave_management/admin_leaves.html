@@ -59,13 +59,15 @@
                 </span>
             </td>
             <td>
-                {% if leave.status == 'pending' %}
-                <a href="{% url 'leave_management:approve' leave.id %}" class="btn btn-success btn-sm">Approve</a>
-                <a href="{% url 'leave_management:reject' leave.id %}" class="btn btn-danger btn-sm ms-1">Reject</a>
-                {% else %}
-                <span class="text-muted small">
-                    {{ leave.admin_comment|truncatechars:40|default:"—" }}
-                </span>
+                {% if leave.status == 'pending' or leave.status == 'auto_rejected' %}
+                    <a href="{% url 'leave_management:approve' leave.id %}" 
+                    class="btn btn-success btn-sm">Approve</a>
+                    <a href="{% url 'leave_management:reject' leave.id %}" 
+                    class="btn btn-danger btn-sm">Reject</a>
+                {% elif leave.status == 'approved' %}
+                    <span class="text-success">✓ Approved</span>
+                {% elif leave.status == 'rejected' %}
+                    <span class="text-danger">✗ Rejected</span>
                 {% endif %}
             </td>
         </tr>

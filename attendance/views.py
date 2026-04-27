@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
@@ -107,7 +107,15 @@ def check_in_view(request):
         record.gps_longitude = longitude
 
     # Mark as late if check-in is after 10:00 AM
-    late_threshold = time_type(10, 0)  # 10:00 AM
+    check_in_start = time_type(9, 30)   # office opens 9:30 AM
+    late_threshold = time_type(10, 0)   # late after 10:00 AM
+
+    # Block check-in before 9:30 AM
+    if now < check_in_start:
+        messages.error(request, 'Check-in is not allowed before 9:30 AM.')
+        return redirect('attendance:dashboard')
+
+    # Mark as late if after 10:00 AM
     if now > late_threshold:
         record.attendance_status = 'late'
     else:
@@ -191,7 +199,6 @@ def attendance_history_view(request):
     Can be filtered by month using ?month=2024-01 in the URL.
     """
     records = AttendanceRecord.objects.filter(employee=request.user)
-
     month = request.GET.get('month', '')
     if month:
         try:

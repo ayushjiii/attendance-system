@@ -245,7 +245,10 @@ def employee_detail_report_view(request, employee_id):
     # Average check-in time
     checkin_times = [d['check_in'] for d in daily_data if d['check_in'] != '-']
     if checkin_times:
-        total_minutes = sum(int(t.split(':')[0])*60 + int(t.split(':')[1]) for t in checkin_times)
+        total_minutes = sum(
+            int(t.split(':')[0]) * 60 + int(t.split(':')[1].split()[0])
+            for t in checkin_times
+        )
         avg_minutes = total_minutes // len(checkin_times)
         hour = avg_minutes // 60
         minute = avg_minutes % 60

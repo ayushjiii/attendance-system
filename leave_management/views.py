@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
-
+from django.utils import timezone
 from .models import LeaveRequest
 from .forms import LeaveRequestForm
 
@@ -28,8 +28,9 @@ def submit_leave_view(request):
             leave_request = form.save(commit=False)
             leave_request.employee = request.user
 
-            # Check the 36-hour rule
-            if not leave_request.passes_36_hour_rule():
+            # Check the 36-hour rule (exception for sick and emergency leave)
+            exempt_types = ['sick', 'emergency']
+            if leave_request.leave_type not in exempt_types and not leave_request.passes_36_hour_rule():
                 # Automatically reject — not enough notice
                 leave_request.status = 'auto_rejected'
                 leave_request.admin_comment = (
@@ -57,8 +58,10 @@ def submit_leave_view(request):
     else:
         form = LeaveRequestForm()
 
-    return render(request, 'leave_management/submit_leave.html', {'form': form})
-
+    return render(request, 'leave_management/submit_leave.html', {
+    'form': form,
+    'today_date': timezone.localdate()
+    })
 
 def _send_leave_email_to_admin(leave_request):
     """

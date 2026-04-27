@@ -1,6 +1,6 @@
 from django import forms
 from .models import LeaveRequest
-
+from django.utils import timezone
 
 class LeaveRequestForm(forms.ModelForm):
     """
@@ -20,27 +20,17 @@ class LeaveRequestForm(forms.ModelForm):
         model = LeaveRequest
         fields = ['leave_date', 'leave_type', 'reason', 'note']
         widgets = {
-            # type="date" gives a date picker in the browser
             'leave_date': forms.DateInput(attrs={
                 'type': 'date',
-                'class': 'form-control'
+                'min': timezone.localdate().strftime('%Y-%m-%d')
             }),
-            'leave_type': forms.Select(attrs={
-                'class': 'form-control'
-            }),
-            'reason': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Brief reason for leave'
-            }),
-            'note': forms.Textarea(attrs={
-                'class': 'form-control',
-                'rows': 3,
-                'placeholder': 'Optional: additional details'
-            }),
+            'reason': forms.TextInput(attrs={'placeholder': 'Brief reason'}),
+            'note': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Optional details'}),
         }
-        labels = {
-            'leave_date': 'Leave Date',
-            'leave_type': 'Leave Type',
-            'reason': 'Reason',
-            'note': 'Additional Note (optional)',
-        }
+
+    labels = {
+        'leave_date': 'Leave Date',
+        'leave_type': 'Leave Type',
+        'reason': 'Reason',
+        'note': 'Additional Note (optional)',
+    }

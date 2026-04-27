@@ -83,9 +83,9 @@
         {% for record in recent_records %}
         <tr>
             <td>{{ record.date|date:"d M Y" }}</td>
-            <td>{{ record.check_in_time|default:"-" }}</td>
-            <td>{{ record.check_out_time|default:"-" }}</td>
-            <td>{{ record.total_working_hours|default:"-" }}</td>
+            <td>{{ record.check_in_time|time:"H:i A"|default:"-" }}</td>
+            <td>{{ record.check_out_time|time:"H:i A"|default:"-" }}</td>
+            <td>{{ record.total_working_hours|format_hours|default:"-" }}</td>
             <td>
                 <span class="badge
                     {% if record.attendance_status == 'present' %}bg-success

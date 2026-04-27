@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Our apps
+    'axes',
     'accounts',
     'attendance',
     'leave_management',
@@ -126,7 +127,7 @@ STATIC_URL = 'static/'
 # Tell Django to use our custom Employee model instead of the default User
 AUTH_USER_MODEL = 'accounts.Employee'
 
-# Email - prints to terminal for now (good for development)
+# Email 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -140,11 +141,63 @@ ADMIN_EMAIL = 'ayushbeladiya65@gmail.com'
 TEMPLATES[0]['DIRS'] = [BASE_DIR / 'templates']
 
 # Office IP addresses allowed to mark attendance
-ALLOWED_OFFICE_IPS = ['127.0.0.1']  # add your real office IPs later
+ALLOWED_OFFICE_IPS = ['127.0.0.1']
 
-# Office GPS (replace with real coordinates later)
+# Office GPS (coordinates )
 OFFICE_LATITUDE = 21.2952576
 OFFICE_LONGITUDE = 72.8958164
-OFFICE_RADIUS_METERS = 1000
+OFFICE_RADIUS_METERS = 100
+    
+AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesStandaloneBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+# Lock account after 5 failed attempts
+AXES_FAILURE_LIMIT = 5
+AXES_COOLOFF_TIME = 1  # locked for 1 hour
+AXES_LOCKOUT_TEMPLATE = 'accounts/locked_out.html'
 
 
+
+
+
+
+# Log out after 8 hours of inactivity
+SESSION_COOKIE_AGE = 86400
+
+# Session expires when browser closes
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Prevent JavaScript from reading session cookie
+SESSION_COOKIE_SECURE = False  # set True in production with HTTPS
+SESSION_COOKIE_HTTPONLY = True
+
+# Prevent clickjacking
+X_FRAME_OPTIONS = 'DENY'
+
+# Force HTTPS in production
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs/django.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+    },
+}
