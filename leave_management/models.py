@@ -1,27 +1,11 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class LeaveRequest(models.Model):
-    """
-    Stores an employee's leave request.
-
-    Key business rule:
-        Leave must be requested at least 36 hours in advance.
-        If not, it is automatically rejected when submitted.
-
-    Fields:
-    - employee: who is requesting leave
-    - leave_date: the day they want off
-    - leave_type: sick / casual / annual / etc.
-    - reason: short description
-    - note: optional extra details
-    - submitted_at: auto-filled when created
-    - status: pending → approved / rejected / auto_rejected
-    - admin_comment: admin's note when approving or rejecting
-    """
-
     STATUS_CHOICES = [
         ('pending', 'Pending'),
         ('approved', 'Approved'),
@@ -46,10 +30,7 @@ class LeaveRequest(models.Model):
     leave_type = models.CharField(max_length=20, choices=LEAVE_TYPE_CHOICES)
     reason = models.CharField(max_length=200)
     note = models.TextField(blank=True)
-
-    # auto_now_add=True means Django fills this in automatically when created
     submitted_at = models.DateTimeField(auto_now_add=True)
-
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
@@ -64,15 +45,7 @@ class LeaveRequest(models.Model):
         return f"{self.employee} - {self.leave_date} ({self.status})"
 
     def hours_until_leave(self):
-        """
-        How many hours remain between now and the leave date?
-        
-        We calculate from now until midnight of the leave date.
-        Example: if leave_date is tomorrow and it's 8 PM now,
-        there are only ~4 hours left — which is less than 36.
-        """
         from datetime import datetime, time
-        # Set leave start to midnight of the leave date
         leave_start = timezone.make_aware(
             datetime.combine(self.leave_date, time.min)
         )
@@ -80,11 +53,56 @@ class LeaveRequest(models.Model):
         return delta.total_seconds() / 3600
 
     def passes_36_hour_rule(self):
-        """
-        Returns True if the request was submitted at least
-        36 hours before the leave date. Otherwise False.
-        
-        This is called before saving the request.
-        If False, the status is set to 'auto_rejected'.
-        """
         return self.hours_until_leave() >= 36
+
+
+class LeaveBalance(models.Model):
+    employee = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='leave_balance'
+    )
+    year = models.IntegerField(default=2026)
+    sick_leave = models.IntegerField(default=12)
+    casual_leave = models.IntegerField(default=12)
+    annual_leave = models.IntegerField(default=15)
+    emergency_leave = models.IntegerField(default=5)
+    other_leave = models.IntegerField(default=3)
+
+    def __str__(self):
+        return f"{self.employee.get_full_name()} - {self.year}"
+
+    def get_used(self, leave_type):
+        return LeaveRequest.objects.filter(
+            employee=self.employee,
+            leave_type=leave_type,
+            status='approved',
+            leave_date__year=self.year
+        ).count()
+
+    def get_remaining(self, leave_type):
+        total = getattr(self, f'{leave_type}_leave')
+        return total - self.get_used(leave_type)
+
+    def get_summary(self):
+        types = ['sick', 'casual', 'annual', 'emergency', 'other']
+        summary = []
+        for t in types:
+            total = getattr(self, f'{t}_leave')
+            used = self.get_used(t)
+            remaining = total - used
+            summary.append({
+                'type': t,
+                'label': t.title(),
+                'total': total,
+                'used': used,
+                'remaining': remaining,
+            })
+        return summary
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_leave_balance(sender, instance, created, **kwargs):
+    """Automatically create a LeaveBalance when a new employee is created."""
+    if created:
+        LeaveBalance.objects.get_or_create(employee=instance)

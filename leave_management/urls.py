@@ -6,7 +6,10 @@ app_name = 'leave_management'
 urlpatterns = [
     path('submit/', views.submit_leave_view, name='submit'),
     path('my-leaves/', views.my_leaves_view, name='my_leaves'),
+    path('balance/', views.leave_balance_view, name='balance'),
     path('admin/leaves/', views.admin_leaves_view, name='admin_leaves'),
     path('admin/leaves/<int:leave_id>/approve/', views.approve_leave_view, name='approve'),
     path('admin/leaves/<int:leave_id>/reject/', views.reject_leave_view, name='reject'),
+    path('admin/leaves/<int:leave_id>/delete/', views.delete_leave_view, name='delete'),
+    path('admin/balance/', views.admin_leave_balance_view, name='admin_balance'),
 ]

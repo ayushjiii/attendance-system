@@ -22,5 +22,6 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('', include('attendance.urls')),
     path('leave/', include('leave_management.urls')),   
-    path('reports/', include('reports.urls'))
+    path('reports/', include('reports.urls')),
+    path('holidays/', include('holidays.urls')),
 ]

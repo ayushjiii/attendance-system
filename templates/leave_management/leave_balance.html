@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Leave Balance{% endblock %}
+
+{% block content %}
+<h3>My Leave Balance — {{ balance.year }}</h3>
+
+<div class="row g-3 mt-2">
+    {% for item in summary %}
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">{{ item.label }} Leave</h6>
+                <div class="progress mb-2" style="height: 10px;">
+                    {% widthratio item.used item.total 100 as pct %}
+                    <div class="progress-bar {% if item.remaining == 0 %}bg-danger{% elif item.remaining <= 2 %}bg-warning{% else %}bg-success{% endif %}"
+                        style="width: {{ pct }}%">
+                    </div>
+                </div>
+                <small class="text-muted">
+                    Used: <strong>{{ item.used }}</strong> /
+                    Total: <strong>{{ item.total }}</strong> —
+                    Remaining: <strong>{{ item.remaining }}</strong>
+                </small>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

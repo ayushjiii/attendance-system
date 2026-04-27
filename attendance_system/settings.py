@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'attendance',
     'leave_management',
     'reports',
+    'holidays',
 ]
 
 
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'attendance_system.urls'
@@ -143,11 +145,20 @@ TEMPLATES[0]['DIRS'] = [BASE_DIR / 'templates']
 # Office IP addresses allowed to mark attendance
 ALLOWED_OFFICE_IPS = ['127.0.0.1']
 
-# Office GPS (coordinates )
-OFFICE_LATITUDE = 21.2952576
-OFFICE_LONGITUDE = 72.8958164
+## comment out any one of this according to your need 
+
+# OFFICE gps coordinates
+# OFFICE_LATITUDE = 21.2417781
+# OFFICE_LONGITUDE = 72.8809676
+# OFFICE_RADIUS_METERS = 100
+     
+## HOME GPS coordinates
+OFFICE_LATITUDE = 21.2950471
+OFFICE_LONGITUDE = 72.8958814
 OFFICE_RADIUS_METERS = 100
-    
+
+
+
 AUTHENTICATION_BACKENDS = [
     'axes.backends.AxesStandaloneBackend',
     'django.contrib.auth.backends.ModelBackend',
@@ -183,21 +194,3 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 
 
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'WARNING',
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'logs/django.log',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'WARNING',
-            'propagate': True,
-        },
-    },
-}

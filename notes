@@ -1,0 +1,12 @@
+6. Hide sensitive info from employees
+In attendance/views.py, strip the IP address 
+from employee-facing views.
+ In attendance_history_view the template shouldn't show IP —
+  make sure history.html doesn't display record.ip_address.
+
+My recommendation — do these in this order:
+
+Session security (settings.py changes — 2 minutes) ✅ easiest
+Rate limiting (django-axes — 5 minutes) ✅ most impactful
+Password strength (already built into Django) ✅ easy
+Logging (good for auditing who did what)

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Holidays{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Public Holidays</h3>
+    {% if user.is_admin_role %}
+    <a href="{% url 'holidays:add' %}" class="btn btn-primary">+ Add Holiday</a>
+    {% endif %}
+</div>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Holiday</th>
+            <th>Date</th>
+            <th>Day</th>
+            <th>Description</th>
+            {% if user.is_admin_role %}<th>Action</th>{% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for holiday in holidays %}
+        <tr>
+            <td>{{ holiday.name }}</td>
+            <td>{{ holiday.date|date:"d M Y" }}</td>
+            <td>{{ holiday.date|date:"l" }}</td>
+            <td>{{ holiday.description|default:"-" }}</td>
+            {% if user.is_admin_role %}
+            <td>
+                <form method="post" action="{% url 'holidays:delete' holiday.id %}"
+                      onsubmit="return confirm('Delete this holiday?')">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                </form>
+            </td>
+            {% endif %}
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No holidays added yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

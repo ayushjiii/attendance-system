@@ -14,7 +14,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="{% url 'attendance:dashboard' %}">
-            Attendance System - FrostLeaf 
+                Attendance System - FrostLeaf
             </a>
 
             {% if user.is_authenticated %}
@@ -28,50 +28,50 @@
                     {% if user.is_admin_role %}
                     <!-- Admin navigation links -->
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'attendance:admin_attendance' %}">
-                            All Attendance
-                        </a>
+                        <a class="nav-link" href="{% url 'attendance:admin_attendance' %}">All Attendance</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'leave_management:admin_leaves' %}">
-                            Leave Requests
-                        </a>
+                        <a class="nav-link" href="{% url 'leave_management:admin_leaves' %}">Leave Requests</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'reports:monthly_report' %}">
-                            Reports
-                        </a>
+                        <a class="nav-link" href="{% url 'leave_management:admin_balance' %}">Leave Balances</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'accounts:create_employee' %}">
-                            Add Employee
-                        </a>
+                        <a class="nav-link" href="{% url 'reports:monthly_report' %}">Reports</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'accounts:employee_list' %}">
-                            Employees
-                        </a>
+                        <a class="nav-link" href="{% url 'holidays:list' %}">Holidays</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:create_employee' %}">Add Employee</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:employee_list' %}">Employees</a>
+                    </li>
+
                     {% else %}
                     <!-- Regular employee navigation links -->
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'attendance:history' %}">
-                            My History
-                        </a>
+                        <a class="nav-link" href="{% url 'attendance:history' %}">My History</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'leave_management:submit' %}">
-                            Apply for Leave
-                        </a>
+                        <a class="nav-link" href="{% url 'leave_management:submit' %}">Apply for Leave</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'leave_management:my_leaves' %}">
-                            My Leaves
-                        </a>
+                        <a class="nav-link" href="{% url 'leave_management:my_leaves' %}">My Leaves</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'leave_management:balance' %}">Leave Balance</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'holidays:list' %}">Holidays</a>
                     </li>
                     {% endif %}
 
-                    <!-- Logout - shown for all logged-in users -->
+                    <!-- Shown for ALL logged in users -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:profile' %}">My Profile</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link text-warning" href="{% url 'accounts:logout' %}">
                             Logout ({{ user.first_name }})

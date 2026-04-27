@@ -241,3 +241,43 @@ def reject_leave_view(request, leave_id):
         'leave': leave,
         'action': 'reject',
     })
+
+@login_required
+def delete_leave_view(request, leave_id):
+    if not request.user.is_admin_role:
+        return redirect('attendance:dashboard')
+
+    leave = get_object_or_404(LeaveRequest, id=leave_id)
+    if request.method == 'POST':
+        leave.delete()
+        messages.success(request, 'Leave request deleted.')
+    return redirect('leave_management:admin_leaves')
+
+
+@login_required
+def leave_balance_view(request):
+    from .models import LeaveBalance
+    balance, created = LeaveBalance.objects.get_or_create(employee=request.user)
+    summary = balance.get_summary()
+    return render(request, 'leave_management/leave_balance.html', {
+        'balance': balance,
+        'summary': summary,
+    })
+
+
+@login_required
+def admin_leave_balance_view(request):
+    if not request.user.is_admin_role:
+        return redirect('attendance:dashboard')
+
+    from .models import LeaveBalance
+    from accounts.models import Employee
+    employees = Employee.objects.filter(role='employee')
+    data = []
+    for emp in employees:
+        balance, _ = LeaveBalance.objects.get_or_create(employee=emp)
+        data.append({
+            'employee': emp,
+            'summary': balance.get_summary(),
+        })
+    return render(request, 'leave_management/admin_leave_balance.html', {'data': data})

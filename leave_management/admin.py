@@ -1,8 +1,15 @@
 from django.contrib import admin
-from .models import LeaveRequest
+from .models import LeaveRequest, LeaveBalance
+
 
 @admin.register(LeaveRequest)
 class LeaveRequestAdmin(admin.ModelAdmin):
     list_display = ['employee', 'leave_date', 'leave_type', 'status', 'submitted_at']
     list_filter = ['status', 'leave_type']
+    search_fields = ['employee__first_name', 'employee__last_name']
+
+
+@admin.register(LeaveBalance)
+class LeaveBalanceAdmin(admin.ModelAdmin):
+    list_display = ['employee', 'year', 'sick_leave', 'casual_leave', 'annual_leave', 'emergency_leave']
     search_fields = ['employee__first_name', 'employee__last_name']

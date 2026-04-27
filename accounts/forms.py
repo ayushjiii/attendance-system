@@ -18,3 +18,14 @@ class EmployeeCreationForm(UserCreationForm):
         # Add Bootstrap classes to all fields
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
+
+
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = Employee
+        fields = ['email', 'phone']
+        widgets = {
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+        }
