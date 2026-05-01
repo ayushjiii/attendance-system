@@ -1,12 +1,22 @@
-6. Hide sensitive info from employees
-In attendance/views.py, strip the IP address 
-from employee-facing views.
- In attendance_history_view the template shouldn't show IP —
-  make sure history.html doesn't display record.ip_address.
-
-My recommendation — do these in this order:
+my - suggestions :  status - done
 
 Session security (settings.py changes — 2 minutes) ✅ easiest
 Rate limiting (django-axes — 5 minutes) ✅ most impactful
 Password strength (already built into Django) ✅ easy
 Logging (good for auditing who did what)
+
+
+
+
+hardik bhai - suggestions : status - pending
+
+1 . functionality add implement break 
+2 . add commpany policy
+3 . salary analyzer
+4 . postgresql 
+5 . activety traker  (reference - upwork) - employee activity traking
+
+devendra bhai - suggestion - status - pending 
+
+1 . employee dashboard live working hours counter - pending
+2 . admin should be notified if any employee doesn't complete his/her work (conditions change according to employees time slot) and working hours should be calculated accordingly - pending

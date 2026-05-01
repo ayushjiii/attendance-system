@@ -1,18 +1,26 @@
-# Python
 __pycache__/
 *.py[cod]
 *.sqlite3
 *.log
 *.env
+
 venv/
 env/
 
-# Django
+
 media/
 staticfiles/
 
-# VS Code
-.vscode/
 
-# macOS
+
+outputs/
+
+snapshots/raw/
+snapshots/hybrid/
+snapshots/human/
+
+*.html
+
+
+.vscode/
 .DS_Store

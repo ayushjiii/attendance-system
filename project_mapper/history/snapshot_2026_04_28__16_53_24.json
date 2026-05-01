@@ -1,0 +1,111 @@
+{
+    "generated_at": "2026-04-28T13:04:23.510519",
+    "apps": [
+        "accounts",
+        "attendance",
+        "holidays",
+        "leave_management",
+        "reports"
+    ],
+    "python_files": [
+        "manage.py",
+        "accounts\\admin.py",
+        "accounts\\apps.py",
+        "accounts\\forms.py",
+        "accounts\\models.py",
+        "accounts\\tests.py",
+        "accounts\\urls.py",
+        "accounts\\views.py",
+        "accounts\\__init__.py",
+        "attendance\\admin.py",
+        "attendance\\apps.py",
+        "attendance\\models.py",
+        "attendance\\tests.py",
+        "attendance\\urls.py",
+        "attendance\\utils.py",
+        "attendance\\views.py",
+        "attendance\\__init__.py",
+        "attendance_system\\asgi.py",
+        "attendance_system\\settings.py",
+        "attendance_system\\urls.py",
+        "attendance_system\\wsgi.py",
+        "attendance_system\\__init__.py",
+        "holidays\\admin.py",
+        "holidays\\apps.py",
+        "holidays\\forms.py",
+        "holidays\\models.py",
+        "holidays\\tests.py",
+        "holidays\\urls.py",
+        "holidays\\views.py",
+        "holidays\\__init__.py",
+        "leave_management\\admin.py",
+        "leave_management\\apps.py",
+        "leave_management\\forms.py",
+        "leave_management\\models.py",
+        "leave_management\\tests.py",
+        "leave_management\\urls.py",
+        "leave_management\\views.py",
+        "leave_management\\__init__.py",
+        "project_mapper\\architecture_report.py",
+        "project_mapper\\dependency_mapper.py",
+        "project_mapper\\model_mapper.py",
+        "project_mapper\\project_snapshot.py",
+        "reports\\admin.py",
+        "reports\\apps.py",
+        "reports\\models.py",
+        "reports\\tests.py",
+        "reports\\urls.py",
+        "reports\\views.py",
+        "reports\\__init__.py",
+        "attendance\\templatetags\\attendance_filters.py",
+        "attendance\\templatetags\\__init__.py"
+    ],
+    "dependencies": {
+        "leave_management": {
+            "accounts": 1
+        },
+        "reports": {
+            "attendance": 1,
+            "leave_management": 1,
+            "accounts": 2
+        }
+    },
+    "models": {
+        "accounts": [
+            "Employee"
+        ],
+        "attendance": [
+            "AttendanceRecord"
+        ],
+        "holidays": [
+            "Holiday"
+        ],
+        "leave_management": [
+            "LeaveRequest",
+            "LeaveBalance"
+        ],
+        "reports": []
+    },
+    "model_relationships": {
+        "Employee": [],
+        "AttendanceRecord": [
+            {
+                "target": "settings.AUTH_USER_MODEL",
+                "type": "ForeignKey"
+            }
+        ],
+        "Holiday": [],
+        "LeaveRequest": [
+            {
+                "target": "settings.AUTH_USER_MODEL",
+                "type": "ForeignKey"
+            }
+        ],
+        "LeaveBalance": [
+            {
+                "target": "settings.AUTH_USER_MODEL",
+                "type": "OneToOneField"
+            }
+        ]
+    }
+}
