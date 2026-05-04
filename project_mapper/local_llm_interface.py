@@ -2,6 +2,8 @@ import requests
 import time
 import json
 import hashlib
+import os
+from datetime import datetime
 from hybrid_retriever import hybrid_search
 
 
@@ -15,6 +17,8 @@ MODELS = {
 TIMEOUT = 600
 CACHE_FILE = "llm_cache.json"
 
+
+# ---------------- CACHE ----------------
 
 def load_cache():
     try:
@@ -37,6 +41,8 @@ def get_cache_key(query, model, results):
 
 cache = load_cache()
 
+
+# ---------------- QUERY ----------------
 
 def classify_query(query):
     q = query.lower()
@@ -62,6 +68,8 @@ def get_strategy(qtype):
     return {"model": MODELS["fast"], "top_k": 3}
 
 
+# ---------------- CONTEXT ----------------
+
 def extract_logic(code):
     lines = code.split("\n")
     important = []
@@ -76,7 +84,7 @@ def extract_logic(code):
         ]):
             important.append(l)
 
-    return "\n".join(important[:25])
+    return "\n".join(important[:30])
 
 
 def build_context(results):
@@ -99,19 +107,63 @@ LOGIC:
     return "\n".join(parts)
 
 
-def build_prompt(query, context, fast_mode=False):
+# ---------------- PROMPT ----------------
+
+def build_prompt(query, context, edit_mode=False, fast_mode=False):
+
+    if edit_mode:
+        return f"""
+You are modifying a Django codebase.
+
+Return ONLY JSON:
+
+{{
+  "edits": [
+    {{
+      "file": "path/to/file.py",
+      "operations": [
+        {{
+          "type": "insert_after",
+          "target": "exact line",
+          "code": "code"
+        }},
+        {{
+          "type": "replace_line",
+          "target": "exact line",
+          "code": "new code"
+        }},
+        {{
+          "type": "delete_line",
+          "target": "line"
+        }}
+      ]
+    }}
+  ]
+}}
+
+Rules:
+- Use exact lines from context
+- Keep indentation correct
+- No explanations
+
+Query:
+{query}
+
+Context:
+{context}
+"""
+
     mode = "FAST MODE\n" if fast_mode else ""
 
     return f"""
-You are a code analysis assistant.
-
 {mode}
 
+You are a code analysis assistant.
+
 Rules:
-- Use only the given context
-- No assumptions
-- No questions
+- Use only context
 - Be direct
+- No assumptions
 
 If incomplete:
 Say: Context incomplete
@@ -126,10 +178,10 @@ Output:
 1. Workflow
 2. Data Flow
 3. Key Functions
-
-Keep it concise.
 """
 
+
+# ---------------- LLM ----------------
 
 def call_llm(model, prompt):
     payload = {
@@ -138,10 +190,7 @@ def call_llm(model, prompt):
         "stream": False,
         "options": {
             "num_predict": 200,
-            "temperature": 0.2,
-            "top_k": 20,
-            "top_p": 0.7,
-            "repeat_penalty": 1.1
+            "temperature": 0.2
         }
     }
 
@@ -153,16 +202,89 @@ def call_llm(model, prompt):
         )
         data = res.json()
         return data.get("response", "").strip()
-
     except Exception as e:
         return f"[ERROR] {e}"
 
 
+# ---------------- EDIT ENGINE ----------------
+
+def apply_edits(edit_json):
+    if "edits" not in edit_json:
+        print("[NO EDITS]")
+        return
+
+    for file_edit in edit_json["edits"]:
+        file_path = file_edit["file"]
+
+        if not os.path.exists(file_path):
+            print(f"[SKIP] {file_path}")
+            continue
+
+        with open(file_path, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+
+        backup = file_path + ".bak_" + datetime.now().strftime("%H%M%S")
+        with open(backup, "w", encoding="utf-8") as f:
+            f.writelines(lines)
+
+        for op in file_edit["operations"]:
+            op_type = op["type"]
+            target = op.get("target", "")
+            code = op.get("code", "")
+
+            applied = False
+
+            for i, line in enumerate(lines):
+                if target.strip() in line.strip():
+
+                    if op_type == "insert_after":
+                        lines.insert(i + 1, code + "\n")
+
+                    elif op_type == "replace_line":
+                        lines[i] = code + "\n"
+
+                    elif op_type == "delete_line":
+                        lines.pop(i)
+
+                    applied = True
+                    break
+
+            if not applied:
+                print(f"[WARN] target not found: {target}")
+
+        with open(file_path, "w", encoding="utf-8") as f:
+            f.writelines(lines)
+
+        print(f"[UPDATED] {file_path}")
+
+
+def run_edit_flow(query, context, results):
+    prompt = build_prompt(query, context, edit_mode=True)
+
+    response = call_llm(MODELS["power"], prompt)
+
+    if not response.strip():
+        print("[EMPTY RESPONSE]")
+        return
+
+    try:
+        edit_json = json.loads(response)
+    except:
+        print("[INVALID JSON]")
+        print(response)
+        return
+
+    apply_edits(edit_json)
+
+
+# ---------------- ANALYSIS ----------------
+
 def smart_llm(query, context, results):
+
     fast_key = get_cache_key(query, MODELS["fast"], results)
 
     if fast_key in cache:
-        print("\n[CACHE - FAST]\n")
+        print("\n[CACHE FAST]\n")
         fast_res = cache[fast_key]
     else:
         fast_prompt = build_prompt(query, context, fast_mode=True)
@@ -173,14 +295,14 @@ def smart_llm(query, context, results):
     print(fast_res)
 
     if len(fast_res) > 80 and "incomplete" not in fast_res.lower():
-        return fast_res
+        return
 
     print("\nRefining...\n")
 
     power_key = get_cache_key(query, MODELS["power"], results)
 
     if power_key in cache:
-        print("\n[CACHE - POWER]\n")
+        print("\n[CACHE POWER]\n")
         power_res = cache[power_key]
     else:
         power_prompt = build_prompt(query, context)
@@ -190,8 +312,8 @@ def smart_llm(query, context, results):
 
     print(power_res)
 
-    return power_res
 
+# ---------------- UI ----------------
 
 def display(results):
     print("\nRetrieved:")
@@ -200,8 +322,10 @@ def display(results):
         print(f"- {c['name']} ({c['type']})")
 
 
+# ---------------- MAIN ----------------
+
 def main():
-    print("\nSMART LOCAL RAG\n")
+    print("\nSMART LOCAL RAG (FINAL)\n")
 
     while True:
         query = input("\nQuery: ")
@@ -224,7 +348,10 @@ def main():
 
         print("\nThinking...\n")
 
-        smart_llm(query, context, results)
+        if qtype == "edit":
+            run_edit_flow(query, context, results)
+        else:
+            smart_llm(query, context, results)
 
         t2 = time.time()
 
