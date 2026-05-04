@@ -5,10 +5,6 @@ import hashlib
 from hybrid_retriever import hybrid_search
 
 
-
-# CONFIG
-
-
 OLLAMA_URL = "http://localhost:11434/api/generate"
 
 MODELS = {
@@ -16,12 +12,8 @@ MODELS = {
     "power": "llama3:latest"
 }
 
-TIMEOUT = 600 ##  timeout in seconds
+TIMEOUT = 600
 CACHE_FILE = "llm_cache.json"
-
-
-
-# CACHE
 
 
 def load_cache():
@@ -31,32 +23,32 @@ def load_cache():
     except:
         return {}
 
+
 def save_cache(cache):
     with open(CACHE_FILE, "w", encoding="utf-8") as f:
         json.dump(cache, f, indent=2)
 
-def get_cache_key(query, model, strategy):
-    raw = f"{query}|{model}|{strategy['top_k']}|{strategy['max_chars']}"
+
+def get_cache_key(query, model, results):
+    ids = [r["chunk"]["name"] for r in results]
+    raw = f"{query}|{model}|{'-'.join(ids)}"
     return hashlib.md5(raw.encode()).hexdigest()
+
 
 cache = load_cache()
 
 
-
-# QUERY CLASSIFIER
-
-
-def classify_query(query: str):
+def classify_query(query):
     q = query.lower()
 
     if any(k in q for k in ["bug", "error", "fix", "issue", "debug"]):
         return "debug"
 
+    if any(k in q for k in ["workflow", "flow", "architecture"]):
+        return "deep"
+
     if any(k in q for k in ["add", "change", "modify", "update"]):
         return "edit"
-
-    if any(k in q for k in ["workflow", "flow", "architecture", "data flow"]):
-        return "deep"
 
     if any(k in q for k in ["what", "list", "show"]):
         return "simple"
@@ -64,259 +56,180 @@ def classify_query(query: str):
     return "default"
 
 
-# STRATEGY (use model based on need)
+def get_strategy(qtype):
+    if qtype in ["debug", "deep", "edit"]:
+        return {"model": MODELS["power"], "top_k": 4}
+    return {"model": MODELS["fast"], "top_k": 3}
 
 
-def get_strategy(query_type):
+def extract_logic(code):
+    lines = code.split("\n")
+    important = []
 
-    if query_type == "edit":
-        return {"model": MODELS["power"], "top_k": 3, "max_chars": 2000}
+    for l in lines:
+        l = l.strip()
 
-    if query_type == "debug":
-        return {"model": MODELS["power"], "top_k": 4, "max_chars": 3000}
+        if any(k in l for k in [
+            "def ", "class ", "return ",
+            "filter(", "get(", "for ", "if ",
+            "save(", "create("
+        ]):
+            important.append(l)
 
-    if query_type == "deep":
-        return {"model": MODELS["power"], "top_k": 3, "max_chars": 2000}
-
-    if query_type == "simple":
-        return {"model": MODELS["fast"], "top_k": 2, "max_chars": 800}
-
-    return {"model": MODELS["fast"], "top_k": 3, "max_chars": 1000}
-
-
-
-# FAST MODE (NO LLM)
+    return "\n".join(important[:25])
 
 
-def fast_mode(query, results):
-    q = query.lower()
-
-    if "list" in q or "show" in q:
-        print("\n FAST MODE (no LLM)\n")
-        for r in results:
-            c = r["chunk"]
-            print(f"- {c['name']} ({c['type']}) → {c['file']}")
-        return True
-
-    return False
-
-
-# CONTEXT
-
-
-def build_context(results, strategy):
+def build_context(results):
     parts = []
 
     for i, r in enumerate(results, 1):
         c = r["chunk"]
+        logic = extract_logic(c["code"])
 
         parts.append(f"""
-FUNCTION START
-Name: {c['name']}
-File: {c['file']}
+CHUNK {i}
+NAME: {c['name']}
+TYPE: {c['type']}
+FILE: {c['file']}
 
-{c['code'][:strategy['max_chars']]}
-FUNCTION END
+LOGIC:
+{logic}
 """)
 
     return "\n".join(parts)
 
 
+def build_prompt(query, context, fast_mode=False):
+    mode = "FAST MODE\n" if fast_mode else ""
 
-# PROMPT
+    return f"""
+You are a code analysis assistant.
 
-
-def build_prompt(query, context, mode, model):
-
-    # SIMPLE → relaxed prompt for phi3
-    if model == MODELS["fast"]:
-        return f"""
-Explain briefly.
-
-Query:
-{query}
-
-Code:
-{context}
-"""
-
-    # EDIT MODE (prompt for editing code)
-    if mode == "edit":
-        return f"""
-You are a code editing assistant.
+{mode}
 
 Rules:
-- Only use given code
+- Use only the given context
 - No assumptions
+- No questions
+- Be direct
+
+If incomplete:
+Say: Context incomplete
 
 Query:
 {query}
 
-Code:
-{context}
-"""
-
-    # DEFAULT / DEEP
-    return f"""
-Explain clearly.
-
-Query:
-{query}
-
-Code:
+Context:
 {context}
 
-keep the output minimal and accurate dont be oversmart or overwrite anything.
+Output:
+1. Workflow
+2. Data Flow
+3. Key Functions
 
+Keep it concise.
 """
 
 
-
-# LLM CALL 
-
-def ask_llm(model, prompt, query):
-
-    key = get_cache_key(query, model)
-
-    
-    # CACHE HIT
-    
-    if key in cache:
-        print("\n CACHE HIT\n")
-        print(cache[key])
-        return cache[key]
-
+def call_llm(model, prompt):
     payload = {
         "model": model,
         "prompt": prompt,
-        "stream": True,
+        "stream": False,
         "options": {
             "num_predict": 200,
-            "temperature": 0.2
+            "temperature": 0.2,
+            "top_k": 20,
+            "top_p": 0.7,
+            "repeat_penalty": 1.1
         }
     }
 
     try:
-        response = requests.post(
+        res = requests.post(
             OLLAMA_URL,
             json=payload,
-            stream=True,
             timeout=TIMEOUT
         )
-
-        full = ""
-
-        
-        # STREAM MODE
-
-        for line in response.iter_lines():
-            if not line:
-                continue
-
-            try:
-                data = json.loads(line.decode("utf-8"))
-
-                token = data.get("response", "")
-                if token:
-                    print(token, end="", flush=True)
-                    full += token
-
-                if data.get("done", False):
-                    break
-
-            except:
-                continue
-
-        
-        # IF EMPTY → RETRY (NON-STREAM)
-        
-        if not full.strip():
-            print("\n EMPTY → retrying without stream...\n")
-
-            payload["stream"] = False
-
-            retry = requests.post(
-                OLLAMA_URL,
-                json=payload,
-                timeout=TIMEOUT
-            )
-
-            data = retry.json()
-            full = data.get("response", "")
-
-            if full:
-                print(full)
-            else:
-                print("\n[FAILED] Model returned empty response.")
-                return "[EMPTY RESPONSE]"
-
-        
-        # SAVE CACHE (ONLY VALID)
-        
-        if full.strip():
-            cache[key] = full
-            save_cache(cache)
-
-        return full
+        data = res.json()
+        return data.get("response", "").strip()
 
     except Exception as e:
-        return f"\n[ERROR] {e}"
+        return f"[ERROR] {e}"
 
 
-# DISPLAY
+def smart_llm(query, context, results):
+    fast_key = get_cache_key(query, MODELS["fast"], results)
+
+    if fast_key in cache:
+        print("\n[CACHE - FAST]\n")
+        fast_res = cache[fast_key]
+    else:
+        fast_prompt = build_prompt(query, context, fast_mode=True)
+        fast_res = call_llm(MODELS["fast"], fast_prompt)
+        cache[fast_key] = fast_res
+        save_cache(cache)
+
+    print(fast_res)
+
+    if len(fast_res) > 80 and "incomplete" not in fast_res.lower():
+        return fast_res
+
+    print("\nRefining...\n")
+
+    power_key = get_cache_key(query, MODELS["power"], results)
+
+    if power_key in cache:
+        print("\n[CACHE - POWER]\n")
+        power_res = cache[power_key]
+    else:
+        power_prompt = build_prompt(query, context)
+        power_res = call_llm(MODELS["power"], power_prompt)
+        cache[power_key] = power_res
+        save_cache(cache)
+
+    print(power_res)
+
+    return power_res
 
 
 def display(results):
-    print("\n--- RETRIEVED ---")
+    print("\nRetrieved:")
     for r in results:
         c = r["chunk"]
-        print(f"{c['name']} ({c['type']})")
-
-
-
-# MAIN
+        print(f"- {c['name']} ({c['type']})")
 
 
 def main():
-    print("\nSMART LOCAL RAG (STABLE)\n")
+    print("\nSMART LOCAL RAG\n")
 
     while True:
-        query = input("\nQuery: ").strip()
-
-        #  prevent empty query
-        if not query:
-            print(" Empty query. Try again.")
-            continue
+        query = input("\nQuery: ")
 
         if query.lower() == "exit":
             break
+
+        t1 = time.time()
 
         qtype = classify_query(query)
         strategy = get_strategy(qtype)
 
         print(f"\nType: {qtype} | Model: {strategy['model']}")
 
-        t1 = time.time()
         results = hybrid_search(query, top_k=strategy["top_k"])
-        t2 = time.time()
 
-        print(f" Retrieval: {t2 - t1:.2f}s")
         display(results)
 
-        # fast mode
-        if fast_mode(query, results):
-            continue
+        context = build_context(results)
 
-        context = build_context(results, strategy)
-        prompt = build_prompt(query, context, qtype, strategy["model"])
+        print("\nThinking...\n")
 
-        print("\nTHINKING...\n")
+        smart_llm(query, context, results)
 
-        ask_llm(strategy["model"], prompt, query, strategy)
+        t2 = time.time()
 
-        t3 = time.time()
+        print(f"\nTime: {t2 - t1:.2f}s")
 
-        print(f"\n Total: {t3 - t1:.2f}s")
 
 if __name__ == "__main__":
     main()
