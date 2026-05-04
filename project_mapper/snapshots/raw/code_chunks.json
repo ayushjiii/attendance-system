@@ -1,0 +1,779 @@
+{
+    "main": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\manage.py",
+        "start_line": 7,
+        "end_line": 18,
+        "code": "def main():\n    \"\"\"Run administrative tasks.\"\"\"\n    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'attendance_system.settings')\n    try:\n        from django.core.management import execute_from_command_line\n    except ImportError as exc:\n        raise ImportError(\n            \"Couldn't import Django. Are you sure it's installed and \"\n            \"available on your PYTHONPATH environment variable? Did you \"\n            \"forget to activate a virtual environment?\"\n        ) from exc\n    execute_from_command_line(sys.argv)"
+    },
+    "EmployeeAdmin": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\admin.py",
+        "start_line": 7,
+        "end_line": 21,
+        "code": "class EmployeeAdmin(UserAdmin):\n    list_display = ['username', 'employee_id', 'get_full_name', 'department', 'role', 'is_active']\n    list_filter = ['role', 'department', 'is_active']\n    search_fields = ['username', 'employee_id', 'first_name', 'last_name', 'email']\n\n    # employee_id is visible but cannot be edited\n    readonly_fields = ['employee_id']\n\n    fieldsets = UserAdmin.fieldsets + (\n        ('Employee Info', {'fields': ('employee_id', 'department', 'role', 'phone')}),\n    )\n    add_fieldsets = UserAdmin.add_fieldsets + (\n        ('Employee Info', {'fields': ('department', 'role', 'phone')}),\n        # employee_id not shown on add \u2014 auto generated\n    )"
+    },
+    "AccountsConfig": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\apps.py",
+        "start_line": 4,
+        "end_line": 5,
+        "code": "class AccountsConfig(AppConfig):\n    name = 'accounts'"
+    },
+    "EmployeeCreationForm": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\forms.py",
+        "start_line": 6,
+        "end_line": 20,
+        "code": "class EmployeeCreationForm(UserCreationForm):\n    class Meta:\n        model = Employee\n        fields = [\n            'username', 'first_name', 'last_name', 'email',\n            'department', 'role', 'phone',\n            'password1', 'password2'\n        ]\n        # employee_id removed \u2014 auto-generated on save\n\n    def __init__(self, *args, **kwargs):\n        super().__init__(*args, **kwargs)\n        # Add Bootstrap classes to all fields\n        for field in self.fields.values():\n            field.widget.attrs['class'] = 'form-control'"
+    },
+    "Meta": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py",
+        "start_line": 41,
+        "end_line": 42,
+        "code": "class Meta:\n        ordering = ['-submitted_at']"
+    },
+    "__init__": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\call_graph_mapper.py",
+        "start_line": 72,
+        "end_line": 74,
+        "code": "def __init__(self):\n\n        self.current_function = None"
+    },
+    "EditProfileForm": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\forms.py",
+        "start_line": 24,
+        "end_line": 31,
+        "code": "class EditProfileForm(forms.ModelForm):\n    class Meta:\n        model = Employee\n        fields = ['email', 'phone']\n        widgets = {\n            'email': forms.EmailInput(attrs={'class': 'form-control'}),\n            'phone': forms.TextInput(attrs={'class': 'form-control'}),\n        }"
+    },
+    "Employee": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\models.py",
+        "start_line": 5,
+        "end_line": 35,
+        "code": "class Employee(AbstractUser):\n    ROLE_CHOICES = [\n        ('employee', 'Employee'),\n        ('admin', 'Admin'),\n    ]\n\n    employee_id = models.CharField(max_length=20, unique=True, blank=True)\n    department = models.CharField(max_length=100)\n    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='employee')\n    phone = models.CharField(max_length=20, blank=True)\n\n    def save(self, *args, **kwargs):\n        # Auto-generate employee ID only if not already set\n        if not self.employee_id:\n            last = Employee.objects.order_by('-id').first()\n            if last and last.employee_id.startswith('EMP'):\n                try:\n                    last_number = int(last.employee_id[3:])\n                    self.employee_id = f'EMP{(last_number + 1):03d}'\n                except ValueError:\n                    self.employee_id = 'EMP001'\n            else:\n                self.employee_id = 'EMP001'\n        super().save(*args, **kwargs)\n\n    def __str__(self):\n        return f\"{self.get_full_name()} ({self.employee_id})\"\n\n    @property\n    def is_admin_role(self):\n        return self.role == 'admin'"
+    },
+    "save": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\models.py",
+        "start_line": 16,
+        "end_line": 28,
+        "code": "def save(self, *args, **kwargs):\n        # Auto-generate employee ID only if not already set\n        if not self.employee_id:\n            last = Employee.objects.order_by('-id').first()\n            if last and last.employee_id.startswith('EMP'):\n                try:\n                    last_number = int(last.employee_id[3:])\n                    self.employee_id = f'EMP{(last_number + 1):03d}'\n                except ValueError:\n                    self.employee_id = 'EMP001'\n            else:\n                self.employee_id = 'EMP001'\n        super().save(*args, **kwargs)"
+    },
+    "__str__": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py",
+        "start_line": 72,
+        "end_line": 73,
+        "code": "def __str__(self):\n        return f\"{self.employee.get_full_name()} - {self.year}\""
+    },
+    "is_admin_role": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\models.py",
+        "start_line": 34,
+        "end_line": 35,
+        "code": "def is_admin_role(self):\n        return self.role == 'admin'"
+    },
+    "login_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py",
+        "start_line": 9,
+        "end_line": 38,
+        "code": "def login_view(request):\n    \"\"\"\n    Display and handle the login form.\n    \n    GET: Show empty login form\n    POST: Validate username/password and log user in\n    \n    If user is already logged in, redirect to dashboard.\n    \"\"\"\n    # Redirect if already logged in\n    if request.user.is_authenticated:\n        return redirect('attendance:dashboard')\n\n    if request.method == 'POST':\n        username = request.POST.get('username')\n        password = request.POST.get('password')\n        \n        # Django's authenticate() checks the password against the hashed version\n        user = authenticate(request, username=username, password=password)\n\n        if user is not None:\n            # Login was successful\n            login(request, user)  # This creates a session\n            messages.success(request, f'Welcome back, {user.first_name}!')\n            return redirect('attendance:dashboard')\n        else:\n            # Login failed\n            messages.error(request, 'Invalid username or password.')\n\n    return render(request, 'accounts/login.html')"
+    },
+    "logout_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py",
+        "start_line": 40,
+        "end_line": 47,
+        "code": "def logout_view(request):\n    \"\"\"\n    Log the user out and clear their session.\n    Redirect to login page.\n    \"\"\"\n    logout(request)\n    messages.info(request, 'You have been logged out.')\n    return redirect('accounts:login')"
+    },
+    "create_employee_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py",
+        "start_line": 50,
+        "end_line": 79,
+        "code": "def create_employee_view(request):\n    \"\"\"\n    Admin-only view to create a new employee account.\n    \n    @login_required: Redirects unauthenticated users to login page\n    We also manually check is_admin_role for extra safety.\n    \n    GET: Show the form\n    POST: Create the employee\n    \"\"\"\n    # Check that user is admin\n    if not request.user.is_admin_role:\n        messages.error(request, 'Only admins can create employee accounts.')\n        return redirect('attendance:dashboard')\n\n    if request.method == 'POST':\n        form = EmployeeCreationForm(request.POST)\n        if form.is_valid():\n            employee = form.save(commit=False)\n            # Password is already hashed by the form\n            employee.save()\n            messages.success(\n                request,\n                f'Account created for {employee.get_full_name()} ({employee.employee_id}).'\n            )\n            return redirect('accounts:employee_list')\n    else:\n        form = EmployeeCreationForm()\n\n    return render(request, 'accounts/create_employee.html', {'form': form})"
+    },
+    "employee_list_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py",
+        "start_line": 82,
+        "end_line": 91,
+        "code": "def employee_list_view(request):\n    \"\"\"\n    Admin-only view to list all employees.\n    Shows name, ID, department, role, and active status.\n    \"\"\"\n    if not request.user.is_admin_role:\n        return redirect('attendance:dashboard')\n\n    employees = Employee.objects.all().order_by('department', 'first_name')\n    return render(request, 'accounts/employee_list.html', {'employees': employees})"
+    },
+    "profile_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py",
+        "start_line": 95,
+        "end_line": 96,
+        "code": "def profile_view(request):\n    return render(request, 'accounts/profile.html', {'employee': request.user})"
+    },
+    "change_password_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py",
+        "start_line": 99,
+        "end_line": 109,
+        "code": "def change_password_view(request):\n    if request.method == 'POST':\n        form = PasswordChangeForm(request.user, request.POST)\n        if form.is_valid():\n            user = form.save()\n            update_session_auth_hash(request, user)  # keeps user logged in\n            messages.success(request, 'Password changed successfully.')\n            return redirect('accounts:profile')\n    else:\n        form = PasswordChangeForm(request.user)\n    return render(request, 'accounts/change_password.html', {'form': form})"
+    },
+    "edit_profile_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py",
+        "start_line": 112,
+        "end_line": 121,
+        "code": "def edit_profile_view(request):\n    if request.method == 'POST':\n        form = EditProfileForm(request.POST, instance=request.user)\n        if form.is_valid():\n            form.save()\n            messages.success(request, 'Profile updated successfully.')\n            return redirect('accounts:profile')\n    else:\n        form = EditProfileForm(instance=request.user)\n    return render(request, 'accounts/edit_profile.html', {'form': form})"
+    },
+    "Migration": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\migrations\\0002_leavebalance.py",
+        "start_line": 8,
+        "end_line": 29,
+        "code": "class Migration(migrations.Migration):\n\n    dependencies = [\n        ('leave_management', '0001_initial'),\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n\n    operations = [\n        migrations.CreateModel(\n            name='LeaveBalance',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),\n                ('year', models.IntegerField(default=2026)),\n                ('sick_leave', models.IntegerField(default=12)),\n                ('casual_leave', models.IntegerField(default=12)),\n                ('annual_leave', models.IntegerField(default=15)),\n                ('emergency_leave', models.IntegerField(default=5)),\n                ('other_leave', models.IntegerField(default=3)),\n                ('employee', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='leave_balance', to=settings.AUTH_USER_MODEL)),\n            ],\n        ),\n    ]"
+    },
+    "AttendanceRecordAdmin": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\admin.py",
+        "start_line": 5,
+        "end_line": 8,
+        "code": "class AttendanceRecordAdmin(admin.ModelAdmin):\n    list_display = ['employee', 'date', 'check_in_time', 'check_out_time', 'attendance_status']\n    list_filter = ['attendance_status', 'date']\n    search_fields = ['employee__first_name', 'employee__last_name', 'employee__employee_id']"
+    },
+    "AttendanceConfig": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\apps.py",
+        "start_line": 4,
+        "end_line": 5,
+        "code": "class AttendanceConfig(AppConfig):\n    name = 'attendance'"
+    },
+    "AttendanceRecord": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\models.py",
+        "start_line": 6,
+        "end_line": 93,
+        "code": "class AttendanceRecord(models.Model):\n    \"\"\"\n    Stores one attendance record per employee per day.\n    \n    Fields:\n    - employee: who this record belongs to\n    - date: which day\n    - check_in_time / check_out_time: when they arrived/left\n    - total_working_hours: auto-calculated on checkout\n    - ip_address: for anti-fake verification\n    - device_info: browser + OS (audit trail)\n    - gps_latitude/longitude: location at time of check-in\n    - attendance_status: present / absent / late / etc.\n    \"\"\"\n\n    STATUS_CHOICES = [\n        ('present', 'Present'),\n        ('absent', 'Absent'),\n        ('half_day', 'Half Day'),\n        ('late', 'Late'),\n        ('on_leave', 'On Leave'),\n    ]\n\n    employee = models.ForeignKey(\n        settings.AUTH_USER_MODEL,\n        on_delete=models.CASCADE,       # delete records if employee is deleted\n        related_name='attendance_records'\n    )\n    date = models.DateField()\n    check_in_time = models.TimeField(null=True, blank=True)\n    check_out_time = models.TimeField(null=True, blank=True)\n    total_working_hours = models.DecimalField(\n        max_digits=5, decimal_places=2,\n        null=True, blank=True\n    )\n\n    # Security / audit fields\n    ip_address = models.GenericIPAddressField(null=True, blank=True)\n    device_info = models.TextField(blank=True)\n    gps_latitude = models.DecimalField(\n        max_digits=9, decimal_places=6,\n        null=True, blank=True\n    )\n    gps_longitude = models.DecimalField(\n        max_digits=9, decimal_places=6,\n        null=True, blank=True\n    )\n\n    attendance_status = models.CharField(\n        max_length=20,\n        choices=STATUS_CHOICES,\n        default='present'\n    )\n    notes = models.TextField(blank=True)\n\n    class Meta:\n        # Database-level constraint: only ONE record per employee per day\n        unique_together = ['employee', 'date']\n        ordering = ['-date']\n\n    def __str__(self):\n        return f\"{self.employee} - {self.date} ({self.attendance_status})\"\n\n    def calculate_working_hours(self):\n        \"\"\"\n        Calculate total hours worked.\n        Called automatically when the employee checks out.\n        \n        Returns hours as a float rounded to 2 decimal places.\n        Example: 8.5 means 8 hours 30 minutes.\n        \"\"\"\n        if self.check_in_time and self.check_out_time:\n            check_in_dt = datetime.combine(self.date, self.check_in_time)\n            check_out_dt = datetime.combine(self.date, self.check_out_time)\n            delta = check_out_dt - check_in_dt\n            hours = round(delta.total_seconds() / 3600, 2)\n            return hours\n        return None\n\n    @property\n    def is_checked_in(self):\n        \"\"\"True if employee has checked in today.\"\"\"\n        return self.check_in_time is not None\n\n    @property\n    def is_checked_out(self):\n        \"\"\"True if employee has checked out today.\"\"\"\n        return self.check_out_time is not None"
+    },
+    "calculate_working_hours": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\models.py",
+        "start_line": 69,
+        "end_line": 83,
+        "code": "def calculate_working_hours(self):\n        \"\"\"\n        Calculate total hours worked.\n        Called automatically when the employee checks out.\n        \n        Returns hours as a float rounded to 2 decimal places.\n        Example: 8.5 means 8 hours 30 minutes.\n        \"\"\"\n        if self.check_in_time and self.check_out_time:\n            check_in_dt = datetime.combine(self.date, self.check_in_time)\n            check_out_dt = datetime.combine(self.date, self.check_out_time)\n            delta = check_out_dt - check_in_dt\n            hours = round(delta.total_seconds() / 3600, 2)\n            return hours\n        return None"
+    },
+    "is_checked_in": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\models.py",
+        "start_line": 86,
+        "end_line": 88,
+        "code": "def is_checked_in(self):\n        \"\"\"True if employee has checked in today.\"\"\"\n        return self.check_in_time is not None"
+    },
+    "is_checked_out": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\models.py",
+        "start_line": 91,
+        "end_line": 93,
+        "code": "def is_checked_out(self):\n        \"\"\"True if employee has checked out today.\"\"\"\n        return self.check_out_time is not None"
+    },
+    "get_client_ip": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\utils.py",
+        "start_line": 5,
+        "end_line": 20,
+        "code": "def get_client_ip(request):\n    \"\"\"\n    Get the real IP address of the user making the request.\n    \n    Why check X-Forwarded-For?\n    When a server sits behind a proxy or load balancer,\n    the real user IP is in this header, not REMOTE_ADDR.\n    \"\"\"\n    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')\n    if x_forwarded_for:\n        # Can contain multiple IPs like \"client, proxy1, proxy2\"\n        # We want the first one (the real client)\n        ip = x_forwarded_for.split(',')[0].strip()\n    else:\n        ip = request.META.get('REMOTE_ADDR')\n    return ip"
+    },
+    "is_office_ip": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\utils.py",
+        "start_line": 23,
+        "end_line": 45,
+        "code": "def is_office_ip(ip_address):\n    \"\"\"\n    Check if an IP address is in the allowed office network.\n    \n    Supports:\n    - Exact match: '192.168.1.100'\n    - /24 subnet: '192.168.1.0/24' matches any 192.168.1.x\n    \n    IPs are defined in settings.ALLOWED_OFFICE_IPS\n    \"\"\"\n    allowed_ips = getattr(settings, 'ALLOWED_OFFICE_IPS', [])\n\n    for allowed in allowed_ips:\n        if '/' in allowed:\n            # Subnet check: compare everything before the last dot\n            network_prefix = allowed.rsplit('.', 1)[0]\n            if ip_address.startswith(network_prefix):\n                return True\n        else:\n            if ip_address == allowed:\n                return True\n\n    return False"
+    },
+    "calculate_distance_meters": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\utils.py",
+        "start_line": 48,
+        "end_line": 73,
+        "code": "def calculate_distance_meters(lat1, lon1, lat2, lon2):\n    \"\"\"\n    Calculate the distance between two GPS coordinates in meters.\n    Uses the Haversine formula (accounts for Earth's curvature).\n    \n    Arguments:\n        lat1, lon1: First point (float)\n        lat2, lon2: Second point (float)\n    \n    Returns:\n        Distance in meters (float)\n    \"\"\"\n    R = 6371000  # Earth's radius in meters\n\n    phi1 = math.radians(lat1)\n    phi2 = math.radians(lat2)\n    d_phi = math.radians(lat2 - lat1)\n    d_lambda = math.radians(lon2 - lon1)\n\n    a = (\n        math.sin(d_phi / 2) ** 2\n        + math.cos(phi1) * math.cos(phi2) * math.sin(d_lambda / 2) ** 2\n    )\n    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))\n\n    return R * c"
+    },
+    "is_within_office_radius": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\utils.py",
+        "start_line": 76,
+        "end_line": 95,
+        "code": "def is_within_office_radius(latitude, longitude):\n    \"\"\"\n    Return True if the given GPS coordinates are within\n    the allowed office radius (defined in settings).\n    \n    If GPS settings are not configured, returns True (skips check).\n    \"\"\"\n    office_lat = getattr(settings, 'OFFICE_LATITUDE', None)\n    office_lon = getattr(settings, 'OFFICE_LONGITUDE', None)\n    radius = getattr(settings, 'OFFICE_RADIUS_METERS', 100)\n\n    # If office GPS not configured, skip the check\n    if office_lat is None or office_lon is None:\n        return True\n\n    distance = calculate_distance_meters(\n        float(latitude), float(longitude),\n        float(office_lat), float(office_lon)\n    )\n    return distance <= radius"
+    },
+    "get_device_info": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\utils.py",
+        "start_line": 98,
+        "end_line": 106,
+        "code": "def get_device_info(request):\n    \"\"\"\n    Extract browser and OS info from the HTTP User-Agent header.\n    Stored for audit purposes so admin can see what device was used.\n    \n    Example output:\n        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0...'\n    \"\"\"\n    return request.META.get('HTTP_USER_AGENT', 'Unknown device')"
+    },
+    "dashboard_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\views.py",
+        "start_line": 13,
+        "end_line": 41,
+        "code": "def dashboard_view(request):\n    \"\"\"\n    Main page after login.\n    Shows today's check-in status and last 7 days of attendance.\n    \n    @login_required means: if user is NOT logged in,\n    Django automatically redirects them to the login page.\n    \"\"\"\n    today = timezone.localdate()\n\n    # Try to find today's attendance record\n    try:\n        today_record = AttendanceRecord.objects.get(\n            employee=request.user,\n            date=today\n        )\n    except AttendanceRecord.DoesNotExist:\n        today_record = None  # No check-in yet today\n\n    # Get last 7 attendance entries\n    recent_records = AttendanceRecord.objects.filter(\n        employee=request.user\n    ).order_by('-date')[:7]\n\n    return render(request, 'attendance/dashboard.html', {\n        'today_record': today_record,\n        'recent_records': recent_records,\n        'today': today,\n    })"
+    },
+    "check_in_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\views.py",
+        "start_line": 45,
+        "end_line": 130,
+        "code": "def check_in_view(request):\n    \"\"\"\n    Handle the Check In button.\n    \n    Security checks (in order):\n    1. Must be a POST request (not just visiting the URL)\n    2. IP must be from the office network\n    3. GPS must be within office radius (if provided by browser)\n    4. Cannot check in twice in one day\n    \"\"\"\n    if request.method != 'POST':\n        return redirect('attendance:dashboard')\n\n    today = timezone.localdate()\n    now = timezone.localtime().time()\n    ip = get_client_ip(request)\n\n    # --- Security Check 1: Office IP ---\n    if not is_office_ip(ip):\n        messages.error(\n            request,\n            f'Check-in is only allowed from the office network. '\n            f'Your current IP address ({ip}) is not authorised.'\n        )\n        return redirect('attendance:dashboard')\n\n    # --- Security Check 2: Already checked in today? ---\n    existing = AttendanceRecord.objects.filter(\n        employee=request.user,\n        date=today\n    ).first()\n\n    if existing and existing.is_checked_in:\n        messages.warning(request, 'You have already checked in today.')\n        return redirect('attendance:dashboard')\n\n    # --- Security Check 3: GPS location (optional) ---\n    latitude = request.POST.get('latitude')\n    longitude = request.POST.get('longitude')\n\n    if latitude and longitude:\n        try:\n            if not is_within_office_radius(float(latitude), float(longitude)):\n                messages.error(\n                    request,\n                    'Your GPS location is outside the office area. '\n                    'Please check in from the office.'\n                )\n                return redirect('attendance:dashboard')\n        except (ValueError, TypeError):\n            pass  # Invalid GPS data \u2014 skip the GPS check\n\n    # --- All checks passed: save the check-in ---\n    record, created = AttendanceRecord.objects.get_or_create(\n        employee=request.user,\n        date=today\n    )\n    record.check_in_time = now\n    record.ip_address = ip\n    record.device_info = get_device_info(request)\n    if latitude and longitude:\n        record.gps_latitude = latitude\n        record.gps_longitude = longitude\n\n    # Mark as late if check-in is after 10:00 AM\n    check_in_start = time_type(9, 30)   # office opens 9:30 AM\n    late_threshold = time_type(10, 0)   # late after 10:00 AM\n\n    # Block check-in before 9:30 AM\n    if now < check_in_start:\n        messages.error(request, 'Check-in is not allowed before 9:30 AM.')\n        return redirect('attendance:dashboard')\n\n    # Mark as late if after 10:00 AM\n    if now > late_threshold:\n        record.attendance_status = 'late'\n    else:\n        record.attendance_status = 'present'\n\n    record.save()\n    \n    messages.success(\n        request,\n        f'Checked in successfully at {now.strftime(\"%H:%M\")}.'\n    )\n    return redirect('attendance:dashboard')"
+    },
+    "check_out_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\views.py",
+        "start_line": 134,
+        "end_line": 192,
+        "code": "def check_out_view(request):\n    \"\"\"\n    Handle the Check Out button.\n    \n    Validation:\n    - Must have checked in today first\n    - Cannot check out twice\n    - Session must be at least 5 minutes long (prevents accidental instant checkout)\n    \"\"\"\n    if request.method != 'POST':\n        return redirect('attendance:dashboard')\n\n    today = timezone.localdate()\n    now = timezone.localtime().time()\n\n    # Find today's record\n    try:\n        record = AttendanceRecord.objects.get(\n            employee=request.user,\n            date=today\n        )\n    except AttendanceRecord.DoesNotExist:\n        messages.error(request, 'You have not checked in today. Cannot check out.')\n        return redirect('attendance:dashboard')\n\n    # Prevent double checkout\n    if record.is_checked_out:\n        messages.warning(request, 'You have already checked out today.')\n        return redirect('attendance:dashboard')\n\n    # Prevent checkout without check-in\n    if not record.is_checked_in:\n        messages.error(request, 'You must check in before checking out.')\n        return redirect('attendance:dashboard')\n\n    # Prevent unrealistically short sessions (< 5 minutes)\n    check_in_dt = datetime.combine(date.today(), record.check_in_time)\n    check_out_dt = datetime.combine(date.today(), now)\n    session_minutes = (check_out_dt - check_in_dt).total_seconds() / 60\n\n    if session_minutes < 5:\n        messages.error(\n            request,\n            f'Session too short ({int(session_minutes)} minutes). '\n            f'Minimum 5 minutes required before checkout.'\n        )\n        return redirect('attendance:dashboard')\n\n    # Save checkout and calculate hours\n    record.check_out_time = now\n    record.total_working_hours = record.calculate_working_hours()\n    record.save()\n\n    messages.success(\n        request,\n        f'Checked out at {now.strftime(\"%H:%M\")}. '\n        f'Total working time: {record.total_working_hours} hours.'\n    )\n    return redirect('attendance:dashboard')"
+    },
+    "attendance_history_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\views.py",
+        "start_line": 196,
+        "end_line": 217,
+        "code": "def attendance_history_view(request):\n    \"\"\"\n    Employee's personal attendance history.\n    Can be filtered by month using ?month=2024-01 in the URL.\n    \"\"\"\n    records = AttendanceRecord.objects.filter(employee=request.user)\n    month = request.GET.get('month', '')\n    if month:\n        try:\n            year, m = month.split('-')\n            records = records.filter(\n                date__year=int(year),\n                date__month=int(m)\n            )\n        except (ValueError, AttributeError):\n            pass  # Ignore invalid month format\n\n    records = records.order_by('-date')\n    return render(request, 'attendance/history.html', {\n        'records': records,\n        'month': month,\n    })"
+    },
+    "admin_attendance_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\views.py",
+        "start_line": 221,
+        "end_line": 266,
+        "code": "def admin_attendance_view(request):\n    \"\"\"\n    Admin-only: see all employees' attendance records.\n    Supports search by employee name/ID, date, or month.\n    \"\"\"\n    if not request.user.is_admin_role:\n        messages.error(request, 'Admin access required.')\n        return redirect('attendance:dashboard')\n\n    records = AttendanceRecord.objects.select_related('employee').all()\n\n    # --- Filters ---\n    employee_search = request.GET.get('employee', '').strip()\n    date_filter = request.GET.get('date', '').strip()\n    month_filter = request.GET.get('month', '').strip()\n\n    if employee_search:\n        records = records.filter(\n            employee__first_name__icontains=employee_search\n        ) | records.filter(\n            employee__last_name__icontains=employee_search\n        ) | records.filter(\n            employee__employee_id__icontains=employee_search\n        )\n\n    if date_filter:\n        records = records.filter(date=date_filter)\n\n    if month_filter:\n        try:\n            year, month = month_filter.split('-')\n            records = records.filter(\n                date__year=int(year),\n                date__month=int(month)\n            )\n        except (ValueError, AttributeError):\n            pass\n\n    records = records.order_by('-date')\n\n    return render(request, 'attendance/admin_attendance.html', {\n        'records': records,\n        'employee_search': employee_search,\n        'date_filter': date_filter,\n        'month_filter': month_filter,\n    })"
+    },
+    "format_hours": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\templatetags\\attendance_filters.py",
+        "start_line": 6,
+        "end_line": 28,
+        "code": "def format_hours(value):\n    \"\"\"\n    Converts decimal hours to human readable format.\n    0.75 -> '45 min'\n    4.75 -> '4 hr 45 min'\n    4.0  -> '4 hr'\n    \"\"\"\n    if not value:\n        return '-'\n    \n    try:\n        total_minutes = round(float(value) * 60)\n        hours = total_minutes // 60\n        minutes = total_minutes % 60\n\n        if hours == 0:\n            return f'{minutes} min'\n        elif minutes == 0:\n            return f'{hours} hr'\n        else:\n            return f'{hours} hr {minutes} min'\n    except (ValueError, TypeError):\n        return '-'"
+    },
+    "HolidayAdmin": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\holidays\\admin.py",
+        "start_line": 6,
+        "end_line": 8,
+        "code": "class HolidayAdmin(admin.ModelAdmin):\n    list_display = ['name', 'date', 'description']\n    ordering = ['date']"
+    },
+    "HolidaysConfig": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\holidays\\apps.py",
+        "start_line": 4,
+        "end_line": 5,
+        "code": "class HolidaysConfig(AppConfig):\n    name = 'holidays'"
+    },
+    "HolidayForm": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\holidays\\forms.py",
+        "start_line": 4,
+        "end_line": 12,
+        "code": "class HolidayForm(forms.ModelForm):\n    class Meta:\n        model = Holiday\n        fields = ['name', 'date', 'description']\n        widgets = {\n            'name': forms.TextInput(attrs={'class': 'form-control'}),\n            'date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),\n            'description': forms.TextInput(attrs={'class': 'form-control'}),\n        }"
+    },
+    "Holiday": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\holidays\\models.py",
+        "start_line": 4,
+        "end_line": 13,
+        "code": "class Holiday(models.Model):\n    name = models.CharField(max_length=100)\n    date = models.DateField(unique=True)\n    description = models.TextField(blank=True)\n\n    class Meta:\n        ordering = ['date']\n\n    def __str__(self):\n        return f\"{self.name} - {self.date}\""
+    },
+    "holiday_list_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\holidays\\views.py",
+        "start_line": 9,
+        "end_line": 11,
+        "code": "def holiday_list_view(request):\n    holidays = Holiday.objects.all()\n    return render(request, 'holidays/holiday_list.html', {'holidays': holidays})"
+    },
+    "add_holiday_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\holidays\\views.py",
+        "start_line": 15,
+        "end_line": 27,
+        "code": "def add_holiday_view(request):\n    if not request.user.is_admin_role:\n        return redirect('attendance:dashboard')\n\n    if request.method == 'POST':\n        form = HolidayForm(request.POST)\n        if form.is_valid():\n            form.save()\n            messages.success(request, 'Holiday added successfully.')\n            return redirect('holidays:list')\n    else:\n        form = HolidayForm()\n    return render(request, 'holidays/add_holiday.html', {'form': form})"
+    },
+    "delete_holiday_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\holidays\\views.py",
+        "start_line": 31,
+        "end_line": 39,
+        "code": "def delete_holiday_view(request, holiday_id):\n    if not request.user.is_admin_role:\n        return redirect('attendance:dashboard')\n\n    holiday = get_object_or_404(Holiday, id=holiday_id)\n    if request.method == 'POST':\n        holiday.delete()\n        messages.success(request, 'Holiday deleted.')\n    return redirect('holidays:list')"
+    },
+    "LeaveRequestAdmin": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\admin.py",
+        "start_line": 6,
+        "end_line": 9,
+        "code": "class LeaveRequestAdmin(admin.ModelAdmin):\n    list_display = ['employee', 'leave_date', 'leave_type', 'status', 'submitted_at']\n    list_filter = ['status', 'leave_type']\n    search_fields = ['employee__first_name', 'employee__last_name']"
+    },
+    "LeaveBalanceAdmin": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\admin.py",
+        "start_line": 13,
+        "end_line": 15,
+        "code": "class LeaveBalanceAdmin(admin.ModelAdmin):\n    list_display = ['employee', 'year', 'sick_leave', 'casual_leave', 'annual_leave', 'emergency_leave']\n    search_fields = ['employee__first_name', 'employee__last_name']"
+    },
+    "LeaveManagementConfig": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\apps.py",
+        "start_line": 4,
+        "end_line": 5,
+        "code": "class LeaveManagementConfig(AppConfig):\n    name = 'leave_management'"
+    },
+    "LeaveRequestForm": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\forms.py",
+        "start_line": 5,
+        "end_line": 36,
+        "code": "class LeaveRequestForm(forms.ModelForm):\n    \"\"\"\n    Form for submitting a leave request.\n    \n    The employee fills in:\n    - leave_date: which day they want off\n    - leave_type: dropdown (sick, casual, annual, etc.)\n    - reason: short text\n    - note: optional longer explanation\n    \n    We do NOT include 'employee' or 'status' here because those\n    are set by the view, not chosen by the user.\n    \"\"\"\n\n    class Meta:\n        model = LeaveRequest\n        fields = ['leave_date', 'leave_type', 'reason', 'note']\n        widgets = {\n            'leave_date': forms.DateInput(attrs={\n                'type': 'date',\n                'min': timezone.localdate().strftime('%Y-%m-%d')\n            }),\n            'reason': forms.TextInput(attrs={'placeholder': 'Brief reason'}),\n            'note': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Optional details'}),\n        }\n\n    labels = {\n        'leave_date': 'Leave Date',\n        'leave_type': 'Leave Type',\n        'reason': 'Reason',\n        'note': 'Additional Note (optional)',\n    }"
+    },
+    "LeaveRequest": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py",
+        "start_line": 8,
+        "end_line": 56,
+        "code": "class LeaveRequest(models.Model):\n    STATUS_CHOICES = [\n        ('pending', 'Pending'),\n        ('approved', 'Approved'),\n        ('rejected', 'Rejected'),\n        ('auto_rejected', 'Auto-Rejected (less than 36 hrs notice)'),\n    ]\n\n    LEAVE_TYPE_CHOICES = [\n        ('sick', 'Sick Leave'),\n        ('casual', 'Casual Leave'),\n        ('annual', 'Annual Leave'),\n        ('emergency', 'Emergency Leave'),\n        ('other', 'Other'),\n    ]\n\n    employee = models.ForeignKey(\n        settings.AUTH_USER_MODEL,\n        on_delete=models.CASCADE,\n        related_name='leave_requests'\n    )\n    leave_date = models.DateField()\n    leave_type = models.CharField(max_length=20, choices=LEAVE_TYPE_CHOICES)\n    reason = models.CharField(max_length=200)\n    note = models.TextField(blank=True)\n    submitted_at = models.DateTimeField(auto_now_add=True)\n    status = models.CharField(\n        max_length=20,\n        choices=STATUS_CHOICES,\n        default='pending'\n    )\n    admin_comment = models.TextField(blank=True)\n\n    class Meta:\n        ordering = ['-submitted_at']\n\n    def __str__(self):\n        return f\"{self.employee} - {self.leave_date} ({self.status})\"\n\n    def hours_until_leave(self):\n        from datetime import datetime, time\n        leave_start = timezone.make_aware(\n            datetime.combine(self.leave_date, time.min)\n        )\n        delta = leave_start - timezone.now()\n        return delta.total_seconds() / 3600\n\n    def passes_36_hour_rule(self):\n        return self.hours_until_leave() >= 36"
+    },
+    "hours_until_leave": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py",
+        "start_line": 47,
+        "end_line": 53,
+        "code": "def hours_until_leave(self):\n        from datetime import datetime, time\n        leave_start = timezone.make_aware(\n            datetime.combine(self.leave_date, time.min)\n        )\n        delta = leave_start - timezone.now()\n        return delta.total_seconds() / 3600"
+    },
+    "passes_36_hour_rule": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py",
+        "start_line": 55,
+        "end_line": 56,
+        "code": "def passes_36_hour_rule(self):\n        return self.hours_until_leave() >= 36"
+    },
+    "LeaveBalance": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py",
+        "start_line": 59,
+        "end_line": 101,
+        "code": "class LeaveBalance(models.Model):\n    employee = models.OneToOneField(\n        settings.AUTH_USER_MODEL,\n        on_delete=models.CASCADE,\n        related_name='leave_balance'\n    )\n    year = models.IntegerField(default=2026)\n    sick_leave = models.IntegerField(default=12)\n    casual_leave = models.IntegerField(default=12)\n    annual_leave = models.IntegerField(default=15)\n    emergency_leave = models.IntegerField(default=5)\n    other_leave = models.IntegerField(default=3)\n\n    def __str__(self):\n        return f\"{self.employee.get_full_name()} - {self.year}\"\n\n    def get_used(self, leave_type):\n        return LeaveRequest.objects.filter(\n            employee=self.employee,\n            leave_type=leave_type,\n            status='approved',\n            leave_date__year=self.year\n        ).count()\n\n    def get_remaining(self, leave_type):\n        total = getattr(self, f'{leave_type}_leave')\n        return total - self.get_used(leave_type)\n\n    def get_summary(self):\n        types = ['sick', 'casual', 'annual', 'emergency', 'other']\n        summary = []\n        for t in types:\n            total = getattr(self, f'{t}_leave')\n            used = self.get_used(t)\n            remaining = total - used\n            summary.append({\n                'type': t,\n                'label': t.title(),\n                'total': total,\n                'used': used,\n                'remaining': remaining,\n            })\n        return summary"
+    },
+    "get_used": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py",
+        "start_line": 75,
+        "end_line": 81,
+        "code": "def get_used(self, leave_type):\n        return LeaveRequest.objects.filter(\n            employee=self.employee,\n            leave_type=leave_type,\n            status='approved',\n            leave_date__year=self.year\n        ).count()"
+    },
+    "get_remaining": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py",
+        "start_line": 83,
+        "end_line": 85,
+        "code": "def get_remaining(self, leave_type):\n        total = getattr(self, f'{leave_type}_leave')\n        return total - self.get_used(leave_type)"
+    },
+    "get_summary": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py",
+        "start_line": 87,
+        "end_line": 101,
+        "code": "def get_summary(self):\n        types = ['sick', 'casual', 'annual', 'emergency', 'other']\n        summary = []\n        for t in types:\n            total = getattr(self, f'{t}_leave')\n            used = self.get_used(t)\n            remaining = total - used\n            summary.append({\n                'type': t,\n                'label': t.title(),\n                'total': total,\n                'used': used,\n                'remaining': remaining,\n            })\n        return summary"
+    },
+    "create_leave_balance": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py",
+        "start_line": 105,
+        "end_line": 108,
+        "code": "def create_leave_balance(sender, instance, created, **kwargs):\n    \"\"\"Automatically create a LeaveBalance when a new employee is created.\"\"\"\n    if created:\n        LeaveBalance.objects.get_or_create(employee=instance)"
+    },
+    "submit_leave_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+        "start_line": 12,
+        "end_line": 64,
+        "code": "def submit_leave_view(request):\n    \"\"\"\n    Employee submits a new leave request.\n\n    What happens:\n    1. Employee fills out the form and clicks Submit\n    2. We check the 36-hour rule:\n       - If less than 36 hours until leave date \u2192 auto-reject immediately\n       - If 36+ hours \u2192 save as 'pending' and notify admin by email\n    3. Redirect to the employee's leave list\n    \"\"\"\n    if request.method == 'POST':\n        form = LeaveRequestForm(request.POST)\n        if form.is_valid():\n            # Save form data but don't commit to database yet\n            # We need to add the employee field first\n            leave_request = form.save(commit=False)\n            leave_request.employee = request.user\n\n            # Check the 36-hour rule (exception for sick and emergency leave)\n            exempt_types = ['sick', 'emergency']\n            if leave_request.leave_type not in exempt_types and not leave_request.passes_36_hour_rule():\n                # Automatically reject \u2014 not enough notice\n                leave_request.status = 'auto_rejected'\n                leave_request.admin_comment = (\n                    'Automatically rejected: request was submitted less than '\n                    '36 hours before the leave date.'\n                )\n                leave_request.save()\n                messages.error(\n                    request,\n                    f'Your leave request for {leave_request.leave_date} was '\n                    f'automatically rejected. Leave must be requested at least '\n                    f'36 hours in advance.'\n                )\n            else:\n                # Valid request \u2014 save and notify admin\n                leave_request.save()\n                _send_leave_email_to_admin(leave_request)\n                messages.success(\n                    request,\n                    f'Leave request for {leave_request.leave_date} submitted '\n                    f'successfully. You will be notified once it is reviewed.'\n                )\n\n            return redirect('leave_management:my_leaves')\n    else:\n        form = LeaveRequestForm()\n\n    return render(request, 'leave_management/submit_leave.html', {\n    'form': form,\n    'today_date': timezone.localdate()\n    })"
+    },
+    "_send_leave_email_to_admin": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+        "start_line": 66,
+        "end_line": 109,
+        "code": "def _send_leave_email_to_admin(leave_request):\n    \"\"\"\n    Send an email to the admin when a leave request is submitted.\n\n    The underscore prefix (_) is a Python convention meaning\n    this is a private helper function \u2014 not a view.\n\n    In development, emails print to the terminal because\n    EMAIL_BACKEND = console in settings.py.\n    In production, swap to real SMTP settings.\n    \"\"\"\n    employee = leave_request.employee\n\n    subject = (\n        f'Leave Request: {employee.get_full_name()} '\n        f'on {leave_request.leave_date}'\n    )\n\n    message = f\"\"\"\nA new leave request has been submitted.\n\nEmployee:     {employee.get_full_name()}\nEmployee ID:  {employee.employee_id}\nDepartment:   {employee.department}\nLeave Date:   {leave_request.leave_date}\nLeave Type:   {leave_request.get_leave_type_display()}\nReason:       {leave_request.reason}\nNote:         {leave_request.note or 'None'}\nSubmitted At: {leave_request.submitted_at.strftime('%Y-%m-%d %H:%M')}\n\nPlease log in to the admin dashboard to approve or reject this request.\nhttp://127.0.0.1:8000/leave/admin/leaves/\n    \"\"\"\n\n    try:\n        send_mail(\n            subject=subject,\n            message=message,\n            from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'noreply@company.com'),\n            recipient_list=[getattr(settings, 'ADMIN_EMAIL', 'admin@company.com')],\n            fail_silently=True,  # Don't crash the app if email fails\n        )\n    except Exception:\n        pass"
+    },
+    "_send_status_notification_email": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+        "start_line": 112,
+        "end_line": 148,
+        "code": "def _send_status_notification_email(leave_request):\n    \"\"\"\n    Send email to employee when their leave is approved or rejected.\n    \"\"\"\n    employee = leave_request.employee\n    status = leave_request.get_status_display()\n    \n    subject = f'Leave Request {status} - {leave_request.leave_date}'\n    \n    message = f\"\"\"\nDear {employee.get_full_name()},\n\nYour leave request has been {status.lower()}.\n\nDetails:\n  Leave Date   : {leave_request.leave_date}\n  Leave Type   : {leave_request.get_leave_type_display()}\n  Reason       : {leave_request.reason}\n  Status       : {status}\n  Admin Comment: {leave_request.admin_comment or 'No comment provided'}\n\n{\"You are approved for leave on this date.\" if leave_request.status == 'approved' else \"Please contact your manager if you have questions.\"}\n\nRegards,\nHR / Admin Team\n    \"\"\"\n\n    try:\n        send_mail(\n            subject=subject,\n            message=message,\n            from_email=settings.DEFAULT_FROM_EMAIL,\n            recipient_list=[employee.email],\n            fail_silently=True,\n        )\n    except Exception:\n        pass"
+    },
+    "my_leaves_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+        "start_line": 151,
+        "end_line": 157,
+        "code": "def my_leaves_view(request):\n    \"\"\"\n    Employee sees their own leave request history.\n    Shows all requests sorted by most recent first.\n    \"\"\"\n    leaves = LeaveRequest.objects.filter(employee=request.user)\n    return render(request, 'leave_management/my_leaves.html', {'leaves': leaves})"
+    },
+    "admin_leaves_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+        "start_line": 161,
+        "end_line": 181,
+        "code": "def admin_leaves_view(request):\n    \"\"\"\n    Admin-only: see all leave requests from all employees.\n    Can filter by status: pending / approved / rejected.\n    \"\"\"\n    if not request.user.is_admin_role:\n        messages.error(request, 'Admin access required.')\n        return redirect('attendance:dashboard')\n\n    leaves = LeaveRequest.objects.select_related('employee').all()\n\n    # Optional filter by status\n    status_filter = request.GET.get('status', '').strip()\n    if status_filter:\n        leaves = leaves.filter(status=status_filter)\n\n    return render(request, 'leave_management/admin_leaves.html', {\n        'leaves': leaves,\n        'status_filter': status_filter,\n        'status_choices': LeaveRequest.STATUS_CHOICES,\n    })"
+    },
+    "approve_leave_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+        "start_line": 185,
+        "end_line": 212,
+        "code": "def approve_leave_view(request, leave_id):\n    \"\"\"\n    Admin approves a specific leave request.\n    \n    GET: Show confirmation page\n    POST: Save approval and redirect back to leave list\n    \"\"\"\n    if not request.user.is_admin_role:\n        return redirect('attendance:dashboard')\n\n    leave = get_object_or_404(LeaveRequest, id=leave_id)\n\n    if request.method == 'POST':\n        comment = request.POST.get('comment', '').strip()\n        leave.status = 'approved'\n        leave.admin_comment = comment\n        leave.save()\n        _send_status_notification_email(leave)\n        messages.success(\n            request,\n            f'Leave approved for {leave.employee.get_full_name()} on {leave.leave_date}.'\n        )\n        return redirect('leave_management:admin_leaves')\n\n    return render(request, 'leave_management/approve_reject.html', {\n        'leave': leave,\n        'action': 'approve',\n    })"
+    },
+    "reject_leave_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+        "start_line": 216,
+        "end_line": 243,
+        "code": "def reject_leave_view(request, leave_id):\n    \"\"\"\n    Admin rejects a specific leave request.\n    \n    GET: Show confirmation page\n    POST: Save rejection and redirect back to leave list\n    \"\"\"\n    if not request.user.is_admin_role:\n        return redirect('attendance:dashboard')\n\n    leave = get_object_or_404(LeaveRequest, id=leave_id)\n\n    if request.method == 'POST':\n        comment = request.POST.get('comment', '').strip()\n        leave.status = 'rejected'\n        leave.admin_comment = comment\n        leave.save()\n        _send_status_notification_email(leave)\n        messages.warning(\n            request,\n            f'Leave rejected for {leave.employee.get_full_name()} on {leave.leave_date}.'\n        )\n        return redirect('leave_management:admin_leaves')\n\n    return render(request, 'leave_management/approve_reject.html', {\n        'leave': leave,\n        'action': 'reject',\n    })"
+    },
+    "delete_leave_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+        "start_line": 246,
+        "end_line": 254,
+        "code": "def delete_leave_view(request, leave_id):\n    if not request.user.is_admin_role:\n        return redirect('attendance:dashboard')\n\n    leave = get_object_or_404(LeaveRequest, id=leave_id)\n    if request.method == 'POST':\n        leave.delete()\n        messages.success(request, 'Leave request deleted.')\n    return redirect('leave_management:admin_leaves')"
+    },
+    "leave_balance_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+        "start_line": 258,
+        "end_line": 265,
+        "code": "def leave_balance_view(request):\n    from .models import LeaveBalance\n    balance, created = LeaveBalance.objects.get_or_create(employee=request.user)\n    summary = balance.get_summary()\n    return render(request, 'leave_management/leave_balance.html', {\n        'balance': balance,\n        'summary': summary,\n    })"
+    },
+    "admin_leave_balance_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+        "start_line": 269,
+        "end_line": 283,
+        "code": "def admin_leave_balance_view(request):\n    if not request.user.is_admin_role:\n        return redirect('attendance:dashboard')\n\n    from .models import LeaveBalance\n    from accounts.models import Employee\n    employees = Employee.objects.filter(role='employee')\n    data = []\n    for emp in employees:\n        balance, _ = LeaveBalance.objects.get_or_create(employee=emp)\n        data.append({\n            'employee': emp,\n            'summary': balance.get_summary(),\n        })\n    return render(request, 'leave_management/admin_leave_balance.html', {'data': data})"
+    },
+    "find_central_apps": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\architecture_advisor.py",
+        "start_line": 26,
+        "end_line": 54,
+        "code": "def find_central_apps():\n\n    scores = {}\n\n\n    for source, targets in dependencies.items():\n\n        scores[source] = (\n            scores.get(source, 0)\n            + len(targets)\n        )\n\n\n        for target in targets:\n\n            scores[target] = (\n                scores.get(target, 0)\n                + 1\n            )\n\n\n    ranked = sorted(\n        scores.items(),\n        key=lambda x: x[1],\n        reverse=True\n    )\n\n\n    return ranked"
+    },
+    "most_connected_models": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\architecture_advisor.py",
+        "start_line": 60,
+        "end_line": 79,
+        "code": "def most_connected_models():\n\n    model_scores = {}\n\n\n    for model, relation_list in relationships.items():\n\n        model_scores[model] = len(\n            relation_list\n        )\n\n\n    ranked = sorted(\n        model_scores.items(),\n        key=lambda x: x[1],\n        reverse=True\n    )\n\n\n    return ranked"
+    },
+    "find_isolated_apps": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\architecture_advisor.py",
+        "start_line": 86,
+        "end_line": 110,
+        "code": "def find_isolated_apps():\n\n    connected = set()\n\n\n    for source, targets in dependencies.items():\n\n        connected.add(source)\n\n        for target in targets:\n\n            connected.add(target)\n\n\n    isolated = []\n\n\n    for app in apps:\n\n        if app not in connected:\n\n            isolated.append(app)\n\n\n    return isolated"
+    },
+    "ArchitectureEngine": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\architecture_engine.py",
+        "start_line": 6,
+        "end_line": 164,
+        "code": "class ArchitectureEngine:\n\n    \n    # INITIALIZATION\n    \n\n    def __init__(self):\n\n        self.snapshot_file = Path(\n            \"snapshots/snapshot.json\"\n        )\n\n        self.snapshot = {}\n\n        self.apps = []\n\n        self.models = {}\n\n        self.dependencies = {}\n\n        self.graph = nx.DiGraph()\n\n        self.load_snapshot()\n\n        self.build_graph()\n\n\n    \n    # LOAD SNAPSHOT\n    \n\n    def load_snapshot(self):\n\n        with open(\n            self.snapshot_file,\n            \"r\",\n            encoding=\"utf-8\"\n        ) as f:\n\n            self.snapshot = json.load(f)\n\n\n        self.apps = self.snapshot.get(\n            \"apps\",\n            []\n        )\n\n        self.models = self.snapshot.get(\n            \"models\",\n            {}\n        )\n\n        self.dependencies = self.snapshot.get(\n            \"dependencies\",\n            {}\n        )\n\n\n    \n    # BUILD GRAPH\n\n\n    def build_graph(self):\n\n        for source, targets in self.dependencies.items():\n\n            for target in targets:\n\n                self.graph.add_edge(\n                    source,\n                    target\n                )\n\n\n    \n    # CENTRAL APPS\n    \n\n    def get_central_apps(self):\n\n        scores = {}\n\n\n        for source, targets in self.dependencies.items():\n\n            scores[source] = (\n                scores.get(source, 0)\n                + len(targets)\n            )\n\n\n            for target in targets:\n\n                scores[target] = (\n                    scores.get(target, 0)\n                    + 1\n                )\n\n\n        ranked = sorted(\n            scores.items(),\n            key=lambda x: x[1],\n            reverse=True\n        )\n\n\n        return ranked\n\n\n    \n    # IMPACT ANALYSIS\n    \n\n    def analyze_impact(self, node):\n\n        try:\n\n            return nx.descendants(\n                self.graph,\n                node\n            )\n\n        except nx.NetworkXError:\n\n            return set()\n\n\n    \n    # WORKFLOW ANALYSIS\n    \n\n    def find_workflow(self, keyword):\n\n        keyword = keyword.lower()\n\n        workflows = []\n\n\n        for app in self.graph.nodes:\n\n            if keyword in app.lower():\n\n                descendants = nx.descendants(\n                    self.graph,\n                    app\n                )\n\n\n                workflow = [app]\n\n                workflow.extend(\n                    sorted(descendants)\n                )\n\n\n                workflows.append(workflow)\n\n\n        return workflows"
+    },
+    "load_snapshot": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\architecture_engine.py",
+        "start_line": 37,
+        "end_line": 61,
+        "code": "def load_snapshot(self):\n\n        with open(\n            self.snapshot_file,\n            \"r\",\n            encoding=\"utf-8\"\n        ) as f:\n\n            self.snapshot = json.load(f)\n\n\n        self.apps = self.snapshot.get(\n            \"apps\",\n            []\n        )\n\n        self.models = self.snapshot.get(\n            \"models\",\n            {}\n        )\n\n        self.dependencies = self.snapshot.get(\n            \"dependencies\",\n            {}\n        )"
+    },
+    "build_graph": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\architecture_engine.py",
+        "start_line": 68,
+        "end_line": 77,
+        "code": "def build_graph(self):\n\n        for source, targets in self.dependencies.items():\n\n            for target in targets:\n\n                self.graph.add_edge(\n                    source,\n                    target\n                )"
+    },
+    "get_central_apps": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\architecture_engine.py",
+        "start_line": 84,
+        "end_line": 112,
+        "code": "def get_central_apps(self):\n\n        scores = {}\n\n\n        for source, targets in self.dependencies.items():\n\n            scores[source] = (\n                scores.get(source, 0)\n                + len(targets)\n            )\n\n\n            for target in targets:\n\n                scores[target] = (\n                    scores.get(target, 0)\n                    + 1\n                )\n\n\n        ranked = sorted(\n            scores.items(),\n            key=lambda x: x[1],\n            reverse=True\n        )\n\n\n        return ranked"
+    },
+    "analyze_impact": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\old_impact_analyzer.py",
+        "start_line": 55,
+        "end_line": 68,
+        "code": "def analyze_impact(node_name):\n\n    try:\n\n        affected = nx.descendants(\n            graph,\n            node_name\n        )\n\n        return affected\n\n    except nx.NetworkXError:\n\n        return None"
+    },
+    "find_workflow": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\old_workflow_mapper.py",
+        "start_line": 39,
+        "end_line": 94,
+        "code": "def find_workflow(keyword):\n\n    keyword = keyword.lower()\n\n\n    matching_apps = []\n\n\n    # MATCH APPS\n\n    for app in graph.nodes:\n\n        if keyword in app.lower():\n\n            matching_apps.append(app)\n\n\n    # MATCH MODELS\n\n    for app, model_list in models.items():\n\n        for model in model_list:\n\n            if keyword in model.lower():\n\n                matching_apps.append(app)\n\n\n    matching_apps = list(set(matching_apps))\n\n\n    # BUILD WORKFLOW CHAINS\n\n    workflows = []\n\n\n    for app in matching_apps:\n\n        descendants = nx.descendants(\n            graph,\n            app\n        )\n\n\n        if descendants:\n\n            workflow = [app]\n\n            workflow.extend(\n                sorted(descendants)\n            )\n\n            workflows.append(workflow)\n\n\n    return workflows"
+    },
+    "CodeChunkVisitor": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\code_chunk_mapper.py",
+        "start_line": 47,
+        "end_line": 135,
+        "code": "class CodeChunkVisitor(ast.NodeVisitor):\n\n\n    def __init__(\n\n        self,\n\n        source_code,\n\n        file_path\n\n    ):\n\n\n        self.source_code = source_code\n\n        self.file_path = str(file_path)\n\n\n    \n    # FUNCTION CHUNKS\n    \n\n    def visit_FunctionDef(self, node):\n\n\n        function_name = node.name\n\n\n        chunk = ast.get_source_segment(\n\n            self.source_code,\n\n            node\n\n        )\n\n\n        code_chunks[function_name] = {\n\n            \"type\": \"function\",\n\n            \"file\": self.file_path,\n\n            \"start_line\": node.lineno,\n\n            \"end_line\": node.end_lineno,\n\n            \"code\": chunk\n        }\n\n\n        self.generic_visit(node)\n\n\n    \n    # CLASS CHUNKS\n    \n\n    def visit_ClassDef(self, node):\n\n\n        class_name = node.name\n\n\n        chunk = ast.get_source_segment(\n\n            self.source_code,\n\n            node\n\n        )\n\n\n        code_chunks[class_name] = {\n\n            \"type\": \"class\",\n\n            \"file\": self.file_path,\n\n            \"start_line\": node.lineno,\n\n            \"end_line\": node.end_lineno,\n\n            \"code\": chunk\n        }\n\n\n        self.generic_visit(node)"
+    },
+    "visit_FunctionDef": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\call_graph_mapper.py",
+        "start_line": 77,
+        "end_line": 99,
+        "code": "def visit_FunctionDef(self, node):\n\n        previous_function = (\n            self.current_function\n        )\n\n\n        self.current_function = node.name\n\n\n        if self.current_function not in call_graph:\n\n            call_graph[\n                self.current_function\n            ] = []\n\n\n        self.generic_visit(node)\n\n\n        self.current_function = (\n            previous_function\n        )"
+    },
+    "visit_ClassDef": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\code_chunk_mapper.py",
+        "start_line": 106,
+        "end_line": 135,
+        "code": "def visit_ClassDef(self, node):\n\n\n        class_name = node.name\n\n\n        chunk = ast.get_source_segment(\n\n            self.source_code,\n\n            node\n\n        )\n\n\n        code_chunks[class_name] = {\n\n            \"type\": \"class\",\n\n            \"file\": self.file_path,\n\n            \"start_line\": node.lineno,\n\n            \"end_line\": node.end_lineno,\n\n            \"code\": chunk\n        }\n\n\n        self.generic_visit(node)"
+    },
+    "get_model_functions": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\context_retriever.py",
+        "start_line": 83,
+        "end_line": 89,
+        "code": "def get_model_functions(model_name):\n\n\n    return reverse_model_usage.get(\n        model_name,\n        []\n    )"
+    },
+    "get_workflow": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\context_retriever.py",
+        "start_line": 94,
+        "end_line": 151,
+        "code": "def get_workflow(\n\n\n    node,\n\n    visited=None,\n\n    depth=0,\n\n    max_depth=3\n):\n\n\n    if visited is None:\n\n        visited = set()\n\n\n    if depth > max_depth:\n\n        return []\n\n\n    if node in visited:\n\n        return []\n\n\n    visited.add(node)\n\n\n    workflow = [node]\n\n\n    children = call_graph.get(\n        node,\n        []\n    )\n\n\n    for child in children:\n\n        workflow.extend(\n\n            get_workflow(\n\n                child,\n\n                visited,\n\n                depth + 1,\n\n                max_depth\n            )\n        )\n\n\n    return workflow"
+    },
+    "get_impact": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\context_retriever.py",
+        "start_line": 158,
+        "end_line": 237,
+        "code": "def get_impact(\n\n\n    node,\n\n    visited=None,\n\n    depth=0,\n\n    max_depth=3\n):\n\n\n    if visited is None:\n\n        visited = set()\n\n\n    if depth > max_depth:\n\n        return []\n\n\n    if node in visited:\n\n        return []\n\n\n    visited.add(node)\n\n\n    impact = [node]\n\n\n    parents = reverse_graph.get(\n        node,\n        []\n    )\n\n\n    for parent in parents:\n\n        impact.extend(\n\n            get_impact(\n\n                parent,\n\n                visited,\n\n                depth + 1,\n\n                max_depth\n            )\n        )\n\n\n    return impact\n\n\n    # MODEL FUNCTIONS\n\n\n    model_functions = get_model_functions(\n        node\n    )\n\n\n    print(\"\\nFUNCTIONS USING MODEL:\\n\")\n\n\n    if model_functions:\n\n        for function in model_functions:\n\n            print(f\"- {function}\")\n\n    else:\n\n        print(\"- None found\")"
+    },
+    "find_related_apps": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\context_retriever.py",
+        "start_line": 242,
+        "end_line": 255,
+        "code": "def find_related_apps(node):\n\n\n    related = []\n\n\n    for app, app_models in models.items():\n\n        if node in app_models:\n\n            related.append(app)\n\n\n    return related"
+    },
+    "get_dependencies": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\context_retriever.py",
+        "start_line": 262,
+        "end_line": 276,
+        "code": "def get_dependencies(apps):\n\n\n    results = {}\n\n\n    for app in apps:\n\n        results[app] = dependencies.get(\n            app,\n            []\n        )\n\n\n    return results"
+    },
+    "retrieve_context": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\old_context_retriever.py",
+        "start_line": 44,
+        "end_line": 90,
+        "code": "def retrieve_context(keyword):\n\n    keyword = keyword.lower()\n\n    matched_files = []\n\n\n    for file_path in python_files:\n\n        full_path = PROJECT_ROOT / file_path\n\n\n        try:\n\n            with open(\n                full_path,\n                \"r\",\n                encoding=\"utf-8\"\n            ) as f:\n\n                content = f.read().lower()\n\n\n            score = content.count(keyword)\n\n\n            if score > 0:\n\n                matched_files.append({\n\n                    \"file\": file_path,\n                    \"score\": score\n                })\n\n\n        except Exception:\n\n            continue\n\n\n    matched_files.sort(\n        key=lambda x: x[\"score\"],\n        reverse=True\n    )\n\n\n    return matched_files"
+    },
+    "analyze_feature": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\feature_analyzer.py",
+        "start_line": 26,
+        "end_line": 79,
+        "code": "def analyze_feature(feature_name):\n\n    feature_name = feature_name.lower()\n\n\n    matched_apps = []\n    matched_models = []\n    connected_apps = set()\n\n# search apps\n\n    for app in apps:\n\n        if feature_name in app.lower():\n\n            matched_apps.append(app)\n\n\n    # search models\n\n    for app, model_list in models.items():\n\n        for model in model_list:\n\n            if feature_name in model.lower():\n\n                matched_models.append(model)\n\n                connected_apps.add(app)\n\n\n    #  FIND CONNECTED DEPENDENCIES\n\n    for source, targets in dependencies.items():\n\n        if source in matched_apps:\n\n            for target in targets:\n\n                connected_apps.add(target)\n\n\n        for target in targets:\n\n            if target in matched_apps:\n\n                connected_apps.add(source)\n\n\n    return {\n        \"apps\": matched_apps,\n        \"models\": matched_models,\n        \"connected_apps\": list(connected_apps)\n    }"
+    },
+    "normalize_text": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\retrieval_engine.py",
+        "start_line": 30,
+        "end_line": 33,
+        "code": "def normalize_text(text):\n\n\n    return text.lower().split()"
+    },
+    "lexical_score": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py",
+        "start_line": 81,
+        "end_line": 101,
+        "code": "def lexical_score(\n\n\n    query_words,\n\n    search_words\n):\n\n\n    score = 0\n\n\n    for word in query_words:\n\n\n        if word in search_words:\n\n            score += 1\n\n\n    return score"
+    },
+    "cosine_similarity": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\sementic_retriever.py",
+        "start_line": 43,
+        "end_line": 74,
+        "code": "def cosine_similarity(\n\n\n    vector_a,\n\n    vector_b\n):\n\n\n    vector_a = np.array(vector_a)\n\n    vector_b = np.array(vector_b)\n\n\n    numerator = np.dot(\n        vector_a,\n        vector_b\n    )\n\n\n    denominator = (\n\n        np.linalg.norm(vector_a)\n\n        *\n\n        np.linalg.norm(vector_b)\n\n    )\n\n\n    return numerator / denominator"
+    },
+    "graph_boost": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py",
+        "start_line": 146,
+        "end_line": 186,
+        "code": "def graph_boost(\n\n\n    query_words,\n\n    chunk\n):\n\n\n    boost = 0\n\n\n    \n    # RELATED MODELS\n    \n\n    for model_name in chunk[\n        \"related_models\"\n    ]:\n\n\n        if model_name.lower() in query_words:\n\n            boost += 2\n\n\n    \n    # RELATED FUNCTIONS\n    \n\n    for function_name in chunk[\n        \"related_functions\"\n    ]:\n\n\n        if function_name.lower() in query_words:\n\n            boost += 1\n\n\n    return boost"
+    },
+    "hybrid_search": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py",
+        "start_line": 193,
+        "end_line": 310,
+        "code": "def hybrid_search(\n\n\n    query,\n\n    top_k=5\n):\n\n\n    query_words = normalize_text(\n        query\n    )\n\n\n   \n    # QUERY EMBEDDING\n\n\n    query_embedding = model.encode(\n        query\n    )\n\n\n    results = []\n    # SCORE EACH CHUNK\n\n\n    for chunk in indexed_chunks:\n\n\n\n        # LEXICAL\n\n        search_words = normalize_text(\n\n            chunk[\"search_text\"]\n\n        )\n\n\n        lexical = lexical_score(\n\n            query_words,\n\n            search_words\n        )\n\n\n        \n        # SEMANTIC\n\n\n        chunk_embedding = embedding_lookup[\n            chunk[\"chunk_id\"]\n        ]\n\n\n        semantic = cosine_similarity(\n\n            query_embedding,\n\n            chunk_embedding\n        )\n\n\n        \n        # GRAPH BOOST\n\n\n        graph = graph_boost(\n\n            query_words,\n\n            chunk\n        )\n\n\n        \n        # FINAL SCORE\n\n\n        final_score = (\n\n            lexical\n            +\n            semantic\n            +\n            graph\n        )\n\n\n        results.append({\n\n            \"final_score\": final_score,\n\n            \"lexical\": lexical,\n\n            \"semantic\": semantic,\n\n            \"graph\": graph,\n\n            \"chunk\": chunk\n        })\n\n\n    \n    # SORT\n\n\n    results.sort(\n\n        key=lambda x: x[\"final_score\"],\n\n        reverse=True\n    )\n\n\n    return results[:top_k]"
+    },
+    "display_results": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\sementic_retriever.py",
+        "start_line": 139,
+        "end_line": 203,
+        "code": "def display_results(results):\n\n\n    print(\"\\n=================================\")\n    print(\"SEMANTIC RETRIEVAL RESULTS\")\n    print(\"=================================\")\n\n\n    for result in results:\n\n\n        similarity = result[\"similarity\"]\n\n        chunk = result[\"chunk\"]\n\n\n        print(f\"\\nNAME: {chunk['name']}\")\n\n        print(f\"TYPE: {chunk['type']}\")\n\n        print(f\"FILE: {chunk['file']}\")\n\n        print(\n            f\"SIMILARITY: \"\n            f\"{similarity:.4f}\"\n        )\n\n\n        print(\"\\nRELATED MODELS:\")\n\n\n        if chunk[\"related_models\"]:\n\n            for model_name in chunk[\n                \"related_models\"\n            ]:\n\n                print(f\"- {model_name}\")\n\n        else:\n\n            print(\"- None\")\n\n\n        print(\"\\nRELATED FUNCTIONS:\")\n\n\n        if chunk[\"related_functions\"]:\n\n            for function in chunk[\n                \"related_functions\"\n            ]:\n\n                print(f\"- {function}\")\n\n        else:\n\n            print(\"- None\")\n\n\n        print(\"\\nCODE:\\n\")\n\n        print(chunk[\"code\"])\n\n        print(\"\\n\" + \"=\" * 40)"
+    },
+    "trace_impact": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\impact_analyzer.py",
+        "start_line": 39,
+        "end_line": 104,
+        "code": "def trace_impact(\n\n\n    node,\n\n    visited=None,\n\n    depth=0,\n\n    max_depth=4\n):\n\n\n    # INIT VISITED\n\n    if visited is None:\n\n        visited = set()\n\n\n\n    # DEPTH LIMIT\n\n    if depth > max_depth:\n\n        return\n\n\n\n    # LOOP PREVENTION\n\n\n    if node in visited:\n\n        return\n\n\n    visited.add(node)\n\n    indent = \"    \" * depth\n\n    print(f\"{indent}- {node}\")\n\n\n    # WHO DEPENDS ON THIS?\n    impacted_nodes = reverse_graph.get(\n        node,\n        []\n    )\n\n\n    # RECURSIVE REVERSE DFS\n\n\n    for impacted in impacted_nodes:\n\n        trace_impact(\n\n            impacted,\n\n            visited,\n\n            depth + 1,\n\n            max_depth\n        )"
+    },
+    "build_context": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py",
+        "start_line": 24,
+        "end_line": 62,
+        "code": "def build_context(results):\n\n\n    context_parts = []\n\n\n    for result in results:\n\n\n        chunk = result[\"chunk\"]\n\n\n        context_parts.append(\n\n            f\"\"\"\nNAME:\n{chunk['name']}\n\nTYPE:\n{chunk['type']}\n\nFILE:\n{chunk['file']}\n\nRELATED MODELS:\n{chunk['related_models']}\n\nRELATED FUNCTIONS:\n{chunk['related_functions']}\n\nCODE:\n{chunk['code']}\n\"\"\"\n        )\n\n\n    return \"\\n\\n\".join(\n        context_parts\n    )"
+    },
+    "ask_llm": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py",
+        "start_line": 69,
+        "end_line": 124,
+        "code": "def ask_llm(\n\n\n    query,\n\n    context\n):\n\n\n    prompt = f\"\"\"\n\nYou are a software architecture assistant.\n\nUse the provided repository context\nto answer the user query.\n\n=================================\nUSER QUERY\n=================================\n\n{query}\n\n=================================\nREPOSITORY CONTEXT\n=================================\n\n{context}\n\n=================================\nANSWER\n=================================\n\"\"\"\n\n\n    payload = {\n\n        \"model\": MODEL_NAME,\n\n        \"prompt\": prompt,\n\n        \"stream\": False\n    }\n\n\n    response = requests.post(\n\n        OLLAMA_URL,\n\n        json=payload\n    )\n\n\n    data = response.json()\n\n\n    return data[\"response\"]"
+    },
+    "FunctionModelVisitor": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\model_usage_mapper.py",
+        "start_line": 46,
+        "end_line": 158,
+        "code": "class FunctionModelVisitor(ast.NodeVisitor):\n\n\n    def __init__(self):\n\n        self.current_function = None\n\n\n    \n    # FUNCTION DETECTION\n    \n\n    def visit_FunctionDef(self, node):\n\n\n        self.current_function = node.name\n\n\n        if self.current_function not in model_usage:\n\n            model_usage[self.current_function] = []\n\n\n        self.generic_visit(node)\n\n\n    \n    # ORM CALL DETECTION\n    \n\n    def visit_Call(self, node):\n\n\n        \"\"\"\n        Detect patterns like:\n\n        AttendanceRecord.objects.filter()\n        Employee.objects.all()\n        \"\"\"\n\n\n        try:\n\n            func = node.func\n\n\n            # METHOD CALL\n\n            if isinstance(func, ast.Attribute):\n\n\n                objects_attr = func.value\n\n\n                # .objects\n                \n\n                if isinstance(objects_attr, ast.Attribute):\n\n\n                    if objects_attr.attr == \"objects\":\n\n\n                        model_node = objects_attr.value\n\n\n                        \n                        # MODEL NAME\n                        \n\n                        if isinstance(\n\n                            model_node,\n\n                            ast.Name\n\n                        ):\n\n\n                            model_name = model_node.id\n\n\n                            \n                            # SIMPLE MODEL HEURISTIC\n                            \n\n                            if model_name[0].isupper():\n\n\n                                if (\n\n                                    self.current_function\n                                    and\n                                    model_name\n                                    not in\n                                    model_usage[\n                                        self.current_function\n                                    ]\n\n                                ):\n\n\n                                    model_usage[\n                                        self.current_function\n                                    ].append(model_name)\n\n\n        except Exception:\n\n            pass\n\n\n        self.generic_visit(node)"
+    },
+    "visit_Call": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\call_graph_mapper.py",
+        "start_line": 102,
+        "end_line": 142,
+        "code": "def visit_Call(self, node):\n\n\n        if not self.current_function:\n\n            return\n\n\n        called_function = None\n\n\n        if isinstance(node.func, ast.Name):\n\n            called_function = (\n                node.func.id\n            )\n\n\n        elif isinstance(\n            node.func,\n            ast.Attribute\n        ):\n\n            called_function = (\n                node.func.attr\n            )\n\n\n        if (\n            called_function\n            and called_function in project_functions\n        ):\n\n            call_graph[\n                self.current_function\n            ].append(\n                called_function\n            )\n\n\n        self.generic_visit(node)"
+    },
+    "find_path": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\path_finder.py",
+        "start_line": 45,
+        "end_line": 63,
+        "code": "def find_path(start, end):\n\n    try:\n\n        path = nx.shortest_path(\n            graph,\n            source=start,\n            target=end\n        )\n\n        return path\n\n    except nx.NetworkXNoPath:\n\n        return None\n\n    except nx.NodeNotFound:\n\n        return None"
+    },
+    "handle_query": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\query_engine_v2.py",
+        "start_line": 13,
+        "end_line": 110,
+        "code": "def handle_query(query):\n\n    query = query.lower()\n\n\n    \n    # CENTRAL APPS\n    \n\n    if \"central\" in query:\n\n        results = engine.get_central_apps()\n\n        print(\"\\nCENTRAL APPS:\\n\")\n\n\n        for app, score in results:\n\n            print(\n                f\"{app} \"\n                f\"(score={score})\"\n            )\n\n\n    \n    # IMPACT ANALYSIS\n    \n\n    elif \"impact\" in query:\n\n        words = query.split()\n\n\n        target = words[-1]\n\n\n        results = engine.analyze_impact(\n            target\n        )\n\n\n        print(\n            f\"\\nIMPACT OF {target}:\\n\"\n        )\n\n\n        if results:\n\n            for item in results:\n\n                print(\"-\", item)\n\n        else:\n\n            print(\"No impact found\")\n\n\n    \n    # WORKFLOW ANALYSIS\n    \n\n    elif \"workflow\" in query:\n\n        words = query.split()\n\n        keyword = words[-1]\n\n\n        workflows = engine.find_workflow(\n            keyword\n        )\n\n\n        print(\"\\nWORKFLOWS:\\n\")\n\n\n        if workflows:\n\n            for workflow in workflows:\n\n                print(\n                    \" \u2192 \".join(workflow)\n                )\n\n        else:\n\n            print(\"No workflow found\")\n\n\n    \n    # UNKNOWN QUERY\n    \n\n    else:\n\n        print(\n            \"\\nUnknown query\"\n        )"
+    },
+    "calculate_score": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\retrieval_engine.py",
+        "start_line": 40,
+        "end_line": 60,
+        "code": "def calculate_score(\n\n\n    query_words,\n\n    search_words\n):\n\n\n    score = 0\n\n\n    for word in query_words:\n\n\n        if word in search_words:\n\n            score += 1\n\n\n    return score"
+    },
+    "search_chunks": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\retrieval_engine.py",
+        "start_line": 65,
+        "end_line": 130,
+        "code": "def search_chunks(\n\n\n    query,\n\n    top_k=5\n):\n\n\n    query_words = normalize_text(\n        query\n    )\n\n\n    results = []\n\n\n    # SEARCH ALL CHUNKS\n    \n\n    for chunk in indexed_chunks:\n\n\n        search_words = normalize_text(\n\n            chunk[\"search_text\"]\n\n        )\n\n\n        score = calculate_score(\n\n            query_words,\n\n            search_words\n        )\n\n\n        \n        # IGNORE ZERO MATCHES\n        \n\n        if score > 0:\n\n\n            results.append({\n\n                \"score\": score,\n\n                \"chunk\": chunk\n            })\n\n\n    \n    # SORT BY SCORE\n    \n\n    results.sort(\n\n        key=lambda x: x[\"score\"],\n\n        reverse=True\n    )\n\n\n    return results[:top_k]"
+    },
+    "semantic_search": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\sementic_retriever.py",
+        "start_line": 81,
+        "end_line": 132,
+        "code": "def semantic_search(\n\n\n    query,\n\n    top_k=5\n):\n\n    # EMBED QUERY\n\n    query_embedding = model.encode(\n        query\n    )\n\n\n    results = []\n\n\n\n    # COMPARE AGAINST CHUNKS\n\n\n    for chunk in embedded_chunks:\n\n\n        similarity = cosine_similarity(\n\n            query_embedding,\n\n            chunk[\"embedding\"]\n        )\n\n\n        results.append({\n\n            \"similarity\": similarity,\n\n            \"chunk\": chunk\n        })\n\n\n    # SORT RESULTS\n\n    results.sort(\n\n        key=lambda x: x[\"similarity\"],\n\n        reverse=True\n    )\n\n\n    return results[:top_k]"
+    },
+    "trace_workflow": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\workflow_tracer.py",
+        "start_line": 27,
+        "end_line": 92,
+        "code": "def trace_workflow(\n\n\n    function_name,\n\n    visited=None,\n\n    depth=0\n):\n\n\n    \n    # INITIALIZE VISITED\n    \n\n    if visited is None:\n\n        visited = set()\n\n\n    \n    # AVOID INFINITE LOOPS\n    \n\n    if function_name in visited:\n\n        return\n\n\n    visited.add(function_name)\n\n\n    \n    # PRINT CURRENT FUNCTION\n    \n\n    indent = \"    \" * depth\n\n    print(f\"{indent}- {function_name}\")\n\n\n    \n    # GET NEXT FUNCTIONS\n    \n\n    next_functions = call_graph.get(\n        function_name,\n        []\n    )\n\n    print(next_functions)\n\n\n    # RECURSIVE DFS\n    \n\n    for next_function in next_functions:\n\n        trace_workflow(\n\n            next_function,\n\n            visited,\n\n            depth + 1\n        )"
+    },
+    "CallGraphVisitor": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\call_graph_mapper.py",
+        "start_line": 69,
+        "end_line": 142,
+        "code": "class CallGraphVisitor(ast.NodeVisitor):\n\n\n    def __init__(self):\n\n        self.current_function = None\n\n\n    def visit_FunctionDef(self, node):\n\n        previous_function = (\n            self.current_function\n        )\n\n\n        self.current_function = node.name\n\n\n        if self.current_function not in call_graph:\n\n            call_graph[\n                self.current_function\n            ] = []\n\n\n        self.generic_visit(node)\n\n\n        self.current_function = (\n            previous_function\n        )\n\n\n    def visit_Call(self, node):\n\n\n        if not self.current_function:\n\n            return\n\n\n        called_function = None\n\n\n        if isinstance(node.func, ast.Name):\n\n            called_function = (\n                node.func.id\n            )\n\n\n        elif isinstance(\n            node.func,\n            ast.Attribute\n        ):\n\n            called_function = (\n                node.func.attr\n            )\n\n\n        if (\n            called_function\n            and called_function in project_functions\n        ):\n\n            call_graph[\n                self.current_function\n            ].append(\n                called_function\n            )\n\n\n        self.generic_visit(node)"
+    },
+    "find_dependents": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\query_engine.py",
+        "start_line": 25,
+        "end_line": 35,
+        "code": "def find_dependents(app_name):\n\n    results = []\n\n    for source, targets in dependencies.items():\n\n        if app_name in targets:\n\n            results.append(source)\n\n    return results"
+    },
+    "get_models": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\query_engine.py",
+        "start_line": 40,
+        "end_line": 42,
+        "code": "def get_models(app_name):\n\n    return models.get(app_name, [])"
+    },
+    "get_relationships": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\query_engine.py",
+        "start_line": 47,
+        "end_line": 49,
+        "code": "def get_relationships(model_name):\n\n    return relationships.get(model_name, [])"
+    },
+    "most_connected_model": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\query_engine.py",
+        "start_line": 54,
+        "end_line": 68,
+        "code": "def most_connected_model():\n\n    highest_model = None\n    highest_count = 0\n\n    for model, relations in relationships.items():\n\n        relation_count = len(relations)\n\n        if relation_count > highest_count:\n\n            highest_count = relation_count\n            highest_model = model\n\n    return highest_model, highest_count"
+    },
+    "ReportsConfig": {
+        "type": "class",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\reports\\apps.py",
+        "start_line": 4,
+        "end_line": 5,
+        "code": "class ReportsConfig(AppConfig):\n    name = 'reports'"
+    },
+    "monthly_report_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py",
+        "start_line": 14,
+        "end_line": 63,
+        "code": "def monthly_report_view(request):\n    if not request.user.is_admin_role:\n        return redirect('attendance:dashboard')\n\n    today = date.today()\n    month_str = request.GET.get('month', today.strftime('%Y-%m'))\n\n    try:\n        year, month = month_str.split('-')\n        year, month = int(year), int(month)\n    except (ValueError, AttributeError):\n        year, month = today.year, today.month\n\n    # Count working days (Mon-sat)\n    cal = calendar.monthcalendar(year, month)\n    working_days = sum(1 for week in cal for day in week[:6] if day != 0)\n\n    records = AttendanceRecord.objects.filter(\n        date__year=year, date__month=month\n    ).select_related('employee')\n\n    employees = Employee.objects.filter(role='employee')\n    report_data = []\n\n    for emp in employees:\n        emp_records = records.filter(employee=emp)\n        present = emp_records.filter(attendance_status='present').count()\n        late = emp_records.filter(attendance_status='late').count()\n        total_hours = emp_records.aggregate(total=Sum('total_working_hours'))['total'] or 0\n        leaves_approved = LeaveRequest.objects.filter(\n            employee=emp,\n            leave_date__year=year,\n            leave_date__month=month,\n            status='approved'\n        ).count()\n\n        report_data.append({\n            'employee': emp,\n            'present_days': present,\n            'late_days': late,\n            'absent_days': working_days - present - leaves_approved,\n            'approved_leaves': leaves_approved,\n            'total_hours': round(total_hours, 2),\n        })\n\n    return render(request, 'reports/monthly_report.html', {\n        'report_data': report_data,\n        'month_str': month_str,\n        'working_days': working_days,\n    })"
+    },
+    "export_csv_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py",
+        "start_line": 66,
+        "end_line": 99,
+        "code": "def export_csv_view(request):\n    if not request.user.is_admin_role:\n        return redirect('attendance:dashboard')\n\n    month_str = request.GET.get('month', date.today().strftime('%Y-%m'))\n    response = HttpResponse(content_type='text/csv')\n    response['Content-Disposition'] = f'attachment; filename=\"attendance_{month_str}.csv\"'\n\n    writer = csv.writer(response)\n    writer.writerow(['Employee ID', 'Name', 'Department', 'Date',\n                     'Check In', 'Check Out', 'Hours Worked', 'Status', 'IP Address'])\n\n    try:\n        year, month = month_str.split('-')\n        records = AttendanceRecord.objects.filter(\n            date__year=int(year), date__month=int(month)\n        ).select_related('employee').order_by('employee__last_name', 'date')\n    except (ValueError, AttributeError):\n        records = AttendanceRecord.objects.none()\n\n    for r in records:\n        writer.writerow([\n            r.employee.employee_id,\n            r.employee.get_full_name(),\n            r.employee.department,\n            r.date,\n            r.check_in_time or '',\n            r.check_out_time or '',\n            r.total_working_hours or '',\n            r.get_attendance_status_display(),\n            r.ip_address or '',\n        ])\n\n    return response"
+    },
+    "export_excel_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py",
+        "start_line": 102,
+        "end_line": 147,
+        "code": "def export_excel_view(request):\n    if not request.user.is_admin_role:\n        return redirect('attendance:dashboard')\n\n    import openpyxl\n    from openpyxl.styles import Font, PatternFill\n\n    month_str = request.GET.get('month', date.today().strftime('%Y-%m'))\n    wb = openpyxl.Workbook()\n    ws = wb.active\n    ws.title = f'Attendance {month_str}'\n\n    headers = ['Employee ID', 'Name', 'Department', 'Date',\n               'Check In', 'Check Out', 'Hours', 'Status']\n    ws.append(headers)\n\n    for cell in ws[1]:\n        cell.font = Font(bold=True)\n        cell.fill = PatternFill(start_color='4472C4', end_color='4472C4', fill_type='solid')\n\n    try:\n        year, month = month_str.split('-')\n        records = AttendanceRecord.objects.filter(\n            date__year=int(year), date__month=int(month)\n        ).select_related('employee').order_by('employee__last_name', 'date')\n    except (ValueError, AttributeError):\n        records = AttendanceRecord.objects.none()\n\n    for r in records:\n        ws.append([\n            r.employee.employee_id,\n            r.employee.get_full_name(),\n            r.employee.department,\n            str(r.date),\n            str(r.check_in_time or ''),\n            str(r.check_out_time or ''),\n            float(r.total_working_hours or 0),\n            r.get_attendance_status_display(),\n        ])\n\n    response = HttpResponse(\n        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'\n    )\n    response['Content-Disposition'] = f'attachment; filename=\"attendance_{month_str}.xlsx\"'\n    wb.save(response)\n    return response"
+    },
+    "employee_detail_report_view": {
+        "type": "function",
+        "file": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py",
+        "start_line": 152,
+        "end_line": 290,
+        "code": "def employee_detail_report_view(request, employee_id):\n    if not request.user.is_admin_role:\n        return redirect('attendance:dashboard')\n\n    from accounts.models import Employee\n    import calendar\n\n    employee = get_object_or_404(Employee, id=employee_id)\n    today = date.today()\n    month_str = request.GET.get('month', today.strftime('%Y-%m'))\n\n    try:\n        year, month = month_str.split('-')\n        year, month = int(year), int(month)\n    except (ValueError, AttributeError):\n        year, month = today.year, today.month\n\n    # All records for this employee this month\n    records = AttendanceRecord.objects.filter(\n        employee=employee,\n        date__year=year,\n        date__month=month\n    ).order_by('date')\n\n    # Build daily data for chart and table\n    cal = calendar.monthcalendar(year, month)\n    working_days = []\n    for week in cal:\n        for i, day in enumerate(week):\n            if day != 0 and i < 6:  # Mon-sat\n                working_days.append(date(year, month, day))\n\n    # Check approved leaves\n    approved_leaves = LeaveRequest.objects.filter(\n        employee=employee,\n        leave_date__year=year,\n        leave_date__month=month,\n        status='approved'\n    ).values_list('leave_date', flat=True)\n\n    daily_data = []\n    chart_labels = []\n    chart_hours = []\n    chart_checkin = []\n\n    for work_date in working_days:\n        record = records.filter(date=work_date).first()\n\n        if record and record.check_in_time:\n            status = record.get_attendance_status_display()\n            hours = float(record.total_working_hours or 0)\n            checkin_minutes = record.check_in_time.hour * 60 + record.check_in_time.minute\n            checkin_str = record.check_in_time.strftime('%I:%M %p')\n            checkout_str = record.check_out_time.strftime('%I:%M %p') if record.check_out_time else '-'\n        elif work_date in approved_leaves:\n            status = 'On Leave'\n            hours = 0\n            checkin_minutes = None\n            checkin_str = '-'\n            checkout_str = '-'\n        elif work_date > today:\n            status = 'Upcoming'\n            hours = 0\n            checkin_minutes = None\n            checkin_str = '-'\n            checkout_str = '-'\n        else:\n            status = 'Absent'\n            hours = 0\n            checkin_minutes = None\n            checkin_str = '-'\n            checkout_str = '-'\n\n        daily_data.append({\n            'date': work_date,\n            'day': work_date.strftime('%a'),\n            'status': status,\n            'check_in': checkin_str,\n            'check_out': checkout_str,\n            'hours': hours,\n        })\n\n        chart_labels.append(work_date.strftime('%d %b'))\n        chart_hours.append(hours)\n        chart_checkin.append(checkin_minutes if checkin_minutes else 'null')\n\n    # Summary stats\n    present_count = sum(1 for d in daily_data if d['status'] not in ['Absent', 'On Leave', 'Upcoming'])\n    absent_count = sum(1 for d in daily_data if d['status'] == 'Absent')\n    leave_count = sum(1 for d in daily_data if d['status'] == 'On Leave')\n    total_hours = sum(d['hours'] for d in daily_data)\n    avg_hours = round(total_hours / present_count, 2) if present_count else 0\n\n    # Average check-in time\n    checkin_times = [d['check_in'] for d in daily_data if d['check_in'] != '-']\n    if checkin_times:\n        total_minutes = sum(\n            int(t.split(':')[0]) * 60 + int(t.split(':')[1].split()[0])\n            for t in checkin_times\n        )\n        avg_minutes = total_minutes // len(checkin_times)\n        hour = avg_minutes // 60\n        minute = avg_minutes % 60\n        period = 'AM' if hour < 12 else 'PM'\n        hour_12 = hour % 12 or 12\n        avg_checkin = f\"{hour_12:02d}:{minute:02d} {period}\"\n\n\n    else:\n        avg_checkin = 'N/A'\n\n    # Generate description\n    if present_count == 0:\n        description = f\"{employee.get_full_name()} has no attendance records for this month.\"\n    else:\n        punctuality = \"excellent\" if avg_checkin <= \"09:30\" else \"good\" if avg_checkin <= \"09:30\" else \"needs improvement\"\n        description = (\n            f\"{employee.get_full_name()} was present for {present_count} out of \"\n            f\"{len([d for d in daily_data if d['status'] != 'Upcoming'])} working days this month, \"\n            f\"with {absent_count} absence(s) and {leave_count} approved leave(s). \"\n            f\"Average working hours per day: {avg_hours} hrs. \"\n            f\"Average check-in time: {avg_checkin} \u2014 punctuality is {punctuality}.\"\n        )\n\n    return render(request, 'reports/employee_detail.html', {\n        'employee': employee,\n        'daily_data': daily_data,\n        'month_str': month_str,\n        'present_count': present_count,\n        'absent_count': absent_count,\n        'leave_count': leave_count,\n        'avg_hours': avg_hours,\n        'avg_checkin': avg_checkin,\n        'total_hours': total_hours,\n        'description': description,\n        'chart_labels': chart_labels,\n        'chart_hours': chart_hours,\n        'chart_checkin': chart_checkin,\n    })"
+    }
+}

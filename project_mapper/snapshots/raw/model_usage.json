@@ -1,0 +1,128 @@
+{
+    "main": [],
+    "__init__": [],
+    "save": [
+        "Employee"
+    ],
+    "__str__": [],
+    "is_admin_role": [],
+    "login_view": [],
+    "logout_view": [],
+    "create_employee_view": [],
+    "employee_list_view": [
+        "Employee"
+    ],
+    "profile_view": [],
+    "change_password_view": [],
+    "edit_profile_view": [],
+    "calculate_working_hours": [],
+    "is_checked_in": [],
+    "is_checked_out": [],
+    "get_client_ip": [],
+    "is_office_ip": [],
+    "calculate_distance_meters": [],
+    "is_within_office_radius": [],
+    "get_device_info": [],
+    "dashboard_view": [
+        "AttendanceRecord"
+    ],
+    "check_in_view": [
+        "AttendanceRecord"
+    ],
+    "check_out_view": [
+        "AttendanceRecord"
+    ],
+    "attendance_history_view": [
+        "AttendanceRecord"
+    ],
+    "admin_attendance_view": [
+        "AttendanceRecord"
+    ],
+    "format_hours": [],
+    "holiday_list_view": [
+        "Holiday"
+    ],
+    "add_holiday_view": [],
+    "delete_holiday_view": [],
+    "hours_until_leave": [],
+    "passes_36_hour_rule": [],
+    "get_used": [
+        "LeaveRequest"
+    ],
+    "get_remaining": [],
+    "get_summary": [],
+    "create_leave_balance": [
+        "LeaveBalance"
+    ],
+    "submit_leave_view": [],
+    "_send_leave_email_to_admin": [],
+    "_send_status_notification_email": [],
+    "my_leaves_view": [
+        "LeaveRequest"
+    ],
+    "admin_leaves_view": [
+        "LeaveRequest"
+    ],
+    "approve_leave_view": [],
+    "reject_leave_view": [],
+    "delete_leave_view": [],
+    "leave_balance_view": [
+        "LeaveBalance"
+    ],
+    "admin_leave_balance_view": [
+        "Employee",
+        "LeaveBalance"
+    ],
+    "find_central_apps": [],
+    "most_connected_models": [],
+    "find_isolated_apps": [],
+    "load_snapshot": [],
+    "build_graph": [],
+    "get_central_apps": [],
+    "analyze_impact": [],
+    "find_workflow": [],
+    "visit_FunctionDef": [],
+    "visit_ClassDef": [],
+    "get_model_functions": [],
+    "get_workflow": [],
+    "get_impact": [],
+    "find_related_apps": [],
+    "get_dependencies": [],
+    "retrieve_context": [],
+    "analyze_feature": [],
+    "normalize_text": [],
+    "lexical_score": [],
+    "cosine_similarity": [],
+    "graph_boost": [],
+    "hybrid_search": [],
+    "display_results": [],
+    "trace_impact": [],
+    "build_context": [],
+    "ask_llm": [],
+    "visit_Call": [],
+    "find_path": [],
+    "handle_query": [],
+    "calculate_score": [],
+    "search_chunks": [],
+    "semantic_search": [],
+    "trace_workflow": [],
+    "find_dependents": [],
+    "get_models": [],
+    "get_relationships": [],
+    "most_connected_model": [],
+    "monthly_report_view": [
+        "AttendanceRecord",
+        "Employee",
+        "LeaveRequest"
+    ],
+    "export_csv_view": [
+        "AttendanceRecord"
+    ],
+    "export_excel_view": [
+        "AttendanceRecord"
+    ],
+    "employee_detail_report_view": [
+        "AttendanceRecord",
+        "LeaveRequest"
+    ]
+}

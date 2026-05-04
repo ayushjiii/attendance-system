@@ -1,12 +1,28 @@
 from pathlib import Path
 import ast
 import json
+import os
+
+# ignored folders
+PROJECT_ROOT = Path(
+    "../"
+).resolve()
 
 
-# PROJECT ROOT
+IGNORED_FOLDERS = {
 
+    "venv",
 
-PROJECT_ROOT = Path("../")
+    "__pycache__",
+
+    ".git",
+
+    "snapshots",
+
+    "outputs",
+
+    "node_modules"
+}
 
 
 
@@ -20,10 +36,31 @@ function_map = {}
 # PROCESS FILES
 
 
-python_files = list(
-    PROJECT_ROOT.rglob("*.py")
-)
+python_files = []
 
+
+for root, dirs, files in os.walk(PROJECT_ROOT):
+
+
+    # REMOVE IGNORED DIRECTORIES
+
+    dirs[:] = [
+
+        d for d in dirs
+
+        if d not in IGNORED_FOLDERS
+    ]
+
+    for file in files:
+
+
+        if file.endswith(".py"):
+
+
+            python_files.append(
+
+                Path(root) / file
+            )
 
 for file_path in python_files:
 

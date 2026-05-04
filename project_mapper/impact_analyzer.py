@@ -1,74 +1,111 @@
 from pathlib import Path
 import json
-import networkx as nx
+from collections import defaultdict
 
 
-SNAPSHOT_FILE = Path(
-    "snapshots/snapshot.json"
+# FILES
+
+CALL_GRAPH_FILE = Path(
+    "snapshots/raw/detailed_call_graph.json"
 )
 
+# LOAD GRAPH
 
+with open(
+    CALL_GRAPH_FILE,
+    "r",
+    encoding="utf-8"
+) as f:
 
-# STEP 1 — LOAD SNAPSHOT
-
-
-with open(SNAPSHOT_FILE, "r", encoding="utf-8") as f:
-
-    snapshot = json.load(f)
-
-
-dependencies = snapshot["dependencies"]
-relationships = snapshot["model_relationships"]
+    call_graph = json.load(f)
 
 
 
-# STEP 2 — BUILD GRAPH
-
-graph = nx.DiGraph()
+# BUILD REVERSE GRAPH
 
 
-## app dependency
-
-for source, targets in dependencies.items():
-
-    for target in targets:
-
-        graph.add_edge(source, target)
+reverse_graph = defaultdict(list)
 
 
+for caller, callees in call_graph.items():
 
-## model relationship
+    for callee in callees:
 
-for model, relation_list in relationships.items():
-
-    for relation in relation_list:
-
-        target = relation["target"]
-
-        graph.add_edge(model, target)
+        reverse_graph[callee].append(caller)
 
 
+# IMPACT TRACING
 
-# STEP 3 — IMPACT ANALYSIS
+def trace_impact(
 
 
-def analyze_impact(node_name):
+    node,
 
-    try:
+    visited=None,
 
-        affected = nx.descendants(
-            graph,
-            node_name
+    depth=0,
+
+    max_depth=4
+):
+
+
+    # INIT VISITED
+
+    if visited is None:
+
+        visited = set()
+
+
+
+    # DEPTH LIMIT
+
+    if depth > max_depth:
+
+        return
+
+
+
+    # LOOP PREVENTION
+
+
+    if node in visited:
+
+        return
+
+
+    visited.add(node)
+
+    indent = "    " * depth
+
+    print(f"{indent}- {node}")
+
+
+    # WHO DEPENDS ON THIS?
+    impacted_nodes = reverse_graph.get(
+        node,
+        []
+    )
+
+
+    # RECURSIVE REVERSE DFS
+
+
+    for impacted in impacted_nodes:
+
+        trace_impact(
+
+            impacted,
+
+            visited,
+
+            depth + 1,
+
+            max_depth
         )
 
-        return affected
-
-    except nx.NetworkXError:
-
-        return None
 
 
-# STEP 4 — INTERACTIVE LOOP
+# MENU
 
 
 print("\nIMPACT ANALYZER\n")
@@ -76,31 +113,21 @@ print("\nIMPACT ANALYZER\n")
 
 while True:
 
-    node = input(
-        "\nAnalyze node (or exit): "
+
+    target = input(
+
+        "\nEnter function/model "
+        "(or 'exit'): "
+
     )
 
 
-    if node.lower() == "exit":
+    if target.lower() == "exit":
 
         break
 
 
-    result = analyze_impact(node)
+    print("\nIMPACT CHAIN:\n")
 
 
-    if result:
-
-        print("\nPOTENTIALLY AFFECTED:\n")
-
-        for item in sorted(result):
-
-            print(f"- {item}")
-
-    elif result == set():
-
-        print("\nNo downstream impact found")
-
-    else:
-
-        print("\nNode not found")
+    trace_impact(target)

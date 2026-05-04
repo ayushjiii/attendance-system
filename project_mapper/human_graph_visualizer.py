@@ -75,7 +75,7 @@ function_scores.sort(
 
 ## adjust it according to how many function you want to see 
 
-TOP_FUNCTIONS = 40
+TOP_FUNCTIONS = 50
 
 
 important_functions = set()
@@ -103,7 +103,7 @@ net = Network(
 
 
 net.barnes_hut(
-    gravity=-5000,
+    gravity=-50000,
     central_gravity=0.9,
     spring_length=110,
     spring_strength=0.02,
@@ -122,7 +122,7 @@ var options = {
       "centralGravity": 0.9,
       "springLength": 110,
       "springConstant": 0.02,
-      "damping": 0.1
+      "damping": 0.09
     },
     "minVelocity": 0.75
   }

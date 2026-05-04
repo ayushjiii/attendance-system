@@ -1,9 +1,29 @@
 from pathlib import Path
 import ast
 import json
+import os
 
-#project root
-PROJECT_ROOT = Path("../")
+# ignored folders
+
+PROJECT_ROOT = Path(
+    "../"
+).resolve()
+
+
+IGNORED_FOLDERS = {
+
+    "venv",
+
+    "__pycache__",
+
+    ".git",
+
+    "snapshots",
+
+    "outputs",
+
+    "node_modules"
+}
 
 # load function map
 FUNCTION_MAP_FILE = Path(
@@ -125,11 +145,30 @@ class CallGraphVisitor(ast.NodeVisitor):
 
 # PROCESS FILES
 
+python_files = []
 
-python_files = list(
-    PROJECT_ROOT.rglob("*.py")
-)
 
+for root, dirs, files in os.walk(PROJECT_ROOT):
+
+
+    dirs[:] = [
+
+        d for d in dirs
+
+        if d not in IGNORED_FOLDERS
+    ]
+
+
+    for file in files:
+
+
+        if file.endswith(".py"):
+
+
+            python_files.append(
+
+                Path(root) / file
+            )
 
 for file_path in python_files:
 
