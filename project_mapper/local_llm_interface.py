@@ -1,8 +1,9 @@
 import requests
+import time
 import json
+import hashlib
 import os
 import re
-import time
 from datetime import datetime
 from hybrid_retriever import hybrid_search
 
@@ -14,147 +15,215 @@ MODELS = {
     "power": "llama3:latest"
 }
 
-LOG_FILE = "rag_log.json"
+TIMEOUT = 1000
+CACHE_FILE = "llm_cache.json"
 
 
-# ---------------- LOGGER ----------------
+# ---------------- CACHE ----------------
 
-def log(action, data=None):
-    entry = {
-        "time": datetime.now().isoformat(),
-        "action": action,
-        "data": data
-    }
+def load_cache():
+    try:
+        with open(CACHE_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except:
+        return {}
 
-    logs = []
-    if os.path.exists(LOG_FILE):
-        with open(LOG_FILE, "r") as f:
-            logs = json.load(f)
+def save_cache(cache):
+    with open(CACHE_FILE, "w", encoding="utf-8") as f:
+        json.dump(cache, f, indent=2)
 
-    logs.append(entry)
+def get_cache_key(query, model):
+    raw = f"{query}|{model}"
+    return hashlib.md5(raw.encode()).hexdigest()
 
-    with open(LOG_FILE, "w") as f:
-        json.dump(logs, f, indent=2)
+cache = load_cache()
 
 
-# ---------------- CLASSIFIER ----------------
+# ---------------- UTILS ----------------
 
-def classify(query):
+def normalize(s):
+    return s.replace('"', '').replace("'", "").strip().lower()
+
+def log_edit(file_path, query):
+    with open("edit_log.txt", "a", encoding="utf-8") as f:
+        f.write(f"{datetime.now()} | {file_path} | {query}\n")
+
+def backup_file(file_path, content):
+    backup = file_path + ".bak_" + datetime.now().strftime("%H%M%S")
+    with open(backup, "w", encoding="utf-8") as f:
+        f.writelines(content)
+    print(f"[BACKUP CREATED] {backup}")
+
+
+# ---------------- QUERY ----------------
+
+def classify_query(query):
     q = query.lower()
 
-    if any(k in q for k in ["create module", "new module"]):
-        return "module"
+    if any(k in q for k in ["bug", "error", "fix", "issue", "debug"]):
+        return "debug"
 
-    if any(k in q for k in ["edit", "replace", "add", "modify"]):
+    if any(k in q for k in ["workflow", "flow", "architecture"]):
+        return "deep"
+
+    if any(k in q for k in ["add", "change", "modify", "update", "edit", "replace", "create"]):
         return "edit"
 
-    return "analysis"
+    return "default"
 
 
-# ---------------- FILE HELPERS ----------------
+# ---------------- FILE TARGETING ----------------
 
-def find_file(query):
+def detect_file_from_query(query):
     match = re.search(r'([\w/\\.-]+\.py)', query)
-
     if not match:
         return None
 
-    name = os.path.basename(match.group(1))
+    requested = match.group(1)
+    requested_name = os.path.basename(requested)
 
-    for root, _, files in os.walk("."):
-        if name in files:
-            return os.path.join(root, name)
+    if os.path.exists(requested):
+        return requested
+
+    for root, dirs, files in os.walk("."):
+        for file in files:
+            if file == requested_name:
+                return os.path.join(root, file)
 
     return None
 
 
-def backup(file_path, lines):
-    path = file_path + ".bak_" + datetime.now().strftime("%H%M%S")
-    with open(path, "w", encoding="utf-8") as f:
-        f.writelines(lines)
-    log("backup_created", path)
+def select_target_file(query, results):
+    q = query.lower()
+
+    for r in results:
+        path = r["chunk"]["file"].lower()
+        if any(word in path for word in q.split()):
+            return r["chunk"]["file"]
+
+    return None
 
 
-# ---------------- DIRECT ENGINE ----------------
+# ---------------- DIRECT EDIT ----------------
 
-def direct_replace(query, file_path):
+def try_direct_edit(query, file_path):
+
     pattern = r'replace\s*-\s*(.*?)\s*-\s*to\s*-\s*(.*)'
-    match = re.search(pattern, query, re.IGNORECASE)
+    match = re.search(pattern, query, re.IGNORECASE | re.DOTALL)
 
     if not match:
+        print("[NO DIRECT PATTERN MATCH]")
         return False
 
-    old = match.group(1)
-    new = match.group(2)
+    old = match.group(1).strip()
+    new = match.group(2).strip()
 
     with open(file_path, "r", encoding="utf-8") as f:
         lines = f.readlines()
 
-    backup(file_path, lines)
+    original = lines[:]
 
+    # -------- BLOCK REPLACE --------
+    full_text = "".join(lines)
+
+    if old in full_text:
+        print("[BLOCK MATCH FOUND]")
+        print("\n--- PREVIEW ---")
+        print("OLD BLOCK:", old)
+        print("NEW BLOCK:", new)
+
+        full_text = full_text.replace(old, new)
+        lines = full_text.splitlines(keepends=True)
+
+        backup_file(file_path, original)
+
+        with open(file_path, "w", encoding="utf-8") as f:
+            f.writelines(lines)
+
+        print("[BLOCK EDIT APPLIED]")
+        log_edit(file_path, query)
+        return True
+
+    # -------- LINE REPLACE --------
     for i, line in enumerate(lines):
-        if old.strip().replace('"','') in line.replace('"',''):
+        if normalize(old) in normalize(line):
+
+            print("\n--- PREVIEW ---")
+            print("OLD:", line.strip())
+            print("NEW:", new)
+
             lines[i] = new + "\n"
+
+            backup_file(file_path, original)
 
             with open(file_path, "w", encoding="utf-8") as f:
                 f.writelines(lines)
 
-            log("direct_replace", {"file": file_path, "old": old, "new": new})
-            print("[UPDATED]")
+            print("[LINE EDIT APPLIED]")
+            log_edit(file_path, query)
             return True
 
-    print("[TARGET NOT FOUND]")
+    print("[DIRECT EDIT FAILED]")
     return False
-
-
-# ---------------- MODULE CREATION ----------------
-
-def create_module(name):
-    base = f"./{name}"
-
-    if os.path.exists(base):
-        print("[EXISTS]")
-        return
-
-    os.makedirs(base, exist_ok=True)
-
-    files = {
-        "__init__.py": "",
-        "models.py": "from django.db import models\n\n",
-        "views.py": "from django.shortcuts import render\n\n",
-        "urls.py": "from django.urls import path\n\nurlpatterns = []\n",
-        "apps.py": f"""from django.apps import AppConfig
-
-class {name.capitalize()}Config(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = '{name}'
-"""
-    }
-
-    for fname, code in files.items():
-        path = os.path.join(base, fname)
-        with open(path, "w", encoding="utf-8") as f:
-            f.write(code)
-        log("file_created", path)
-
-    print("[MODULE CREATED]", name)
 
 
 # ---------------- LLM ----------------
 
-def call_llm(prompt):
+def call_llm(model, prompt):
     payload = {
-        "model": MODELS["power"],
+        "model": model,
         "prompt": prompt,
-        "stream": False
+        "stream": False,
+        "options": {
+            "num_predict": 300,
+            "temperature": 0.2
+        }
     }
 
     try:
-        res = requests.post(OLLAMA_URL, json=payload, timeout=600)
-        return res.json().get("response", "")
+        res = requests.post(OLLAMA_URL, json=payload, timeout=TIMEOUT)
+        return res.json().get("response", "").strip()
     except Exception as e:
-        return str(e)
+        return f"[ERROR] {e}"
 
+
+def build_edit_prompt(query, file_path, code):
+    return f"""
+Modify ONLY this file.
+
+FILE:
+{file_path}
+
+CODE:
+{code}
+
+Return ONLY JSON:
+
+{{
+  "operations": [
+    {{
+      "type": "replace_line",
+      "target": "exact line",
+      "code": "new line"
+    }},
+    {{
+      "type": "insert_after",
+      "target": "exact line",
+      "code": "new line"
+    }}
+  ]
+}}
+
+Rules:
+- Use replace_line ONLY if replacing
+- Use insert_after ONLY if adding
+- Do not mix both unnecessarily
+- No explanation
+- Only JSON
+
+Query:
+{query}
+"""
 
 def extract_json(text):
     try:
@@ -169,112 +238,112 @@ def extract_json(text):
     return None
 
 
-# ---------------- LLM EDIT ----------------
+def apply_operations(file_path, edit_json):
 
-def llm_edit(query, file_path):
-
-    code = open(file_path, "r", encoding="utf-8").read()
-
-    prompt = f"""
-Modify this Python file.
-
-FILE:
-{file_path}
-
-CODE:
-{code}
-
-Return ONLY JSON:
-
-{{
-  "operations": [
-    {{
-      "type": "replace_line",
-      "target": "line",
-      "code": "new line"
-    }}
-  ]
-}}
-
-Query:
-{query}
-"""
-
-    res = call_llm(prompt)
-    data = extract_json(res)
-
-    if not data:
-        print("[LLM FAILED]")
+    if not edit_json or "operations" not in edit_json:
+        print("[INVALID JSON]")
         return
 
-    lines = open(file_path, "r").readlines()
-    backup(file_path, lines)
+    with open(file_path, "r", encoding="utf-8") as f:
+        lines = f.readlines()
 
-    for op in data["operations"]:
+    original = lines[:]
+
+    for op in edit_json["operations"]:
+        op_type = op["type"]
+        target = op["target"]
+        code = op["code"]
+
         for i, line in enumerate(lines):
-            if op["target"] in line:
-                lines[i] = op["code"] + "\n"
-                log("llm_edit", op)
-                print("[LLM UPDATED]")
+
+            if target.strip() in line.strip():
+
+                print("[LLM EDIT MATCH FOUND]")
+
+                if op_type == "replace_line":
+                    lines[i] = code + "\n"
+
+                elif op_type == "insert_after":
+                    lines.insert(i + 1, code + "\n")
+
                 break
 
-    with open(file_path, "w") as f:
+    backup_file(file_path, original)
+
+    with open(file_path, "w", encoding="utf-8") as f:
         f.writelines(lines)
 
+    print("[LLM EDIT APPLIED]")
 
-# ---------------- ANALYSIS ----------------
 
-def run_analysis(query):
-    results = hybrid_search(query, top_k=4)
+# ---------------- EDIT FLOW ----------------
 
-    context = "\n".join([r["chunk"]["code"][:600] for r in results])
+def run_edit_flow(query, results):
 
-    prompt = f"""
-Answer based only on this context:
+    target_file = detect_file_from_query(query)
 
-{context}
+    if not target_file:
+        target_file = select_target_file(query, results)
 
-Query:
-{query}
-"""
+    if not target_file:
+        print("[NO FILE FOUND]")
+        return
 
-    print(call_llm(prompt))
+    print(f"\nTarget File: {target_file}")
+
+    # STEP 1 — DIRECT EDIT
+    
+    success = try_direct_edit(query, target_file)
+
+    if success:
+        return
+
+    # 🚫 STOP unsafe fallback for replace queries
+    if "replace" in query.lower():
+        print("[ABORTED: TARGET NOT FOUND]")
+        return
+
+    # STEP 2 — LLM FALLBACK (only safe ops like add)
+    print("[USING LLM FALLBACK]")
+
+    code = open(target_file, "r", encoding="utf-8").read()
+    prompt = build_edit_prompt(query, target_file, code)
+
+    response = call_llm(MODELS["power"], prompt)
+    edit_json = extract_json(response)
+
+    if edit_json:
+        apply_operations(target_file, edit_json)
+    else:
+        print("[FAILED: LLM COULD NOT FIX]")
 
 
 # ---------------- MAIN ----------------
 
 def main():
-    print("\nRAG AGENT \n")
+    print("\nRAG MODE ~~~ \n")
 
     while True:
+        print("------------------------")
         query = input("\nQuery: ")
-
+        print("------------------------")
         if query.lower() == "exit":
             break
 
-        mode = classify(query)
+        qtype = classify_query(query)
 
-        print(f"\nMode: {mode}")
+        results = hybrid_search(query, top_k=4)
 
-        if mode == "module":
-            match = re.search(r'create module (\w+)', query.lower())
-            if match:
-                create_module(match.group(1))
+        print("\nRetrieved:")
+        for r in results:
+            print("-", r["chunk"]["name"])
 
-        elif mode == "edit":
-            file_path = find_file(query)
+        print("\nThinking...\n")
 
-            if not file_path:
-                print("[FILE NOT FOUND]")
-                continue
-
-            print("Target:", file_path)
-
-            if not direct_replace(query, file_path):
-                llm_edit(query, file_path)
-
+        if qtype == "edit":
+            run_edit_flow(query, results)
         else:
-            run_analysis(query)
+            print("Analysis mode not implemented.")
 
 
 if __name__ == "__main__":
