@@ -1,350 +1,795 @@
-import requests
-import time
-import json
-import hashlib
 import os
 import re
+import json
+import hashlib
+import requests
+import time
 from datetime import datetime
-from hybrid_retriever import hybrid_search
 
+from hybrid_retriever import hybrid_search
+from graph_retriever import graph_search
+
+
+# =========================================================
+# CONFIG
+# =========================================================
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
 
-MODELS = {
-    "fast": "phi3:mini",
-    "power": "llama3:latest"
-}
+MODEL = "llama3:latest"
 
-TIMEOUT = 1000
+TIMEOUT = 600
+
 CACHE_FILE = "llm_cache.json"
 
 
-# ---------------- CACHE ----------------
+# =========================================================
+# CACHE
+# =========================================================
 
 def load_cache():
+
     try:
-        with open(CACHE_FILE, "r", encoding="utf-8") as f:
+
+        with open(
+            CACHE_FILE,
+            "r",
+            encoding="utf-8"
+        ) as f:
+
             return json.load(f)
+
     except:
+
         return {}
 
-def save_cache(cache):
-    with open(CACHE_FILE, "w", encoding="utf-8") as f:
-        json.dump(cache, f, indent=2)
 
-def get_cache_key(query, model):
-    raw = f"{query}|{model}"
-    return hashlib.md5(raw.encode()).hexdigest()
+def save_cache(cache):
+
+    with open(
+        CACHE_FILE,
+        "w",
+        encoding="utf-8"
+    ) as f:
+
+        json.dump(
+            cache,
+            f,
+            indent=4
+        )
+
+
+def build_cache_key(query, retrieval_mode):
+
+    raw = f"{query}|{retrieval_mode}"
+
+    return hashlib.md5(
+        raw.encode()
+    ).hexdigest()
+
 
 cache = load_cache()
 
 
-# ---------------- UTILS ----------------
+# =========================================================
+# UTIL
+# =========================================================
 
 def normalize(s):
-    return s.replace('"', '').replace("'", "").strip().lower()
+
+    return (
+        s.replace('"', '')
+        .replace("'", "")
+        .strip()
+        .lower()
+    )
+
+
+def backup_file(file_path, lines):
+
+    backup = (
+        file_path
+        + ".bak_"
+        + datetime.now().strftime("%H%M%S")
+    )
+
+    with open(
+        backup,
+        "w",
+        encoding="utf-8"
+    ) as f:
+
+        f.writelines(lines)
+
+    print(f"[BACKUP] {backup}")
+
 
 def log_edit(file_path, query):
-    with open("edit_log.txt", "a", encoding="utf-8") as f:
-        f.write(f"{datetime.now()} | {file_path} | {query}\n")
 
-def backup_file(file_path, content):
-    backup = file_path + ".bak_" + datetime.now().strftime("%H%M%S")
-    with open(backup, "w", encoding="utf-8") as f:
-        f.writelines(content)
-    print(f"[BACKUP CREATED] {backup}")
+    with open(
+        "edit_log.txt",
+        "a",
+        encoding="utf-8"
+    ) as f:
 
-
-# ---------------- QUERY ----------------
-
-def classify_query(query):
-    q = query.lower()
-
-    if any(k in q for k in ["bug", "error", "fix", "issue", "debug"]):
-        return "debug"
-
-    if any(k in q for k in ["workflow", "flow", "architecture"]):
-        return "deep"
-
-    if any(k in q for k in ["add", "change", "modify", "update", "edit", "replace", "create"]):
-        return "edit"
-
-    return "default"
+        f.write(
+            f"{datetime.now()} | "
+            f"{file_path} | "
+            f"{query}\n"
+        )
 
 
-# ---------------- FILE TARGETING ----------------
+# =========================================================
+# FILE DETECTION
+# =========================================================
 
-def detect_file_from_query(query):
-    match = re.search(r'([\w/\\.-]+\.py)', query)
+def detect_file(query):
+
+    match = re.search(
+        r'([\w/\\.-]+\.py)',
+        query
+    )
+
     if not match:
         return None
 
-    requested = match.group(1)
-    requested_name = os.path.basename(requested)
+    path = match.group(1)
 
-    if os.path.exists(requested):
-        return requested
+    if os.path.exists(path):
+        return path
 
-    for root, dirs, files in os.walk("."):
-        for file in files:
-            if file == requested_name:
-                return os.path.join(root, file)
+    filename = os.path.basename(path)
+
+    for root, _, files in os.walk("."):
+
+        if filename in files:
+
+            return os.path.join(
+                root,
+                filename
+            )
 
     return None
 
 
-def select_target_file(query, results):
+# =========================================================
+# EDIT REQUEST DETECTION
+# =========================================================
+
+def is_edit_request(query):
+
     q = query.lower()
 
-    for r in results:
-        path = r["chunk"]["file"].lower()
-        if any(word in path for word in q.split()):
-            return r["chunk"]["file"]
+    keywords = [
+
+        "edit",
+        "replace",
+        "add after",
+        "insert",
+        "delete"
+
+    ]
+
+    return any(
+        k in q
+        for k in keywords
+    )
+
+
+# =========================================================
+# PARSE EDIT INTENT
+# =========================================================
+
+def parse_intent(query):
+
+    # ---------------- REPLACE ----------------
+
+    replace_match = re.search(
+
+        r'replace\s*-\s*(.*?)\s*-\s*to\s*-\s*(.*)',
+
+        query,
+
+        re.I | re.S
+    )
+
+    if replace_match:
+
+        return {
+
+            "type": "replace",
+
+            "old": replace_match.group(1).strip(),
+
+            "new": replace_match.group(2).strip()
+        }
+
+    # ---------------- INSERT ----------------
+
+    insert_match = re.search(
+
+        r'add\s+after\s*(.*?)\s*->\s*(.*)',
+
+        query,
+
+        re.I | re.S
+    )
+
+    if insert_match:
+
+        return {
+
+            "type": "insert",
+
+            "target": insert_match.group(1).strip(),
+
+            "code": insert_match.group(2).strip()
+        }
 
     return None
 
 
-# ---------------- DIRECT EDIT ----------------
+# =========================================================
+# APPLY EDIT
+# =========================================================
 
-def try_direct_edit(query, file_path):
+def apply_edit(file_path, intent, query):
 
-    pattern = r'replace\s*-\s*(.*?)\s*-\s*to\s*-\s*(.*)'
-    match = re.search(pattern, query, re.IGNORECASE | re.DOTALL)
+    with open(
+        file_path,
+        "r",
+        encoding="utf-8"
+    ) as f:
 
-    if not match:
-        print("[NO DIRECT PATTERN MATCH]")
-        return False
-
-    old = match.group(1).strip()
-    new = match.group(2).strip()
-
-    with open(file_path, "r", encoding="utf-8") as f:
         lines = f.readlines()
 
     original = lines[:]
 
-    # -------- BLOCK REPLACE --------
-    full_text = "".join(lines)
+    applied = False
 
-    if old in full_text:
-        print("[BLOCK MATCH FOUND]")
-        print("\n--- PREVIEW ---")
-        print("OLD BLOCK:", old)
-        print("NEW BLOCK:", new)
+    # =====================================================
+    # REPLACE
+    # =====================================================
 
-        full_text = full_text.replace(old, new)
-        lines = full_text.splitlines(keepends=True)
+    if intent["type"] == "replace":
 
-        backup_file(file_path, original)
+        for i, line in enumerate(lines):
 
-        with open(file_path, "w", encoding="utf-8") as f:
-            f.writelines(lines)
+            if normalize(intent["old"]) == normalize(line):
 
-        print("[BLOCK EDIT APPLIED]")
-        log_edit(file_path, query)
-        return True
+                print("\n[MATCH FOUND]\n")
 
-    # -------- LINE REPLACE --------
-    for i, line in enumerate(lines):
-        if normalize(old) in normalize(line):
+                print("OLD:", line.strip())
 
-            print("\n--- PREVIEW ---")
-            print("OLD:", line.strip())
-            print("NEW:", new)
+                print("NEW:", intent["new"])
 
-            lines[i] = new + "\n"
+                lines[i] = intent["new"] + "\n"
 
-            backup_file(file_path, original)
+                applied = True
 
-            with open(file_path, "w", encoding="utf-8") as f:
-                f.writelines(lines)
+                break
 
-            print("[LINE EDIT APPLIED]")
-            log_edit(file_path, query)
-            return True
+    # =====================================================
+    # INSERT
+    # =====================================================
 
-    print("[DIRECT EDIT FAILED]")
-    return False
+    elif intent["type"] == "insert":
+
+        for i, line in enumerate(lines):
+
+            if normalize(intent["target"]) in normalize(line):
+
+                print("\n[INSERT AFTER]\n")
+
+                print("TARGET:", line.strip())
+
+                print("INSERT:", intent["code"])
+
+                indent = (
+                    len(line)
+                    - len(line.lstrip())
+                )
+
+                spaces = " " * indent
+
+                lines.insert(
+
+                    i + 1,
+
+                    spaces
+                    + intent["code"]
+                    + "\n"
+                )
+
+                applied = True
+
+                break
+
+    # =====================================================
+    # FAIL
+    # =====================================================
+
+    if not applied:
+
+        print("[ABORTED: target not found]")
+
+        return
+
+    # =====================================================
+    # SAVE
+    # =====================================================
+
+    backup_file(
+        file_path,
+        original
+    )
+
+    with open(
+        file_path,
+        "w",
+        encoding="utf-8"
+    ) as f:
+
+        f.writelines(lines)
+
+    log_edit(
+        file_path,
+        query
+    )
+
+    print("\n[EDIT APPLIED]\n")
 
 
-# ---------------- LLM ----------------
+# =========================================================
+# RETRIEVAL MODE
+# =========================================================
 
-def call_llm(model, prompt):
+def detect_retrieval_mode(query):
+
+    q = query.lower()
+
+    graph_keywords = [
+
+        "dependency",
+        "dependencies",
+        "workflow",
+        "flow",
+        "impact",
+        "connected",
+        "relation",
+        "relations",
+        "trace",
+        "architecture",
+        "linked",
+        "what uses",
+        "depends on",
+        "break if",
+        "affected by"
+
+    ]
+
+    for keyword in graph_keywords:
+
+        if keyword in q:
+
+            return "graph"
+
+    return "hybrid"
+
+
+# =========================================================
+# ANALYSIS TYPE
+# =========================================================
+
+def detect_analysis_type(query):
+
+    q = query.lower()
+
+    if (
+        "bug" in q
+        or "issue" in q
+        or "problem" in q
+    ):
+
+        return "bug"
+
+    if (
+        "workflow" in q
+        or "flow" in q
+        or "trace" in q
+    ):
+
+        return "workflow"
+
+    if (
+        "dependency" in q
+        or "depends" in q
+        or "connected" in q
+        or "impact" in q
+    ):
+
+        return "dependency"
+
+    return "general"
+
+
+# =========================================================
+# PROMPTS
+# =========================================================
+
+def build_bug_prompt(query, context):
+
+    return f"""
+Find possible bugs using ONLY the context.
+
+QUERY:
+{query}
+
+CONTEXT:
+{context}
+"""
+
+
+def build_workflow_prompt(query, context):
+
+    return f"""
+Explain workflow using ONLY the context.
+
+QUERY:
+{query}
+
+CONTEXT:
+{context}
+"""
+
+
+def build_dependency_prompt(query, context):
+
+    return f"""
+Analyze dependencies using ONLY the context.
+
+QUERY:
+{query}
+
+CONTEXT:
+{context}
+"""
+
+
+def build_general_prompt(query, context):
+
+    return f"""
+Answer using ONLY the provided context.
+
+QUERY:
+{query}
+
+CONTEXT:
+{context}
+"""
+
+
+# =========================================================
+# PROMPT ROUTER
+# =========================================================
+
+def build_prompt(query, context):
+
+    analysis_type = detect_analysis_type(query)
+
+    if analysis_type == "bug":
+
+        return build_bug_prompt(
+            query,
+            context
+        )
+
+    if analysis_type == "workflow":
+
+        return build_workflow_prompt(
+            query,
+            context
+        )
+
+    if analysis_type == "dependency":
+
+        return build_dependency_prompt(
+            query,
+            context
+        )
+
+    return build_general_prompt(
+        query,
+        context
+    )
+
+
+# =========================================================
+# LLM
+# =========================================================
+
+def call_llm(prompt):
+
     payload = {
-        "model": model,
+
+        "model": MODEL,
+
         "prompt": prompt,
+
         "stream": False,
+
         "options": {
-            "num_predict": 300,
-            "temperature": 0.2
+
+            "temperature": 0.2,
+
+            "num_predict": 1000
         }
     }
 
     try:
-        res = requests.post(OLLAMA_URL, json=payload, timeout=TIMEOUT)
-        return res.json().get("response", "").strip()
+
+        res = requests.post(
+
+            OLLAMA_URL,
+
+            json=payload,
+
+            timeout=TIMEOUT
+        )
+
+        return res.json().get(
+            "response",
+            ""
+        )
+
     except Exception as e:
+
         return f"[ERROR] {e}"
 
 
-def build_edit_prompt(query, file_path, code):
-    return f"""
-Modify ONLY this file.
+# =========================================================
+# ANALYSIS
+# =========================================================
 
-FILE:
-{file_path}
+def run_analysis(
+    query,
+    results,
+    retrieval_mode,
+    retrieval_time
+):
 
-CODE:
-{code}
+    cache_key = build_cache_key(
+        query,
+        retrieval_mode
+    )
 
-Return ONLY JSON:
+    # =====================================================
+    # CACHE HIT
+    # =====================================================
 
-{{
-  "operations": [
-    {{
-      "type": "replace_line",
-      "target": "exact line",
-      "code": "new line"
-    }},
-    {{
-      "type": "insert_after",
-      "target": "exact line",
-      "code": "new line"
-    }}
-  ]
-}}
+    if cache_key in cache:
 
-Rules:
-- Use replace_line ONLY if replacing
-- Use insert_after ONLY if adding
-- Do not mix both unnecessarily
-- No explanation
-- Only JSON
+        print("\n[CACHE HIT]\n")
 
-Query:
-{query}
+        print(cache[cache_key])
+
+        print("\n------------------------")
+
+        print(
+            "Retrieval Time: 0.0s"
+        )
+
+        print(
+            "LLM Time: 0.0s"
+        )
+
+        print(
+            "Total Time: CACHE"
+        )
+
+        print("------------------------")
+
+        return
+
+    # =====================================================
+    # BUILD CONTEXT
+    # =====================================================
+
+    context = ""
+
+    for r in results:
+
+        chunk = r["chunk"]
+
+        context += f"""
+
+FILE: {chunk['file']}
+
+NAME: {chunk['name']}
+
+{chunk['code'][:1200]}
+
+-------------------
 """
 
-def extract_json(text):
-    try:
-        return json.loads(text)
-    except:
-        match = re.search(r'\{.*\}', text, re.DOTALL)
-        if match:
-            try:
-                return json.loads(match.group())
-            except:
-                return None
-    return None
+    # =====================================================
+    # PROMPT
+    # =====================================================
+
+    prompt = build_prompt(
+        query,
+        context
+    )
+
+    # =====================================================
+    # LLM
+    # =====================================================
+
+    llm_start = time.time()
+
+    response = call_llm(prompt)
+
+    llm_end = time.time()
+
+    llm_time = round(
+        llm_end - llm_start,
+        2
+    )
+
+    total_time = round(
+        retrieval_time + llm_time,
+        2
+    )
+
+    print(f"LLM Time: {llm_time}s")
+
+    total_time = retrieval_time + llm_time
+
+    print(f"Total Time: {total_time}s")
 
 
-def apply_operations(file_path, edit_json):
+    if response.strip():
 
-    if not edit_json or "operations" not in edit_json:
-        print("[INVALID JSON]")
-        return
+        print(response)
 
-    with open(file_path, "r", encoding="utf-8") as f:
-        lines = f.readlines()
+        print("\n------------------------")
 
-    original = lines[:]
+        print(
+            f"Retrieval Time: "
+            f"{retrieval_time}s"
+        )
 
-    for op in edit_json["operations"]:
-        op_type = op["type"]
-        target = op["target"]
-        code = op["code"]
+        print(
+            f"LLM Time: "
+            f"{llm_time}s"
+        )
 
-        for i, line in enumerate(lines):
+        print(
+            f"Total Time: "
+            f"{total_time}s"
+        )
 
-            if target.strip() in line.strip():
+        print(
+            f"Retrieval Mode: "
+            f"{retrieval_mode}"
+        )
 
-                print("[LLM EDIT MATCH FOUND]")
+        print("------------------------")
 
-                if op_type == "replace_line":
-                    lines[i] = code + "\n"
+        cache[cache_key] = response
 
-                elif op_type == "insert_after":
-                    lines.insert(i + 1, code + "\n")
+        save_cache(cache)
 
-                break
-
-    backup_file(file_path, original)
-
-    with open(file_path, "w", encoding="utf-8") as f:
-        f.writelines(lines)
-
-    print("[LLM EDIT APPLIED]")
-
-
-# ---------------- EDIT FLOW ----------------
-
-def run_edit_flow(query, results):
-
-    target_file = detect_file_from_query(query)
-
-    if not target_file:
-        target_file = select_target_file(query, results)
-
-    if not target_file:
-        print("[NO FILE FOUND]")
-        return
-
-    print(f"\nTarget File: {target_file}")
-
-    # STEP 1 — DIRECT EDIT
-    
-    success = try_direct_edit(query, target_file)
-
-    if success:
-        return
-
-    # 🚫 STOP unsafe fallback for replace queries
-    if "replace" in query.lower():
-        print("[ABORTED: TARGET NOT FOUND]")
-        return
-
-    # STEP 2 — LLM FALLBACK (only safe ops like add)
-    print("[USING LLM FALLBACK]")
-
-    code = open(target_file, "r", encoding="utf-8").read()
-    prompt = build_edit_prompt(query, target_file, code)
-
-    response = call_llm(MODELS["power"], prompt)
-    edit_json = extract_json(response)
-
-    if edit_json:
-        apply_operations(target_file, edit_json)
     else:
-        print("[FAILED: LLM COULD NOT FIX]")
+
+        print("[EMPTY RESPONSE]")
 
 
-# ---------------- MAIN ----------------
+# =========================================================
+# MAIN
+# =========================================================
 
 def main():
-    print("\nRAG MODE ~~~ \n")
+
+    print("\nRAG ENGINE V2 (STABLE)\n")
 
     while True:
-        print("------------------------")
+
         query = input("\nQuery: ")
-        print("------------------------")
+
         if query.lower() == "exit":
             break
 
-        qtype = classify_query(query)
+        # =================================================
+        # EDIT MODE
+        # =================================================
 
-        results = hybrid_search(query, top_k=4)
+        if is_edit_request(query):
 
-        print("\nRetrieved:")
-        for r in results:
-            print("-", r["chunk"]["name"])
+            file_path = detect_file(query)
 
-        print("\nThinking...\n")
+            if not file_path:
 
-        if qtype == "edit":
-            run_edit_flow(query, results)
+                print("[FILE NOT FOUND]")
+
+                continue
+
+            intent = parse_intent(query)
+
+            if not intent:
+
+                print("[INVALID EDIT FORMAT]")
+
+                continue
+
+            print(f"\nTarget File: {file_path}")
+
+            apply_edit(
+                file_path,
+                intent,
+                query
+            )
+
+        # =================================================
+        # ANALYSIS MODE
+        # =================================================
+
         else:
-            print("Analysis mode not implemented.")
 
+            retrieval_mode = detect_retrieval_mode(query)
+
+            print(
+                f"\nRetrieval Mode: "
+                f"{retrieval_mode}"
+            )
+
+            # ---------------------------------------------
+
+            retrieval_start = time.time()
+
+            if retrieval_mode == "graph":
+
+                results = graph_search(query)
+
+            else:
+
+                results = hybrid_search(
+                    query,
+                    top_k=4
+                )
+
+            retrieval_end = time.time()
+
+            retrieval_time = round(
+                retrieval_end - retrieval_start,
+                2
+            )
+
+            print(f"Retrieval Time: {retrieval_time}s")
+
+            print("\nRetrieved:")
+
+            for r in results:
+
+                print(
+                    "-",
+                    r["chunk"]["name"]
+                )
+
+            print("\nThinking...\n")
+
+            run_analysis(
+                query,
+                results,
+                retrieval_mode,
+                retrieval_time
+            )
+
+
+# =========================================================
+# START
+# =========================================================
 
 if __name__ == "__main__":
+
     main()
