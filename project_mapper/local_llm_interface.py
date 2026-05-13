@@ -10,10 +10,6 @@ from hybrid_retriever import hybrid_search
 from graph_retriever import graph_search
 
 
-# =========================================================
-# CONFIG
-# =========================================================
-
 OLLAMA_URL = "http://localhost:11434/api/generate"
 
 MODEL = "llama3:latest"
@@ -22,10 +18,6 @@ TIMEOUT = 600
 
 CACHE_FILE = "llm_cache.json"
 
-
-# =========================================================
-# CACHE
-# =========================================================
 
 def load_cache():
 
@@ -71,10 +63,6 @@ def build_cache_key(query, retrieval_mode):
 cache = load_cache()
 
 
-# =========================================================
-# UTIL
-# =========================================================
-
 def normalize(s):
 
     return (
@@ -119,10 +107,6 @@ def log_edit(file_path, query):
         )
 
 
-# =========================================================
-# FILE DETECTION
-# =========================================================
-
 def detect_file(query):
 
     match = re.search(
@@ -152,10 +136,6 @@ def detect_file(query):
     return None
 
 
-# =========================================================
-# EDIT REQUEST DETECTION
-# =========================================================
-
 def is_edit_request(query):
 
     q = query.lower()
@@ -176,13 +156,7 @@ def is_edit_request(query):
     )
 
 
-# =========================================================
-# PARSE EDIT INTENT
-# =========================================================
-
 def parse_intent(query):
-
-    # ---------------- REPLACE ----------------
 
     replace_match = re.search(
 
@@ -203,8 +177,6 @@ def parse_intent(query):
 
             "new": replace_match.group(2).strip()
         }
-
-    # ---------------- INSERT ----------------
 
     insert_match = re.search(
 
@@ -229,10 +201,6 @@ def parse_intent(query):
     return None
 
 
-# =========================================================
-# APPLY EDIT
-# =========================================================
-
 def apply_edit(file_path, intent, query):
 
     with open(
@@ -247,21 +215,11 @@ def apply_edit(file_path, intent, query):
 
     applied = False
 
-    # =====================================================
-    # REPLACE
-    # =====================================================
-
     if intent["type"] == "replace":
 
         for i, line in enumerate(lines):
 
             if normalize(intent["old"]) == normalize(line):
-
-                print("\n[MATCH FOUND]\n")
-
-                print("OLD:", line.strip())
-
-                print("NEW:", intent["new"])
 
                 lines[i] = intent["new"] + "\n"
 
@@ -269,21 +227,11 @@ def apply_edit(file_path, intent, query):
 
                 break
 
-    # =====================================================
-    # INSERT
-    # =====================================================
-
     elif intent["type"] == "insert":
 
         for i, line in enumerate(lines):
 
             if normalize(intent["target"]) in normalize(line):
-
-                print("\n[INSERT AFTER]\n")
-
-                print("TARGET:", line.strip())
-
-                print("INSERT:", intent["code"])
 
                 indent = (
                     len(line)
@@ -305,19 +253,11 @@ def apply_edit(file_path, intent, query):
 
                 break
 
-    # =====================================================
-    # FAIL
-    # =====================================================
-
     if not applied:
 
         print("[ABORTED: target not found]")
 
         return
-
-    # =====================================================
-    # SAVE
-    # =====================================================
 
     backup_file(
         file_path,
@@ -339,10 +279,6 @@ def apply_edit(file_path, intent, query):
 
     print("\n[EDIT APPLIED]\n")
 
-
-# =========================================================
-# RETRIEVAL MODE
-# =========================================================
 
 def detect_retrieval_mode(query):
 
@@ -377,10 +313,6 @@ def detect_retrieval_mode(query):
     return "hybrid"
 
 
-# =========================================================
-# ANALYSIS TYPE
-# =========================================================
-
 def detect_analysis_type(query):
 
     q = query.lower()
@@ -406,6 +338,7 @@ def detect_analysis_type(query):
         or "depends" in q
         or "connected" in q
         or "impact" in q
+        or "break" in q
     ):
 
         return "dependency"
@@ -413,100 +346,94 @@ def detect_analysis_type(query):
     return "general"
 
 
-# =========================================================
-# PROMPTS
-# =========================================================
-
-def build_bug_prompt(query, context):
+def build_prompt(query, context, analysis_type):
 
     return f"""
-Find possible bugs using ONLY the context.
+You are a senior Django codebase assistant.
+
+Answer the query directly.
+
+Rules:
+- Be short and technical
+- Do not write sections
+- Do not explain obvious things
+- Do not say "Based on the provided context"
+- Do not say "The codebase appears to"
+- Do not hallucinate
+- If unsure, say "Not found in retrieved context"
 
 QUERY:
 {query}
 
 CONTEXT:
 {context}
+
+Direct answer:
 """
 
+def build_context(results):
 
-def build_workflow_prompt(query, context):
+    context = ""
 
-    return f"""
-Explain workflow using ONLY the context.
+    seen = set()
 
-QUERY:
-{query}
+    for r in results:
 
-CONTEXT:
-{context}
+        # GRAPH RETRIEVER FORMAT
+        if "chunk" in r:
+
+            chunk = r["chunk"]
+
+            key = (
+                chunk.get("file"),
+                chunk.get("name")
+            )
+
+            if key in seen:
+                continue
+
+            seen.add(key)
+
+            context += f"""
+
+NAME: {chunk.get('name')}
+
+TYPE: {chunk.get('type')}
+
+FILE: {chunk.get('file')}
+
+RELATED MODELS:
+{", ".join(chunk.get("related_models", [])) or "None"}
+
+RELATED FUNCTIONS:
+{", ".join(chunk.get("related_functions", [])) or "None"}
+
+CODE:
+{chunk.get("code", "")[:1200]} 
+
+-----------------------------------
 """
 
+        # HYBRID / SEMANTIC FORMAT
+        elif "text" in r:
 
-def build_dependency_prompt(query, context):
+            text = r.get("text", "")
 
-    return f"""
-Analyze dependencies using ONLY the context.
+            if text in seen:
+                continue
 
-QUERY:
-{query}
+            seen.add(text)
 
-CONTEXT:
-{context}
+            context += f"""
+
+CODE:
+{text[:2000]}
+
+-----------------------------------
 """
 
+    return context
 
-def build_general_prompt(query, context):
-
-    return f"""
-Answer using ONLY the provided context.
-
-QUERY:
-{query}
-
-CONTEXT:
-{context}
-"""
-
-
-# =========================================================
-# PROMPT ROUTER
-# =========================================================
-
-def build_prompt(query, context):
-
-    analysis_type = detect_analysis_type(query)
-
-    if analysis_type == "bug":
-
-        return build_bug_prompt(
-            query,
-            context
-        )
-
-    if analysis_type == "workflow":
-
-        return build_workflow_prompt(
-            query,
-            context
-        )
-
-    if analysis_type == "dependency":
-
-        return build_dependency_prompt(
-            query,
-            context
-        )
-
-    return build_general_prompt(
-        query,
-        context
-    )
-
-
-# =========================================================
-# LLM
-# =========================================================
 
 def call_llm(prompt):
 
@@ -522,7 +449,7 @@ def call_llm(prompt):
 
             "temperature": 0.2,
 
-            "num_predict": 1000
+            "num_predict": 600
         }
     }
 
@@ -547,10 +474,6 @@ def call_llm(prompt):
         return f"[ERROR] {e}"
 
 
-# =========================================================
-# ANALYSIS
-# =========================================================
-
 def run_analysis(
     query,
     results,
@@ -563,67 +486,23 @@ def run_analysis(
         retrieval_mode
     )
 
-    # =====================================================
-    # CACHE HIT
-    # =====================================================
-
     if cache_key in cache:
 
         print("\n[CACHE HIT]\n")
 
         print(cache[cache_key])
 
-        print("\n------------------------")
-
-        print(
-            "Retrieval Time: 0.0s"
-        )
-
-        print(
-            "LLM Time: 0.0s"
-        )
-
-        print(
-            "Total Time: CACHE"
-        )
-
-        print("------------------------")
-
         return
 
-    # =====================================================
-    # BUILD CONTEXT
-    # =====================================================
+    analysis_type = detect_analysis_type(query)
 
-    context = ""
-
-    for r in results:
-
-        chunk = r["chunk"]
-
-        context += f"""
-
-FILE: {chunk['file']}
-
-NAME: {chunk['name']}
-
-{chunk['code'][:1200]}
-
--------------------
-"""
-
-    # =====================================================
-    # PROMPT
-    # =====================================================
+    context = build_context(results)
 
     prompt = build_prompt(
         query,
-        context
+        context,
+        analysis_type
     )
-
-    # =====================================================
-    # LLM
-    # =====================================================
 
     llm_start = time.time()
 
@@ -641,40 +520,11 @@ NAME: {chunk['name']}
         2
     )
 
-    print(f"LLM Time: {llm_time}s")
-
-    total_time = retrieval_time + llm_time
-
-    print(f"Total Time: {total_time}s")
-
+    print("\n=================================\n")
 
     if response.strip():
 
         print(response)
-
-        print("\n------------------------")
-
-        print(
-            f"Retrieval Time: "
-            f"{retrieval_time}s"
-        )
-
-        print(
-            f"LLM Time: "
-            f"{llm_time}s"
-        )
-
-        print(
-            f"Total Time: "
-            f"{total_time}s"
-        )
-
-        print(
-            f"Retrieval Mode: "
-            f"{retrieval_mode}"
-        )
-
-        print("------------------------")
 
         cache[cache_key] = response
 
@@ -684,14 +534,20 @@ NAME: {chunk['name']}
 
         print("[EMPTY RESPONSE]")
 
+    print("\n=================================\n")
 
-# =========================================================
-# MAIN
-# =========================================================
+    print(f"Retrieval Mode: {retrieval_mode}")
+
+    print(f"Retrieval Time: {retrieval_time}s")
+
+    print(f"LLM Time: {llm_time}s")
+
+    print(f"Total Time: {total_time}s")
+
 
 def main():
 
-    print("\nRAG ENGINE V2 (STABLE)\n")
+    print("\nRAG ENGINE\n")
 
     while True:
 
@@ -700,9 +556,7 @@ def main():
         if query.lower() == "exit":
             break
 
-        # =================================================
-        # EDIT MODE
-        # =================================================
+        print("\nTHINKING...")
 
         if is_edit_request(query):
 
@@ -730,20 +584,9 @@ def main():
                 query
             )
 
-        # =================================================
-        # ANALYSIS MODE
-        # =================================================
-
         else:
 
             retrieval_mode = detect_retrieval_mode(query)
-
-            print(
-                f"\nRetrieval Mode: "
-                f"{retrieval_mode}"
-            )
-
-            # ---------------------------------------------
 
             retrieval_start = time.time()
 
@@ -753,10 +596,7 @@ def main():
 
             else:
 
-                results = hybrid_search(
-                    query,
-                    top_k=4
-                )
+                results = hybrid_search(query)
 
             retrieval_end = time.time()
 
@@ -765,18 +605,11 @@ def main():
                 2
             )
 
-            print(f"Retrieval Time: {retrieval_time}s")
+            if not results:
 
-            print("\nRetrieved:")
+                print("\n[NO RESULTS FOUND]\n")
 
-            for r in results:
-
-                print(
-                    "-",
-                    r["chunk"]["name"]
-                )
-
-            print("\nThinking...\n")
+                continue
 
             run_analysis(
                 query,
@@ -785,10 +618,6 @@ def main():
                 retrieval_time
             )
 
-
-# =========================================================
-# START
-# =========================================================
 
 if __name__ == "__main__":
 

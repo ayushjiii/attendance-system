@@ -7,14 +7,18 @@ from sentence_transformers import (
 )
 
 
+# =========================================================
 # FILE
+# =========================================================
 
 EMBEDDINGS_FILE = Path(
     "snapshots/hybrid/chunk_embeddings.json"
 )
 
 
+# =========================================================
 # LOAD EMBEDDINGS
+# =========================================================
 
 with open(
     EMBEDDINGS_FILE,
@@ -25,40 +29,36 @@ with open(
     embedded_chunks = json.load(f)
 
 
+# =========================================================
 # LOAD MODEL
+# =========================================================
 
-print(
-    "\nLOADING EMBEDDING MODEL...\n"
-)
+print("\nLOADING EMBEDDING MODEL...\n")
 
 model = SentenceTransformer(
     "all-MiniLM-L6-v2"
 )
 
 
-
+# =========================================================
 # COSINE SIMILARITY
-
+# =========================================================
 
 def cosine_similarity(
-
 
     vector_a,
 
     vector_b
 ):
 
-
     vector_a = np.array(vector_a)
 
     vector_b = np.array(vector_b)
-
 
     numerator = np.dot(
         vector_a,
         vector_b
     )
-
 
     denominator = (
 
@@ -70,38 +70,27 @@ def cosine_similarity(
 
     )
 
-
     return numerator / denominator
 
 
-
+# =========================================================
 # SEMANTIC SEARCH
-
+# =========================================================
 
 def semantic_search(
-
 
     query,
 
     top_k=5
 ):
 
-    # EMBED QUERY
-
     query_embedding = model.encode(
         query
     )
 
-
     results = []
 
-
-
-    # COMPARE AGAINST CHUNKS
-
-
     for chunk in embedded_chunks:
-
 
         similarity = cosine_similarity(
 
@@ -110,16 +99,12 @@ def semantic_search(
             chunk["embedding"]
         )
 
-
         results.append({
 
             "similarity": similarity,
 
             "chunk": chunk
         })
-
-
-    # SORT RESULTS
 
     results.sort(
 
@@ -128,29 +113,24 @@ def semantic_search(
         reverse=True
     )
 
-
     return results[:top_k]
 
 
-
-# DISPLAY
-
+# =========================================================
+# OPTIONAL DEBUG DISPLAY
+# =========================================================
 
 def display_results(results):
-
 
     print("\n=================================")
     print("SEMANTIC RETRIEVAL RESULTS")
     print("=================================")
 
-
     for result in results:
-
 
         similarity = result["similarity"]
 
         chunk = result["chunk"]
-
 
         print(f"\nNAME: {chunk['name']}")
 
@@ -163,9 +143,7 @@ def display_results(results):
             f"{similarity:.4f}"
         )
 
-
         print("\nRELATED MODELS:")
-
 
         if chunk["related_models"]:
 
@@ -179,9 +157,7 @@ def display_results(results):
 
             print("- None")
 
-
         print("\nRELATED FUNCTIONS:")
-
 
         if chunk["related_functions"]:
 
@@ -195,7 +171,6 @@ def display_results(results):
 
             print("- None")
 
-
         print("\nCODE:\n")
 
         print(chunk["code"])
@@ -203,31 +178,27 @@ def display_results(results):
         print("\n" + "=" * 40)
 
 
-# MENU
+# =========================================================
+# TEST MODE ONLY
+# =========================================================
 
+if __name__ == "__main__":
 
-print("\nSEMANTIC RETRIEVER\n")
+    print("\nSEMANTIC RETRIEVER\n")
 
+    while True:
 
-while True:
+        query = input(
+            "\nEnter semantic query "
+            "(or 'exit'): "
+        )
 
+        if query.lower() == "exit":
 
-    query = input(
+            break
 
-        "\nEnter semantic query "
-        "(or 'exit'): "
+        results = semantic_search(
+            query
+        )
 
-    )
-
-
-    if query.lower() == "exit":
-
-        break
-
-
-    results = semantic_search(
-        query
-    )
-
-
-    display_results(results)
+        display_results(results)

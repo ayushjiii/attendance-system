@@ -1,11 +1,15 @@
-from pathlib import Path
 import json
+from collections import deque
+from pathlib import Path
 
+
+# =========================================================
+# LOAD GRAPH
+# =========================================================
 
 GRAPH_FILE = Path(
-    "snapshots/hybrid/filtered_call_graph.json"
+    "snapshots/unified/unified_graph.json"
 )
-
 
 with open(
     GRAPH_FILE,
@@ -16,61 +20,290 @@ with open(
     graph = json.load(f)
 
 
-def graph_search(query, max_connections=10):
+nodes = graph["nodes"]
+
+edges = graph["edges"]
+
+
+# =========================================================
+# BUILD ADJACENCY
+# =========================================================
+
+adjacency = {}
+
+for edge in edges:
+
+    source = edge["source"]
+
+    if source not in adjacency:
+
+        adjacency[source] = []
+
+    adjacency[source].append({
+
+        "target": edge["target"],
+
+        "relation": edge["relation"]
+    })
+
+
+# =========================================================
+# SEARCH MATCHES
+# =========================================================
+
+def find_start_nodes(query):
 
     q = query.lower()
 
-    matched_nodes = []
+    scored = []
 
-    connected_nodes = set()
+    for node_id, data in nodes.items():
+
+        score = 0
+
+        node_lower = node_id.lower()
+
+        file_lower = data["file"].lower()
+
+        type_lower = data["type"].lower()
+
+        # =================================================
+        # DIRECT NODE MATCH
+        # =================================================
+
+        for word in q.split():
+
+            if word in node_lower:
+
+                score += 10
+
+            if word in file_lower:
+
+                score += 4
+
+            if word == type_lower:
+
+                score += 6
+
+        # =================================================
+        # IMPORTANT TYPE BOOSTS
+        # =================================================
+
+        if "workflow" in q:
+
+            if type_lower in [
+
+                "view",
+                "function",
+                "model"
+
+            ]:
+
+                score += 8
+
+        if "dependency" in q or "break" in q:
+
+            if type_lower in [
+
+                "model",
+                "view"
+
+            ]:
+
+                score += 10
+
+        if "attendance" in q:
+
+            if "attendance" in node_lower:
+
+                score += 20
+
+            if "attendance" in file_lower:
+
+                score += 12
+
+        # =================================================
+        # NOISE PENALTY
+        # =================================================
+
+        noise_words = [
+
+            "builder",
+            "mapper",
+            "helper",
+            "utils",
+            "__init__"
+
+        ]
+
+        for noise in noise_words:
+
+            if noise in node_lower:
+
+                score -= 15
+
+        # =================================================
+        # KEEP
+        # =================================================
+
+        if score > 0:
+
+            scored.append(
+
+                (
+                    score,
+                    node_id
+                )
+            )
+
+    scored.sort(reverse=True)
+
+    return [
+
+        node
+
+        for _, node in scored[:10]
+    ]
+
+
+# =========================================================
+# BFS TRAVERSAL
+# =========================================================
+
+def bfs_paths(start_node, max_depth=4):
+
+    queue = deque()
+
+    queue.append(
+
+        (
+            start_node,
+            [],
+            0
+        )
+    )
+
+    visited = set()
 
     results = []
 
+    while queue:
 
-    # MATCH ROOT NODES
+        current, path, depth = queue.popleft()
 
-    for node in graph:
+        if depth > max_depth:
 
-        if q in node.lower():
+            continue
 
-            matched_nodes.append(node)
+        if current in visited:
 
+            continue
 
-    # TRAVERSE CONNECTIONS
+        visited.add(current)
 
-    for node in matched_nodes:
+        neighbors = adjacency.get(current, [])
 
-        connected_nodes.add(node)
+        for neighbor in neighbors:
 
-        for callee in graph.get(node, []):
+            nxt = neighbor["target"]
 
-            connected_nodes.add(callee)
+            relation = neighbor["relation"]
 
-            if len(connected_nodes) >= max_connections:
-                break
+            step = {
 
+                "from": current,
 
-    # FORMAT RESULTS
+                "relation": relation,
 
-    for node in connected_nodes:
-
-        connections = graph.get(node, [])
-
-        code_preview = "\n".join(
-            [f"calls -> {c}" for c in connections[:5]]
-        )
-
-        results.append({
-
-            "chunk": {
-
-                "name": node,
-
-                "file": "graph_relation",
-
-                "code": code_preview
+                "to": nxt
             }
 
-        })
+            new_path = path + [step]
+
+            results.append(new_path)
+
+            queue.append(
+
+                (
+                    nxt,
+                    new_path,
+                    depth + 1
+                )
+            )
 
     return results
+
+
+# =========================================================
+# GRAPH SEARCH
+# =========================================================
+
+def graph_search(query):
+
+    matched_nodes = find_start_nodes(query)
+
+    results = []
+
+    for node in matched_nodes[:5]:
+
+        paths = bfs_paths(node)
+
+        for path in paths[:10]:
+
+            formatted = []
+
+            for step in path:
+
+                formatted.append(
+
+                    f"{step['from']}"
+                    f"\n--[{step['relation']}]-->\n"
+                    f"{step['to']}"
+                )
+
+            formatted_text = "\n\n".join(formatted)
+
+            results.append({
+
+                "chunk": {
+
+                    "name": node,
+
+                    "file": nodes.get(
+                        node,
+                        {}
+                    ).get(
+                        "file",
+                        ""
+                    ),
+
+                    "code": formatted_text
+                }
+            })
+
+    return results
+
+
+# =========================================================
+# TEST
+# =========================================================
+
+if __name__ == "__main__":
+
+    while True:
+
+        q = input("\nQuery: ")
+
+        if q == "exit":
+
+            break
+
+        results = graph_search(q)
+
+        print("\nRESULTS\n")
+
+        for r in results:
+
+            print("=" * 50)
+
+            print(r["chunk"]["code"])

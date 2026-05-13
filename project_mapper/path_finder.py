@@ -39,6 +39,7 @@ for model, relation_list in relationships.items():
 
         graph.add_edge(model, target)
 
+## okkk
 
 # setp 3 - path finder function
 

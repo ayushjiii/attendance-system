@@ -1,0 +1,4006 @@
+{
+    "nodes": {
+        "manage.main": {
+            "id": "manage.main",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\manage.py"
+        },
+        "admin.EmployeeAdmin": {
+            "id": "admin.EmployeeAdmin",
+            "type": "admin",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\admin.py"
+        },
+        "class.AccountsConfig": {
+            "id": "class.AccountsConfig",
+            "type": "class",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\apps.py"
+        },
+        "form.EmployeeCreationForm": {
+            "id": "form.EmployeeCreationForm",
+            "type": "form",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\forms.py"
+        },
+        "class.Meta": {
+            "id": "class.Meta",
+            "type": "class",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\forms.py"
+        },
+        "forms.__init__": {
+            "id": "forms.__init__",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\forms.py"
+        },
+        "class.EditProfileForm": {
+            "id": "class.EditProfileForm",
+            "type": "class",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\forms.py"
+        },
+        "class.Employee": {
+            "id": "class.Employee",
+            "type": "class",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\models.py"
+        },
+        "models.save": {
+            "id": "models.save",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\models.py"
+        },
+        "models.__str__": {
+            "id": "models.__str__",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\models.py"
+        },
+        "models.is_admin_role": {
+            "id": "models.is_admin_role",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\models.py"
+        },
+        "url:login/": {
+            "id": "url:login/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\urls.py"
+        },
+        "url:logout/": {
+            "id": "url:logout/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\urls.py"
+        },
+        "url:employees/": {
+            "id": "url:employees/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\urls.py"
+        },
+        "url:employees/create/": {
+            "id": "url:employees/create/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\urls.py"
+        },
+        "url:profile/": {
+            "id": "url:profile/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\urls.py"
+        },
+        "url:profile/change-password/": {
+            "id": "url:profile/change-password/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\urls.py"
+        },
+        "url:profile/edit/": {
+            "id": "url:profile/edit/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\urls.py"
+        },
+        "views.login_view": {
+            "id": "views.login_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py"
+        },
+        "views.logout_view": {
+            "id": "views.logout_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py"
+        },
+        "views.create_employee_view": {
+            "id": "views.create_employee_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py"
+        },
+        "views.employee_list_view": {
+            "id": "views.employee_list_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py"
+        },
+        "views.profile_view": {
+            "id": "views.profile_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py"
+        },
+        "views.change_password_view": {
+            "id": "views.change_password_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py"
+        },
+        "views.edit_profile_view": {
+            "id": "views.edit_profile_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py"
+        },
+        "class.AttendanceRecordAdmin": {
+            "id": "class.AttendanceRecordAdmin",
+            "type": "class",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\admin.py"
+        },
+        "class.AttendanceConfig": {
+            "id": "class.AttendanceConfig",
+            "type": "class",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\apps.py"
+        },
+        "model.AttendanceRecord": {
+            "id": "model.AttendanceRecord",
+            "type": "model",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\models.py"
+        },
+        "models.calculate_working_hours": {
+            "id": "models.calculate_working_hours",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\models.py"
+        },
+        "models.is_checked_in": {
+            "id": "models.is_checked_in",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\models.py"
+        },
+        "models.is_checked_out": {
+            "id": "models.is_checked_out",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\models.py"
+        },
+        "url:check-in/": {
+            "id": "url:check-in/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\urls.py"
+        },
+        "url:check-out/": {
+            "id": "url:check-out/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\urls.py"
+        },
+        "url:history/": {
+            "id": "url:history/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\urls.py"
+        },
+        "url:all-attendance/": {
+            "id": "url:all-attendance/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\urls.py"
+        },
+        "utils.get_client_ip": {
+            "id": "utils.get_client_ip",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\utils.py"
+        },
+        "utils.is_office_ip": {
+            "id": "utils.is_office_ip",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\utils.py"
+        },
+        "utils.calculate_distance_meters": {
+            "id": "utils.calculate_distance_meters",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\utils.py"
+        },
+        "utils.is_within_office_radius": {
+            "id": "utils.is_within_office_radius",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\utils.py"
+        },
+        "utils.get_device_info": {
+            "id": "utils.get_device_info",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\utils.py"
+        },
+        "views.dashboard_view": {
+            "id": "views.dashboard_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\views.py"
+        },
+        "views.check_in_view": {
+            "id": "views.check_in_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\views.py"
+        },
+        "views.check_out_view": {
+            "id": "views.check_out_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\views.py"
+        },
+        "views.attendance_history_view": {
+            "id": "views.attendance_history_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\views.py"
+        },
+        "views.admin_attendance_view": {
+            "id": "views.admin_attendance_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\views.py"
+        },
+        "attendance_filters.format_hours": {
+            "id": "attendance_filters.format_hours",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance\\templatetags\\attendance_filters.py"
+        },
+        "url:admin/": {
+            "id": "url:admin/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\attendance_system\\urls.py"
+        },
+        "class.HolidayAdmin": {
+            "id": "class.HolidayAdmin",
+            "type": "class",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\holidays\\admin.py"
+        },
+        "class.HolidaysConfig": {
+            "id": "class.HolidaysConfig",
+            "type": "class",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\holidays\\apps.py"
+        },
+        "class.HolidayForm": {
+            "id": "class.HolidayForm",
+            "type": "class",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\holidays\\forms.py"
+        },
+        "model.Holiday": {
+            "id": "model.Holiday",
+            "type": "model",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\holidays\\models.py"
+        },
+        "url:add/": {
+            "id": "url:add/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\holidays\\urls.py"
+        },
+        "url:<int:holiday_id>/delete/": {
+            "id": "url:<int:holiday_id>/delete/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\holidays\\urls.py"
+        },
+        "views.holiday_list_view": {
+            "id": "views.holiday_list_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\holidays\\views.py"
+        },
+        "views.add_holiday_view": {
+            "id": "views.add_holiday_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\holidays\\views.py"
+        },
+        "views.delete_holiday_view": {
+            "id": "views.delete_holiday_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\holidays\\views.py"
+        },
+        "class.LeaveRequestAdmin": {
+            "id": "class.LeaveRequestAdmin",
+            "type": "class",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\admin.py"
+        },
+        "class.LeaveBalanceAdmin": {
+            "id": "class.LeaveBalanceAdmin",
+            "type": "class",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\admin.py"
+        },
+        "class.LeaveManagementConfig": {
+            "id": "class.LeaveManagementConfig",
+            "type": "class",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\apps.py"
+        },
+        "class.LeaveRequestForm": {
+            "id": "class.LeaveRequestForm",
+            "type": "class",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\forms.py"
+        },
+        "model.LeaveRequest": {
+            "id": "model.LeaveRequest",
+            "type": "model",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py"
+        },
+        "models.hours_until_leave": {
+            "id": "models.hours_until_leave",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py"
+        },
+        "models.passes_36_hour_rule": {
+            "id": "models.passes_36_hour_rule",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py"
+        },
+        "model.LeaveBalance": {
+            "id": "model.LeaveBalance",
+            "type": "model",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py"
+        },
+        "models.get_used": {
+            "id": "models.get_used",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py"
+        },
+        "models.get_remaining": {
+            "id": "models.get_remaining",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py"
+        },
+        "models.get_summary": {
+            "id": "models.get_summary",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py"
+        },
+        "models.create_leave_balance": {
+            "id": "models.create_leave_balance",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py"
+        },
+        "url:submit/": {
+            "id": "url:submit/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\urls.py"
+        },
+        "url:my-leaves/": {
+            "id": "url:my-leaves/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\urls.py"
+        },
+        "url:balance/": {
+            "id": "url:balance/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\urls.py"
+        },
+        "url:admin/leaves/": {
+            "id": "url:admin/leaves/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\urls.py"
+        },
+        "url:admin/leaves/<int:leave_id>/approve/": {
+            "id": "url:admin/leaves/<int:leave_id>/approve/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\urls.py"
+        },
+        "url:admin/leaves/<int:leave_id>/reject/": {
+            "id": "url:admin/leaves/<int:leave_id>/reject/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\urls.py"
+        },
+        "url:admin/leaves/<int:leave_id>/delete/": {
+            "id": "url:admin/leaves/<int:leave_id>/delete/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\urls.py"
+        },
+        "url:admin/balance/": {
+            "id": "url:admin/balance/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\urls.py"
+        },
+        "views.submit_leave_view": {
+            "id": "views.submit_leave_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py"
+        },
+        "views._send_leave_email_to_admin": {
+            "id": "views._send_leave_email_to_admin",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py"
+        },
+        "views._send_status_notification_email": {
+            "id": "views._send_status_notification_email",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py"
+        },
+        "views.my_leaves_view": {
+            "id": "views.my_leaves_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py"
+        },
+        "views.admin_leaves_view": {
+            "id": "views.admin_leaves_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py"
+        },
+        "views.approve_leave_view": {
+            "id": "views.approve_leave_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py"
+        },
+        "views.reject_leave_view": {
+            "id": "views.reject_leave_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py"
+        },
+        "views.delete_leave_view": {
+            "id": "views.delete_leave_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py"
+        },
+        "views.leave_balance_view": {
+            "id": "views.leave_balance_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py"
+        },
+        "views.admin_leave_balance_view": {
+            "id": "views.admin_leave_balance_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py"
+        },
+        "auto_indexer.get_file_hash": {
+            "id": "auto_indexer.get_file_hash",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\auto_indexer.py"
+        },
+        "auto_indexer.read_file_content": {
+            "id": "auto_indexer.read_file_content",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\auto_indexer.py"
+        },
+        "auto_indexer.create_chunks": {
+            "id": "auto_indexer.create_chunks",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\auto_indexer.py"
+        },
+        "auto_indexer.extract_python_metadata": {
+            "id": "auto_indexer.extract_python_metadata",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\auto_indexer.py"
+        },
+        "auto_indexer.detect_module": {
+            "id": "auto_indexer.detect_module",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\auto_indexer.py"
+        },
+        "auto_indexer.detect_file_type": {
+            "id": "auto_indexer.detect_file_type",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\auto_indexer.py"
+        },
+        "class.CodeChunkVisitor": {
+            "id": "class.CodeChunkVisitor",
+            "type": "class",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\code_chunk_mapper.py"
+        },
+        "code_chunk_mapper.__init__": {
+            "id": "code_chunk_mapper.__init__",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\code_chunk_mapper.py"
+        },
+        "code_chunk_mapper.visit_FunctionDef": {
+            "id": "code_chunk_mapper.visit_FunctionDef",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\code_chunk_mapper.py"
+        },
+        "code_chunk_mapper.visit_ClassDef": {
+            "id": "code_chunk_mapper.visit_ClassDef",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\code_chunk_mapper.py"
+        },
+        "feature_analyzer.analyze_feature": {
+            "id": "feature_analyzer.analyze_feature",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\feature_analyzer.py"
+        },
+        "graph_retriever.find_start_nodes": {
+            "id": "graph_retriever.find_start_nodes",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\graph_retriever.py"
+        },
+        "graph_retriever.bfs_paths": {
+            "id": "graph_retriever.bfs_paths",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\graph_retriever.py"
+        },
+        "graph_retriever.graph_search": {
+            "id": "graph_retriever.graph_search",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\graph_retriever.py"
+        },
+        "hybrid_retriever.normalize_text": {
+            "id": "hybrid_retriever.normalize_text",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py"
+        },
+        "hybrid_retriever.lexical_score": {
+            "id": "hybrid_retriever.lexical_score",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py"
+        },
+        "hybrid_retriever.cosine_similarity": {
+            "id": "hybrid_retriever.cosine_similarity",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py"
+        },
+        "hybrid_retriever.graph_boost": {
+            "id": "hybrid_retriever.graph_boost",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py"
+        },
+        "hybrid_retriever.expand_query": {
+            "id": "hybrid_retriever.expand_query",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py"
+        },
+        "hybrid_retriever.metadata_search": {
+            "id": "hybrid_retriever.metadata_search",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py"
+        },
+        "hybrid_retriever.hybrid_search": {
+            "id": "hybrid_retriever.hybrid_search",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py"
+        },
+        "hybrid_retriever.display_results": {
+            "id": "hybrid_retriever.display_results",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py"
+        },
+        "impact_analyzer.trace_impact": {
+            "id": "impact_analyzer.trace_impact",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\impact_analyzer.py"
+        },
+        "local_llm_interface.load_cache": {
+            "id": "local_llm_interface.load_cache",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.save_cache": {
+            "id": "local_llm_interface.save_cache",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.build_cache_key": {
+            "id": "local_llm_interface.build_cache_key",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.normalize": {
+            "id": "local_llm_interface.normalize",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.backup_file": {
+            "id": "local_llm_interface.backup_file",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.log_edit": {
+            "id": "local_llm_interface.log_edit",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.detect_file": {
+            "id": "local_llm_interface.detect_file",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.is_edit_request": {
+            "id": "local_llm_interface.is_edit_request",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.parse_intent": {
+            "id": "local_llm_interface.parse_intent",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.apply_edit": {
+            "id": "local_llm_interface.apply_edit",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.detect_retrieval_mode": {
+            "id": "local_llm_interface.detect_retrieval_mode",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.detect_analysis_type": {
+            "id": "local_llm_interface.detect_analysis_type",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.build_bug_prompt": {
+            "id": "local_llm_interface.build_bug_prompt",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.build_workflow_prompt": {
+            "id": "local_llm_interface.build_workflow_prompt",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.build_dependency_prompt": {
+            "id": "local_llm_interface.build_dependency_prompt",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.build_general_prompt": {
+            "id": "local_llm_interface.build_general_prompt",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.build_prompt": {
+            "id": "local_llm_interface.build_prompt",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.call_llm": {
+            "id": "local_llm_interface.call_llm",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.run_analysis": {
+            "id": "local_llm_interface.run_analysis",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "local_llm_interface.main": {
+            "id": "local_llm_interface.main",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py"
+        },
+        "metadata_retriever.load_index": {
+            "id": "metadata_retriever.load_index",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\metadata_retriever.py"
+        },
+        "metadata_retriever.normalize": {
+            "id": "metadata_retriever.normalize",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\metadata_retriever.py"
+        },
+        "metadata_retriever.tokenize": {
+            "id": "metadata_retriever.tokenize",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\metadata_retriever.py"
+        },
+        "metadata_retriever.fuzzy_match": {
+            "id": "metadata_retriever.fuzzy_match",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\metadata_retriever.py"
+        },
+        "metadata_retriever.score_word_match": {
+            "id": "metadata_retriever.score_word_match",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\metadata_retriever.py"
+        },
+        "metadata_retriever.calculate_metadata_score": {
+            "id": "metadata_retriever.calculate_metadata_score",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\metadata_retriever.py"
+        },
+        "metadata_retriever.metadata_search": {
+            "id": "metadata_retriever.metadata_search",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\metadata_retriever.py"
+        },
+        "class.FunctionModelVisitor": {
+            "id": "class.FunctionModelVisitor",
+            "type": "class",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\model_usage_mapper.py"
+        },
+        "model_usage_mapper.__init__": {
+            "id": "model_usage_mapper.__init__",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\model_usage_mapper.py"
+        },
+        "model_usage_mapper.visit_FunctionDef": {
+            "id": "model_usage_mapper.visit_FunctionDef",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\model_usage_mapper.py"
+        },
+        "model_usage_mapper.visit_Call": {
+            "id": "model_usage_mapper.visit_Call",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\model_usage_mapper.py"
+        },
+        "path_finder.find_path": {
+            "id": "path_finder.find_path",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\path_finder.py"
+        },
+        "reranker.remove_duplicate_results": {
+            "id": "reranker.remove_duplicate_results",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\reranker.py"
+        },
+        "reranker.boost_important_results": {
+            "id": "reranker.boost_important_results",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\reranker.py"
+        },
+        "reranker.diversify_results": {
+            "id": "reranker.diversify_results",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\reranker.py"
+        },
+        "reranker.rerank_results": {
+            "id": "reranker.rerank_results",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\reranker.py"
+        },
+        "retrieval_filter.apply_retrieval_filters": {
+            "id": "retrieval_filter.apply_retrieval_filters",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\retrieval_filter.py"
+        },
+        "retrieval_ranker.detect_query_intent": {
+            "id": "retrieval_ranker.detect_query_intent",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\retrieval_ranker.py"
+        },
+        "retrieval_ranker.apply_intent_boost": {
+            "id": "retrieval_ranker.apply_intent_boost",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\retrieval_ranker.py"
+        },
+        "retrieval_ranker.should_ignore_file": {
+            "id": "retrieval_ranker.should_ignore_file",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\retrieval_ranker.py"
+        },
+        "retrieval_ranker.deduplicate_results": {
+            "id": "retrieval_ranker.deduplicate_results",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\retrieval_ranker.py"
+        },
+        "sementic_retriever.cosine_similarity": {
+            "id": "sementic_retriever.cosine_similarity",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\sementic_retriever.py"
+        },
+        "sementic_retriever.semantic_search": {
+            "id": "sementic_retriever.semantic_search",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\sementic_retriever.py"
+        },
+        "sementic_retriever.display_results": {
+            "id": "sementic_retriever.display_results",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\sementic_retriever.py"
+        },
+        "unified_graph_builder.add_node": {
+            "id": "unified_graph_builder.add_node",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\unified_graph_builder.py"
+        },
+        "unified_graph_builder.add_edge": {
+            "id": "unified_graph_builder.add_edge",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\unified_graph_builder.py"
+        },
+        "class.GraphVisitor": {
+            "id": "class.GraphVisitor",
+            "type": "class",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\unified_graph_builder.py"
+        },
+        "unified_graph_builder.__init__": {
+            "id": "unified_graph_builder.__init__",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\unified_graph_builder.py"
+        },
+        "unified_graph_builder.visit_Import": {
+            "id": "unified_graph_builder.visit_Import",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\unified_graph_builder.py"
+        },
+        "unified_graph_builder.visit_ImportFrom": {
+            "id": "unified_graph_builder.visit_ImportFrom",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\unified_graph_builder.py"
+        },
+        "unified_graph_builder.visit_ClassDef": {
+            "id": "unified_graph_builder.visit_ClassDef",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\unified_graph_builder.py"
+        },
+        "unified_graph_builder.visit_FunctionDef": {
+            "id": "unified_graph_builder.visit_FunctionDef",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\unified_graph_builder.py"
+        },
+        "unified_graph_builder.visit_AsyncFunctionDef": {
+            "id": "unified_graph_builder.visit_AsyncFunctionDef",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\unified_graph_builder.py"
+        },
+        "unified_graph_builder.visit_Assign": {
+            "id": "unified_graph_builder.visit_Assign",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\unified_graph_builder.py"
+        },
+        "unified_graph_builder.visit_Call": {
+            "id": "unified_graph_builder.visit_Call",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\unified_graph_builder.py"
+        },
+        "unified_graph_builder.extract_urls": {
+            "id": "unified_graph_builder.extract_urls",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\unified_graph_builder.py"
+        },
+        "workflow_tracer.trace_workflow": {
+            "id": "workflow_tracer.trace_workflow",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\workflow_tracer.py"
+        },
+        "class.CallGraphVisitor": {
+            "id": "class.CallGraphVisitor",
+            "type": "class",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\call_graph_mapper.py"
+        },
+        "call_graph_mapper.__init__": {
+            "id": "call_graph_mapper.__init__",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\call_graph_mapper.py"
+        },
+        "call_graph_mapper.visit_FunctionDef": {
+            "id": "call_graph_mapper.visit_FunctionDef",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\call_graph_mapper.py"
+        },
+        "call_graph_mapper.visit_Call": {
+            "id": "call_graph_mapper.visit_Call",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\call_graph_mapper.py"
+        },
+        "query_engine.find_dependents": {
+            "id": "query_engine.find_dependents",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\query_engine.py"
+        },
+        "query_engine.get_models": {
+            "id": "query_engine.get_models",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\query_engine.py"
+        },
+        "query_engine.get_relationships": {
+            "id": "query_engine.get_relationships",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\query_engine.py"
+        },
+        "query_engine.most_connected_model": {
+            "id": "query_engine.most_connected_model",
+            "type": "function",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\query_engine.py"
+        },
+        "class.ReportsConfig": {
+            "id": "class.ReportsConfig",
+            "type": "class",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\reports\\apps.py"
+        },
+        "url:export/csv/": {
+            "id": "url:export/csv/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\reports\\urls.py"
+        },
+        "url:export/excel/": {
+            "id": "url:export/excel/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\reports\\urls.py"
+        },
+        "url:employee/<int:employee_id>/": {
+            "id": "url:employee/<int:employee_id>/",
+            "type": "url",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\reports\\urls.py"
+        },
+        "views.monthly_report_view": {
+            "id": "views.monthly_report_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py"
+        },
+        "views.export_csv_view": {
+            "id": "views.export_csv_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py"
+        },
+        "views.export_excel_view": {
+            "id": "views.export_excel_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py"
+        },
+        "views.employee_detail_report_view": {
+            "id": "views.employee_detail_report_view",
+            "type": "view",
+            "file": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py"
+        }
+    },
+    "edges": [
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\manage.py",
+            "target": "os",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\manage.py",
+            "target": "sys",
+            "relation": "imports"
+        },
+        {
+            "source": "manage.main",
+            "target": "setdefault",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\manage.py",
+            "target": "django.core.management",
+            "relation": "imports"
+        },
+        {
+            "source": "manage.main",
+            "target": "ImportError",
+            "relation": "calls"
+        },
+        {
+            "source": "manage.main",
+            "target": "execute_from_command_line",
+            "relation": "calls"
+        },
+        {
+            "source": "manage.main",
+            "target": "main",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\accounts\\admin.py",
+            "target": "django.contrib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\accounts\\admin.py",
+            "target": "django.contrib.auth.admin",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\accounts\\admin.py",
+            "target": "models",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\accounts\\apps.py",
+            "target": "django.apps",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\accounts\\forms.py",
+            "target": "django",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\accounts\\forms.py",
+            "target": "django.contrib.auth.forms",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\accounts\\forms.py",
+            "target": "models",
+            "relation": "imports"
+        },
+        {
+            "source": "forms.__init__",
+            "target": "__init__",
+            "relation": "calls"
+        },
+        {
+            "source": "forms.__init__",
+            "target": "super",
+            "relation": "calls"
+        },
+        {
+            "source": "forms.__init__",
+            "target": "values",
+            "relation": "calls"
+        },
+        {
+            "source": "forms.__init__",
+            "target": "EmailInput",
+            "relation": "calls"
+        },
+        {
+            "source": "forms.__init__",
+            "target": "TextInput",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\accounts\\models.py",
+            "target": "django.db",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\accounts\\models.py",
+            "target": "django.contrib.auth.models",
+            "relation": "imports"
+        },
+        {
+            "source": "models.save",
+            "target": "model.Employee",
+            "relation": "uses_model"
+        },
+        {
+            "source": "models.save",
+            "target": "startswith",
+            "relation": "calls"
+        },
+        {
+            "source": "models.save",
+            "target": "super",
+            "relation": "calls"
+        },
+        {
+            "source": "models.__str__",
+            "target": "get_full_name",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\accounts\\tests.py",
+            "target": "django.test",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\accounts\\urls.py",
+            "target": "django.urls",
+            "relation": "imports"
+        },
+        {
+            "source": "url:login/",
+            "target": "views.login_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:logout/",
+            "target": "views.logout_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:employees/",
+            "target": "views.employee_list_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:employees/create/",
+            "target": "views.create_employee_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:profile/",
+            "target": "views.profile_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:profile/change-password/",
+            "target": "views.change_password_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:profile/edit/",
+            "target": "views.edit_profile_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py",
+            "target": "django.shortcuts",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py",
+            "target": "django.contrib.auth",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py",
+            "target": "django.contrib.auth.decorators",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py",
+            "target": "django.contrib.auth.forms",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py",
+            "target": "django.contrib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py",
+            "target": "models",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\accounts\\views.py",
+            "target": "forms",
+            "relation": "imports"
+        },
+        {
+            "source": "views.login_view",
+            "target": "authenticate",
+            "relation": "calls"
+        },
+        {
+            "source": "views.login_view",
+            "target": "login",
+            "relation": "calls"
+        },
+        {
+            "source": "views.login_view",
+            "target": "success",
+            "relation": "calls"
+        },
+        {
+            "source": "views.login_view",
+            "target": "error",
+            "relation": "calls"
+        },
+        {
+            "source": "views.logout_view",
+            "target": "logout",
+            "relation": "calls"
+        },
+        {
+            "source": "views.logout_view",
+            "target": "info",
+            "relation": "calls"
+        },
+        {
+            "source": "views.create_employee_view",
+            "target": "error",
+            "relation": "calls"
+        },
+        {
+            "source": "views.create_employee_view",
+            "target": "EmployeeCreationForm",
+            "relation": "calls"
+        },
+        {
+            "source": "views.create_employee_view",
+            "target": "is_valid",
+            "relation": "calls"
+        },
+        {
+            "source": "views.create_employee_view",
+            "target": "success",
+            "relation": "calls"
+        },
+        {
+            "source": "views.create_employee_view",
+            "target": "get_full_name",
+            "relation": "calls"
+        },
+        {
+            "source": "views.employee_list_view",
+            "target": "model.Employee",
+            "relation": "uses_model"
+        },
+        {
+            "source": "views.change_password_view",
+            "target": "PasswordChangeForm",
+            "relation": "calls"
+        },
+        {
+            "source": "views.change_password_view",
+            "target": "is_valid",
+            "relation": "calls"
+        },
+        {
+            "source": "views.change_password_view",
+            "target": "update_session_auth_hash",
+            "relation": "calls"
+        },
+        {
+            "source": "views.change_password_view",
+            "target": "success",
+            "relation": "calls"
+        },
+        {
+            "source": "views.edit_profile_view",
+            "target": "EditProfileForm",
+            "relation": "calls"
+        },
+        {
+            "source": "views.edit_profile_view",
+            "target": "is_valid",
+            "relation": "calls"
+        },
+        {
+            "source": "views.edit_profile_view",
+            "target": "success",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance\\admin.py",
+            "target": "django.contrib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance\\admin.py",
+            "target": "models",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance\\apps.py",
+            "target": "django.apps",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance\\models.py",
+            "target": "django.db",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance\\models.py",
+            "target": "django.conf",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance\\models.py",
+            "target": "datetime",
+            "relation": "imports"
+        },
+        {
+            "source": "models.calculate_working_hours",
+            "target": "combine",
+            "relation": "calls"
+        },
+        {
+            "source": "models.calculate_working_hours",
+            "target": "total_seconds",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance\\tests.py",
+            "target": "django.test",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance\\urls.py",
+            "target": "django.urls",
+            "relation": "imports"
+        },
+        {
+            "source": "url:check-in/",
+            "target": "views.check_in_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:check-out/",
+            "target": "views.check_out_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:history/",
+            "target": "views.attendance_history_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:all-attendance/",
+            "target": "views.admin_attendance_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance\\utils.py",
+            "target": "math",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance\\utils.py",
+            "target": "django.conf",
+            "relation": "imports"
+        },
+        {
+            "source": "utils.is_office_ip",
+            "target": "getattr",
+            "relation": "calls"
+        },
+        {
+            "source": "utils.is_office_ip",
+            "target": "rsplit",
+            "relation": "calls"
+        },
+        {
+            "source": "utils.is_office_ip",
+            "target": "startswith",
+            "relation": "calls"
+        },
+        {
+            "source": "utils.calculate_distance_meters",
+            "target": "radians",
+            "relation": "calls"
+        },
+        {
+            "source": "utils.calculate_distance_meters",
+            "target": "sin",
+            "relation": "calls"
+        },
+        {
+            "source": "utils.calculate_distance_meters",
+            "target": "cos",
+            "relation": "calls"
+        },
+        {
+            "source": "utils.calculate_distance_meters",
+            "target": "atan2",
+            "relation": "calls"
+        },
+        {
+            "source": "utils.calculate_distance_meters",
+            "target": "sqrt",
+            "relation": "calls"
+        },
+        {
+            "source": "utils.is_within_office_radius",
+            "target": "getattr",
+            "relation": "calls"
+        },
+        {
+            "source": "utils.is_within_office_radius",
+            "target": "calculate_distance_meters",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance\\views.py",
+            "target": "django.shortcuts",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance\\views.py",
+            "target": "django.contrib.auth.decorators",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance\\views.py",
+            "target": "django.contrib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance\\views.py",
+            "target": "django.utils",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance\\views.py",
+            "target": "datetime",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance\\views.py",
+            "target": "models",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance\\views.py",
+            "target": "utils",
+            "relation": "imports"
+        },
+        {
+            "source": "views.dashboard_view",
+            "target": "localdate",
+            "relation": "calls"
+        },
+        {
+            "source": "views.dashboard_view",
+            "target": "model.AttendanceRecord",
+            "relation": "uses_model"
+        },
+        {
+            "source": "views.check_in_view",
+            "target": "localdate",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_in_view",
+            "target": "time",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_in_view",
+            "target": "localtime",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_in_view",
+            "target": "get_client_ip",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_in_view",
+            "target": "is_office_ip",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_in_view",
+            "target": "error",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_in_view",
+            "target": "model.AttendanceRecord",
+            "relation": "uses_model"
+        },
+        {
+            "source": "views.check_in_view",
+            "target": "warning",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_in_view",
+            "target": "is_within_office_radius",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_in_view",
+            "target": "get_or_create",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_in_view",
+            "target": "get_device_info",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_in_view",
+            "target": "time_type",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_in_view",
+            "target": "success",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_in_view",
+            "target": "strftime",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_out_view",
+            "target": "localdate",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_out_view",
+            "target": "time",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_out_view",
+            "target": "localtime",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_out_view",
+            "target": "model.AttendanceRecord",
+            "relation": "uses_model"
+        },
+        {
+            "source": "views.check_out_view",
+            "target": "error",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_out_view",
+            "target": "warning",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_out_view",
+            "target": "combine",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_out_view",
+            "target": "today",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_out_view",
+            "target": "total_seconds",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_out_view",
+            "target": "calculate_working_hours",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_out_view",
+            "target": "success",
+            "relation": "calls"
+        },
+        {
+            "source": "views.check_out_view",
+            "target": "strftime",
+            "relation": "calls"
+        },
+        {
+            "source": "views.attendance_history_view",
+            "target": "model.AttendanceRecord",
+            "relation": "uses_model"
+        },
+        {
+            "source": "views.admin_attendance_view",
+            "target": "error",
+            "relation": "calls"
+        },
+        {
+            "source": "views.admin_attendance_view",
+            "target": "model.AttendanceRecord",
+            "relation": "uses_model"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance\\templatetags\\attendance_filters.py",
+            "target": "django",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance_system\\asgi.py",
+            "target": "os",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance_system\\asgi.py",
+            "target": "django.core.asgi",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance_system\\settings.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance_system\\urls.py",
+            "target": "django.contrib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance_system\\urls.py",
+            "target": "django.urls",
+            "relation": "imports"
+        },
+        {
+            "source": "url:admin/",
+            "target": "views.urls",
+            "relation": "routes_to"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance_system\\wsgi.py",
+            "target": "os",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\attendance_system\\wsgi.py",
+            "target": "django.core.wsgi",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\holidays\\admin.py",
+            "target": "django.contrib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\holidays\\admin.py",
+            "target": "models",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\holidays\\apps.py",
+            "target": "django.apps",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\holidays\\forms.py",
+            "target": "django",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\holidays\\forms.py",
+            "target": "models",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\holidays\\models.py",
+            "target": "django.db",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\holidays\\tests.py",
+            "target": "django.test",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\holidays\\urls.py",
+            "target": "django.urls",
+            "relation": "imports"
+        },
+        {
+            "source": "url:add/",
+            "target": "views.add_holiday_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:<int:holiday_id>/delete/",
+            "target": "views.delete_holiday_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\holidays\\views.py",
+            "target": "django.shortcuts",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\holidays\\views.py",
+            "target": "django.contrib.auth.decorators",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\holidays\\views.py",
+            "target": "django.contrib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\holidays\\views.py",
+            "target": "models",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\holidays\\views.py",
+            "target": "forms",
+            "relation": "imports"
+        },
+        {
+            "source": "views.holiday_list_view",
+            "target": "model.Holiday",
+            "relation": "uses_model"
+        },
+        {
+            "source": "views.add_holiday_view",
+            "target": "HolidayForm",
+            "relation": "calls"
+        },
+        {
+            "source": "views.add_holiday_view",
+            "target": "is_valid",
+            "relation": "calls"
+        },
+        {
+            "source": "views.add_holiday_view",
+            "target": "success",
+            "relation": "calls"
+        },
+        {
+            "source": "views.delete_holiday_view",
+            "target": "get_object_or_404",
+            "relation": "calls"
+        },
+        {
+            "source": "views.delete_holiday_view",
+            "target": "success",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\admin.py",
+            "target": "django.contrib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\admin.py",
+            "target": "models",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\apps.py",
+            "target": "django.apps",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\forms.py",
+            "target": "django",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\forms.py",
+            "target": "models",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\forms.py",
+            "target": "django.utils",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py",
+            "target": "django.db",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py",
+            "target": "django.conf",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py",
+            "target": "django.utils",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py",
+            "target": "django.db.models.signals",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py",
+            "target": "django.dispatch",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\models.py",
+            "target": "datetime",
+            "relation": "imports"
+        },
+        {
+            "source": "models.hours_until_leave",
+            "target": "make_aware",
+            "relation": "calls"
+        },
+        {
+            "source": "models.hours_until_leave",
+            "target": "combine",
+            "relation": "calls"
+        },
+        {
+            "source": "models.hours_until_leave",
+            "target": "now",
+            "relation": "calls"
+        },
+        {
+            "source": "models.hours_until_leave",
+            "target": "total_seconds",
+            "relation": "calls"
+        },
+        {
+            "source": "models.passes_36_hour_rule",
+            "target": "hours_until_leave",
+            "relation": "calls"
+        },
+        {
+            "source": "models.passes_36_hour_rule",
+            "target": "OneToOneField",
+            "relation": "calls"
+        },
+        {
+            "source": "models.passes_36_hour_rule",
+            "target": "IntegerField",
+            "relation": "calls"
+        },
+        {
+            "source": "models.get_used",
+            "target": "model.LeaveRequest",
+            "relation": "uses_model"
+        },
+        {
+            "source": "models.get_remaining",
+            "target": "getattr",
+            "relation": "calls"
+        },
+        {
+            "source": "models.get_remaining",
+            "target": "get_used",
+            "relation": "calls"
+        },
+        {
+            "source": "models.get_summary",
+            "target": "getattr",
+            "relation": "calls"
+        },
+        {
+            "source": "models.get_summary",
+            "target": "get_used",
+            "relation": "calls"
+        },
+        {
+            "source": "models.get_summary",
+            "target": "title",
+            "relation": "calls"
+        },
+        {
+            "source": "models.create_leave_balance",
+            "target": "get_or_create",
+            "relation": "calls"
+        },
+        {
+            "source": "models.create_leave_balance",
+            "target": "receiver",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\tests.py",
+            "target": "django.test",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\urls.py",
+            "target": "django.urls",
+            "relation": "imports"
+        },
+        {
+            "source": "url:submit/",
+            "target": "views.submit_leave_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:my-leaves/",
+            "target": "views.my_leaves_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:balance/",
+            "target": "views.leave_balance_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:admin/leaves/",
+            "target": "views.admin_leaves_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:admin/leaves/<int:leave_id>/approve/",
+            "target": "views.approve_leave_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:admin/leaves/<int:leave_id>/reject/",
+            "target": "views.reject_leave_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:admin/leaves/<int:leave_id>/delete/",
+            "target": "views.delete_leave_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:admin/balance/",
+            "target": "views.admin_leave_balance_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+            "target": "django.shortcuts",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+            "target": "django.contrib.auth.decorators",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+            "target": "django.contrib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+            "target": "django.core.mail",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+            "target": "django.conf",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+            "target": "django.utils",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+            "target": "models",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+            "target": "forms",
+            "relation": "imports"
+        },
+        {
+            "source": "views.submit_leave_view",
+            "target": "LeaveRequestForm",
+            "relation": "calls"
+        },
+        {
+            "source": "views.submit_leave_view",
+            "target": "is_valid",
+            "relation": "calls"
+        },
+        {
+            "source": "views.submit_leave_view",
+            "target": "passes_36_hour_rule",
+            "relation": "calls"
+        },
+        {
+            "source": "views.submit_leave_view",
+            "target": "error",
+            "relation": "calls"
+        },
+        {
+            "source": "views.submit_leave_view",
+            "target": "_send_leave_email_to_admin",
+            "relation": "calls"
+        },
+        {
+            "source": "views.submit_leave_view",
+            "target": "success",
+            "relation": "calls"
+        },
+        {
+            "source": "views.submit_leave_view",
+            "target": "localdate",
+            "relation": "calls"
+        },
+        {
+            "source": "views._send_leave_email_to_admin",
+            "target": "get_full_name",
+            "relation": "calls"
+        },
+        {
+            "source": "views._send_leave_email_to_admin",
+            "target": "get_leave_type_display",
+            "relation": "calls"
+        },
+        {
+            "source": "views._send_leave_email_to_admin",
+            "target": "strftime",
+            "relation": "calls"
+        },
+        {
+            "source": "views._send_leave_email_to_admin",
+            "target": "send_mail",
+            "relation": "calls"
+        },
+        {
+            "source": "views._send_leave_email_to_admin",
+            "target": "getattr",
+            "relation": "calls"
+        },
+        {
+            "source": "views._send_status_notification_email",
+            "target": "get_status_display",
+            "relation": "calls"
+        },
+        {
+            "source": "views._send_status_notification_email",
+            "target": "get_full_name",
+            "relation": "calls"
+        },
+        {
+            "source": "views._send_status_notification_email",
+            "target": "get_leave_type_display",
+            "relation": "calls"
+        },
+        {
+            "source": "views._send_status_notification_email",
+            "target": "send_mail",
+            "relation": "calls"
+        },
+        {
+            "source": "views.my_leaves_view",
+            "target": "model.LeaveRequest",
+            "relation": "uses_model"
+        },
+        {
+            "source": "views.admin_leaves_view",
+            "target": "error",
+            "relation": "calls"
+        },
+        {
+            "source": "views.admin_leaves_view",
+            "target": "model.LeaveRequest",
+            "relation": "uses_model"
+        },
+        {
+            "source": "views.approve_leave_view",
+            "target": "get_object_or_404",
+            "relation": "calls"
+        },
+        {
+            "source": "views.approve_leave_view",
+            "target": "_send_status_notification_email",
+            "relation": "calls"
+        },
+        {
+            "source": "views.approve_leave_view",
+            "target": "success",
+            "relation": "calls"
+        },
+        {
+            "source": "views.approve_leave_view",
+            "target": "get_full_name",
+            "relation": "calls"
+        },
+        {
+            "source": "views.reject_leave_view",
+            "target": "get_object_or_404",
+            "relation": "calls"
+        },
+        {
+            "source": "views.reject_leave_view",
+            "target": "_send_status_notification_email",
+            "relation": "calls"
+        },
+        {
+            "source": "views.reject_leave_view",
+            "target": "warning",
+            "relation": "calls"
+        },
+        {
+            "source": "views.reject_leave_view",
+            "target": "get_full_name",
+            "relation": "calls"
+        },
+        {
+            "source": "views.delete_leave_view",
+            "target": "get_object_or_404",
+            "relation": "calls"
+        },
+        {
+            "source": "views.delete_leave_view",
+            "target": "success",
+            "relation": "calls"
+        },
+        {
+            "source": "views.leave_balance_view",
+            "target": "get_or_create",
+            "relation": "calls"
+        },
+        {
+            "source": "views.leave_balance_view",
+            "target": "get_summary",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\leave_management\\views.py",
+            "target": "accounts.models",
+            "relation": "imports"
+        },
+        {
+            "source": "views.admin_leave_balance_view",
+            "target": "model.Employee",
+            "relation": "uses_model"
+        },
+        {
+            "source": "views.admin_leave_balance_view",
+            "target": "get_or_create",
+            "relation": "calls"
+        },
+        {
+            "source": "views.admin_leave_balance_view",
+            "target": "get_summary",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\auto_indexer.py",
+            "target": "os",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\auto_indexer.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\auto_indexer.py",
+            "target": "hashlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\auto_indexer.py",
+            "target": "ast",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\auto_indexer.py",
+            "target": "datetime",
+            "relation": "imports"
+        },
+        {
+            "source": "auto_indexer.get_file_hash",
+            "target": "open",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.get_file_hash",
+            "target": "read",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.get_file_hash",
+            "target": "hexdigest",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.get_file_hash",
+            "target": "md5",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.read_file_content",
+            "target": "open",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.read_file_content",
+            "target": "read",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.extract_python_metadata",
+            "target": "parse",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.extract_python_metadata",
+            "target": "walk",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.extract_python_metadata",
+            "target": "hasattr",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.detect_file_type",
+            "target": "basename",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.detect_file_type",
+            "target": "endswith",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.detect_file_type",
+            "target": "walk",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.detect_file_type",
+            "target": "join",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.detect_file_type",
+            "target": "splitext",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.detect_file_type",
+            "target": "get_file_hash",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.detect_file_type",
+            "target": "stat",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.detect_file_type",
+            "target": "read_file_content",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.detect_file_type",
+            "target": "create_chunks",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.detect_file_type",
+            "target": "detect_module",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.detect_file_type",
+            "target": "detect_file_type",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.detect_file_type",
+            "target": "strftime",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.detect_file_type",
+            "target": "fromtimestamp",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.detect_file_type",
+            "target": "extract_python_metadata",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.detect_file_type",
+            "target": "enumerate",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.detect_file_type",
+            "target": "open",
+            "relation": "calls"
+        },
+        {
+            "source": "auto_indexer.detect_file_type",
+            "target": "dump",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\code_chunk_mapper.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\code_chunk_mapper.py",
+            "target": "ast",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\code_chunk_mapper.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\code_chunk_mapper.py",
+            "target": "os",
+            "relation": "imports"
+        },
+        {
+            "source": "code_chunk_mapper.visit_FunctionDef",
+            "target": "get_source_segment",
+            "relation": "calls"
+        },
+        {
+            "source": "code_chunk_mapper.visit_FunctionDef",
+            "target": "generic_visit",
+            "relation": "calls"
+        },
+        {
+            "source": "code_chunk_mapper.visit_ClassDef",
+            "target": "get_source_segment",
+            "relation": "calls"
+        },
+        {
+            "source": "code_chunk_mapper.visit_ClassDef",
+            "target": "generic_visit",
+            "relation": "calls"
+        },
+        {
+            "source": "code_chunk_mapper.visit_ClassDef",
+            "target": "walk",
+            "relation": "calls"
+        },
+        {
+            "source": "code_chunk_mapper.visit_ClassDef",
+            "target": "endswith",
+            "relation": "calls"
+        },
+        {
+            "source": "code_chunk_mapper.visit_ClassDef",
+            "target": "Path",
+            "relation": "calls"
+        },
+        {
+            "source": "code_chunk_mapper.visit_ClassDef",
+            "target": "open",
+            "relation": "calls"
+        },
+        {
+            "source": "code_chunk_mapper.visit_ClassDef",
+            "target": "read",
+            "relation": "calls"
+        },
+        {
+            "source": "code_chunk_mapper.visit_ClassDef",
+            "target": "parse",
+            "relation": "calls"
+        },
+        {
+            "source": "code_chunk_mapper.visit_ClassDef",
+            "target": "CodeChunkVisitor",
+            "relation": "calls"
+        },
+        {
+            "source": "code_chunk_mapper.visit_ClassDef",
+            "target": "visit",
+            "relation": "calls"
+        },
+        {
+            "source": "code_chunk_mapper.visit_ClassDef",
+            "target": "dump",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\dependency_mapper.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\dependency_mapper.py",
+            "target": "ast",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\dependency_mapper.py",
+            "target": "collections",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\dependency_mapper.py",
+            "target": "networkx",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\dependency_mapper.py",
+            "target": "pyvis.network",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\embedding_generator.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\embedding_generator.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\embedding_generator.py",
+            "target": "sentence_transformers",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\feature_analyzer.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\feature_analyzer.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "feature_analyzer.analyze_feature",
+            "target": "items",
+            "relation": "calls"
+        },
+        {
+            "source": "feature_analyzer.analyze_feature",
+            "target": "add",
+            "relation": "calls"
+        },
+        {
+            "source": "feature_analyzer.analyze_feature",
+            "target": "analyze_feature",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\function_mapper.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\function_mapper.py",
+            "target": "ast",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\function_mapper.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\function_mapper.py",
+            "target": "os",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\graph_retriever.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\graph_retriever.py",
+            "target": "collections",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\graph_retriever.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "graph_retriever.find_start_nodes",
+            "target": "items",
+            "relation": "calls"
+        },
+        {
+            "source": "graph_retriever.find_start_nodes",
+            "target": "sort",
+            "relation": "calls"
+        },
+        {
+            "source": "graph_retriever.bfs_paths",
+            "target": "deque",
+            "relation": "calls"
+        },
+        {
+            "source": "graph_retriever.bfs_paths",
+            "target": "popleft",
+            "relation": "calls"
+        },
+        {
+            "source": "graph_retriever.bfs_paths",
+            "target": "add",
+            "relation": "calls"
+        },
+        {
+            "source": "graph_retriever.graph_search",
+            "target": "find_start_nodes",
+            "relation": "calls"
+        },
+        {
+            "source": "graph_retriever.graph_search",
+            "target": "bfs_paths",
+            "relation": "calls"
+        },
+        {
+            "source": "graph_retriever.graph_search",
+            "target": "join",
+            "relation": "calls"
+        },
+        {
+            "source": "graph_retriever.graph_search",
+            "target": "graph_search",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\human_graph.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\human_graph.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\human_graph.py",
+            "target": "collections",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\human_graph_visualizer.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\human_graph_visualizer.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\human_graph_visualizer.py",
+            "target": "collections",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\human_graph_visualizer.py",
+            "target": "pyvis.network",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_graph.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_graph.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py",
+            "target": "numpy",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py",
+            "target": "re",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py",
+            "target": "retrieval_ranker",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py",
+            "target": "retrieval_filter",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py",
+            "target": "sentence_transformers",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\hybrid_retriever.py",
+            "target": "reranker",
+            "relation": "imports"
+        },
+        {
+            "source": "hybrid_retriever.normalize_text",
+            "target": "findall",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.cosine_similarity",
+            "target": "array",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.cosine_similarity",
+            "target": "dot",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.cosine_similarity",
+            "target": "norm",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.graph_boost",
+            "target": "normalize_text",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.expand_query",
+            "target": "items",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.expand_query",
+            "target": "replace",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.metadata_search",
+            "target": "normalize_text",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.metadata_search",
+            "target": "join",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.metadata_search",
+            "target": "sort",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.metadata_search",
+            "target": "deduplicate_results",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.hybrid_search",
+            "target": "expand_query",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.hybrid_search",
+            "target": "normalize_text",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.hybrid_search",
+            "target": "encode",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.hybrid_search",
+            "target": "should_ignore_file",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.hybrid_search",
+            "target": "lexical_score",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.hybrid_search",
+            "target": "cosine_similarity",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.hybrid_search",
+            "target": "graph_boost",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.hybrid_search",
+            "target": "apply_intent_boost",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.hybrid_search",
+            "target": "metadata_search",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.hybrid_search",
+            "target": "apply_retrieval_filters",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.hybrid_search",
+            "target": "items",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.hybrid_search",
+            "target": "rerank_results",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.display_results",
+            "target": "hybrid_search",
+            "relation": "calls"
+        },
+        {
+            "source": "hybrid_retriever.display_results",
+            "target": "display_results",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\impact_analyzer.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\impact_analyzer.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\impact_analyzer.py",
+            "target": "collections",
+            "relation": "imports"
+        },
+        {
+            "source": "impact_analyzer.trace_impact",
+            "target": "add",
+            "relation": "calls"
+        },
+        {
+            "source": "impact_analyzer.trace_impact",
+            "target": "trace_impact",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py",
+            "target": "os",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py",
+            "target": "re",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py",
+            "target": "hashlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py",
+            "target": "requests",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py",
+            "target": "time",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py",
+            "target": "datetime",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py",
+            "target": "hybrid_retriever",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\local_llm_interface.py",
+            "target": "graph_retriever",
+            "relation": "imports"
+        },
+        {
+            "source": "local_llm_interface.load_cache",
+            "target": "open",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.load_cache",
+            "target": "load",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.save_cache",
+            "target": "open",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.save_cache",
+            "target": "dump",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.build_cache_key",
+            "target": "hexdigest",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.build_cache_key",
+            "target": "md5",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.build_cache_key",
+            "target": "encode",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.build_cache_key",
+            "target": "load_cache",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.normalize",
+            "target": "replace",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.backup_file",
+            "target": "strftime",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.backup_file",
+            "target": "now",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.backup_file",
+            "target": "open",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.backup_file",
+            "target": "writelines",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.log_edit",
+            "target": "open",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.log_edit",
+            "target": "write",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.log_edit",
+            "target": "now",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.detect_file",
+            "target": "search",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.detect_file",
+            "target": "group",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.detect_file",
+            "target": "basename",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.detect_file",
+            "target": "walk",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.detect_file",
+            "target": "join",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.is_edit_request",
+            "target": "any",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.parse_intent",
+            "target": "search",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.parse_intent",
+            "target": "group",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.apply_edit",
+            "target": "open",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.apply_edit",
+            "target": "readlines",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.apply_edit",
+            "target": "enumerate",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.apply_edit",
+            "target": "normalize",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.apply_edit",
+            "target": "lstrip",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.apply_edit",
+            "target": "insert",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.apply_edit",
+            "target": "backup_file",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.apply_edit",
+            "target": "writelines",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.apply_edit",
+            "target": "log_edit",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.build_prompt",
+            "target": "detect_analysis_type",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.build_prompt",
+            "target": "build_bug_prompt",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.build_prompt",
+            "target": "build_workflow_prompt",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.build_prompt",
+            "target": "build_dependency_prompt",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.build_prompt",
+            "target": "build_general_prompt",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.call_llm",
+            "target": "post",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.call_llm",
+            "target": "json",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.run_analysis",
+            "target": "build_cache_key",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.run_analysis",
+            "target": "build_prompt",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.run_analysis",
+            "target": "time",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.run_analysis",
+            "target": "call_llm",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.run_analysis",
+            "target": "save_cache",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.main",
+            "target": "is_edit_request",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.main",
+            "target": "detect_file",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.main",
+            "target": "parse_intent",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.main",
+            "target": "apply_edit",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.main",
+            "target": "detect_retrieval_mode",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.main",
+            "target": "time",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.main",
+            "target": "graph_search",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.main",
+            "target": "hybrid_search",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.main",
+            "target": "run_analysis",
+            "relation": "calls"
+        },
+        {
+            "source": "local_llm_interface.main",
+            "target": "main",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\metadata_retriever.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\metadata_retriever.py",
+            "target": "os",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\metadata_retriever.py",
+            "target": "difflib",
+            "relation": "imports"
+        },
+        {
+            "source": "metadata_retriever.load_index",
+            "target": "open",
+            "relation": "calls"
+        },
+        {
+            "source": "metadata_retriever.load_index",
+            "target": "load",
+            "relation": "calls"
+        },
+        {
+            "source": "metadata_retriever.normalize",
+            "target": "replace",
+            "relation": "calls"
+        },
+        {
+            "source": "metadata_retriever.tokenize",
+            "target": "normalize",
+            "relation": "calls"
+        },
+        {
+            "source": "metadata_retriever.fuzzy_match",
+            "target": "ratio",
+            "relation": "calls"
+        },
+        {
+            "source": "metadata_retriever.fuzzy_match",
+            "target": "SequenceMatcher",
+            "relation": "calls"
+        },
+        {
+            "source": "metadata_retriever.score_word_match",
+            "target": "tokenize",
+            "relation": "calls"
+        },
+        {
+            "source": "metadata_retriever.score_word_match",
+            "target": "fuzzy_match",
+            "relation": "calls"
+        },
+        {
+            "source": "metadata_retriever.calculate_metadata_score",
+            "target": "tokenize",
+            "relation": "calls"
+        },
+        {
+            "source": "metadata_retriever.calculate_metadata_score",
+            "target": "score_word_match",
+            "relation": "calls"
+        },
+        {
+            "source": "metadata_retriever.calculate_metadata_score",
+            "target": "normalize",
+            "relation": "calls"
+        },
+        {
+            "source": "metadata_retriever.metadata_search",
+            "target": "load_index",
+            "relation": "calls"
+        },
+        {
+            "source": "metadata_retriever.metadata_search",
+            "target": "calculate_metadata_score",
+            "relation": "calls"
+        },
+        {
+            "source": "metadata_retriever.metadata_search",
+            "target": "metadata_search",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\model_usage_mapper.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\model_usage_mapper.py",
+            "target": "ast",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\model_usage_mapper.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\model_usage_mapper.py",
+            "target": "os",
+            "relation": "imports"
+        },
+        {
+            "source": "model_usage_mapper.visit_FunctionDef",
+            "target": "generic_visit",
+            "relation": "calls"
+        },
+        {
+            "source": "model_usage_mapper.visit_Call",
+            "target": "isupper",
+            "relation": "calls"
+        },
+        {
+            "source": "model_usage_mapper.visit_Call",
+            "target": "generic_visit",
+            "relation": "calls"
+        },
+        {
+            "source": "model_usage_mapper.visit_Call",
+            "target": "walk",
+            "relation": "calls"
+        },
+        {
+            "source": "model_usage_mapper.visit_Call",
+            "target": "endswith",
+            "relation": "calls"
+        },
+        {
+            "source": "model_usage_mapper.visit_Call",
+            "target": "Path",
+            "relation": "calls"
+        },
+        {
+            "source": "model_usage_mapper.visit_Call",
+            "target": "open",
+            "relation": "calls"
+        },
+        {
+            "source": "model_usage_mapper.visit_Call",
+            "target": "read",
+            "relation": "calls"
+        },
+        {
+            "source": "model_usage_mapper.visit_Call",
+            "target": "parse",
+            "relation": "calls"
+        },
+        {
+            "source": "model_usage_mapper.visit_Call",
+            "target": "FunctionModelVisitor",
+            "relation": "calls"
+        },
+        {
+            "source": "model_usage_mapper.visit_Call",
+            "target": "visit",
+            "relation": "calls"
+        },
+        {
+            "source": "model_usage_mapper.visit_Call",
+            "target": "dump",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\path_finder.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\path_finder.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\path_finder.py",
+            "target": "networkx",
+            "relation": "imports"
+        },
+        {
+            "source": "path_finder.find_path",
+            "target": "shortest_path",
+            "relation": "calls"
+        },
+        {
+            "source": "path_finder.find_path",
+            "target": "find_path",
+            "relation": "calls"
+        },
+        {
+            "source": "path_finder.find_path",
+            "target": "join",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\project_snapshot.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\project_snapshot.py",
+            "target": "ast",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\project_snapshot.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\project_snapshot.py",
+            "target": "collections",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\project_snapshot.py",
+            "target": "datetime",
+            "relation": "imports"
+        },
+        {
+            "source": "reranker.remove_duplicate_results",
+            "target": "add",
+            "relation": "calls"
+        },
+        {
+            "source": "reranker.boost_important_results",
+            "target": "any",
+            "relation": "calls"
+        },
+        {
+            "source": "reranker.rerank_results",
+            "target": "remove_duplicate_results",
+            "relation": "calls"
+        },
+        {
+            "source": "reranker.rerank_results",
+            "target": "boost_important_results",
+            "relation": "calls"
+        },
+        {
+            "source": "reranker.rerank_results",
+            "target": "diversify_results",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\retrieval_filter.py",
+            "target": "os",
+            "relation": "imports"
+        },
+        {
+            "source": "retrieval_filter.apply_retrieval_filters",
+            "target": "items",
+            "relation": "calls"
+        },
+        {
+            "source": "retrieval_filter.apply_retrieval_filters",
+            "target": "basename",
+            "relation": "calls"
+        },
+        {
+            "source": "retrieval_filter.apply_retrieval_filters",
+            "target": "sort",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\retrieval_ranker.py",
+            "target": "os",
+            "relation": "imports"
+        },
+        {
+            "source": "retrieval_ranker.detect_query_intent",
+            "target": "any",
+            "relation": "calls"
+        },
+        {
+            "source": "retrieval_ranker.apply_intent_boost",
+            "target": "detect_query_intent",
+            "relation": "calls"
+        },
+        {
+            "source": "retrieval_ranker.should_ignore_file",
+            "target": "basename",
+            "relation": "calls"
+        },
+        {
+            "source": "retrieval_ranker.deduplicate_results",
+            "target": "add",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\sementic_retriever.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\sementic_retriever.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\sementic_retriever.py",
+            "target": "numpy",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\sementic_retriever.py",
+            "target": "sentence_transformers",
+            "relation": "imports"
+        },
+        {
+            "source": "sementic_retriever.cosine_similarity",
+            "target": "array",
+            "relation": "calls"
+        },
+        {
+            "source": "sementic_retriever.cosine_similarity",
+            "target": "dot",
+            "relation": "calls"
+        },
+        {
+            "source": "sementic_retriever.cosine_similarity",
+            "target": "norm",
+            "relation": "calls"
+        },
+        {
+            "source": "sementic_retriever.semantic_search",
+            "target": "encode",
+            "relation": "calls"
+        },
+        {
+            "source": "sementic_retriever.semantic_search",
+            "target": "cosine_similarity",
+            "relation": "calls"
+        },
+        {
+            "source": "sementic_retriever.semantic_search",
+            "target": "sort",
+            "relation": "calls"
+        },
+        {
+            "source": "sementic_retriever.display_results",
+            "target": "semantic_search",
+            "relation": "calls"
+        },
+        {
+            "source": "sementic_retriever.display_results",
+            "target": "display_results",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\smell_detector.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\smell_detector.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\snapshot_history.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\snapshot_history.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\snapshot_history.py",
+            "target": "shutil",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\snapshot_history.py",
+            "target": "datetime",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\unified_graph_builder.py",
+            "target": "ast",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\unified_graph_builder.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\unified_graph_builder.py",
+            "target": "os",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\unified_graph_builder.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "unified_graph_builder.add_edge",
+            "target": "add",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.visit_Import",
+            "target": "add_edge",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.visit_Import",
+            "target": "generic_visit",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.visit_ImportFrom",
+            "target": "add_edge",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.visit_ImportFrom",
+            "target": "generic_visit",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.visit_ClassDef",
+            "target": "add_node",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.visit_ClassDef",
+            "target": "generic_visit",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.visit_FunctionDef",
+            "target": "endswith",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.visit_FunctionDef",
+            "target": "add_node",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.visit_FunctionDef",
+            "target": "generic_visit",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.visit_AsyncFunctionDef",
+            "target": "visit_FunctionDef",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.visit_Assign",
+            "target": "generic_visit",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.visit_Call",
+            "target": "generic_visit",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.visit_Call",
+            "target": "add_edge",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.extract_urls",
+            "target": "open",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.extract_urls",
+            "target": "read",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.extract_urls",
+            "target": "parse",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.extract_urls",
+            "target": "walk",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.extract_urls",
+            "target": "add_node",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.extract_urls",
+            "target": "add_edge",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.extract_urls",
+            "target": "endswith",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.extract_urls",
+            "target": "Path",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.extract_urls",
+            "target": "GraphVisitor",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.extract_urls",
+            "target": "visit",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.extract_urls",
+            "target": "extract_urls",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.extract_urls",
+            "target": "mkdir",
+            "relation": "calls"
+        },
+        {
+            "source": "unified_graph_builder.extract_urls",
+            "target": "dump",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\workflow_tracer.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\workflow_tracer.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "workflow_tracer.trace_workflow",
+            "target": "add",
+            "relation": "calls"
+        },
+        {
+            "source": "workflow_tracer.trace_workflow",
+            "target": "trace_workflow",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\call_graph_mapper.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\call_graph_mapper.py",
+            "target": "ast",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\call_graph_mapper.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\call_graph_mapper.py",
+            "target": "os",
+            "relation": "imports"
+        },
+        {
+            "source": "call_graph_mapper.visit_FunctionDef",
+            "target": "generic_visit",
+            "relation": "calls"
+        },
+        {
+            "source": "call_graph_mapper.visit_Call",
+            "target": "generic_visit",
+            "relation": "calls"
+        },
+        {
+            "source": "call_graph_mapper.visit_Call",
+            "target": "walk",
+            "relation": "calls"
+        },
+        {
+            "source": "call_graph_mapper.visit_Call",
+            "target": "endswith",
+            "relation": "calls"
+        },
+        {
+            "source": "call_graph_mapper.visit_Call",
+            "target": "Path",
+            "relation": "calls"
+        },
+        {
+            "source": "call_graph_mapper.visit_Call",
+            "target": "open",
+            "relation": "calls"
+        },
+        {
+            "source": "call_graph_mapper.visit_Call",
+            "target": "read",
+            "relation": "calls"
+        },
+        {
+            "source": "call_graph_mapper.visit_Call",
+            "target": "parse",
+            "relation": "calls"
+        },
+        {
+            "source": "call_graph_mapper.visit_Call",
+            "target": "CallGraphVisitor",
+            "relation": "calls"
+        },
+        {
+            "source": "call_graph_mapper.visit_Call",
+            "target": "visit",
+            "relation": "calls"
+        },
+        {
+            "source": "call_graph_mapper.visit_Call",
+            "target": "dump",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\function_call_graph.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\function_call_graph.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\function_call_graph.py",
+            "target": "pyvis.network",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\query_engine.py",
+            "target": "pathlib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\query_engine.py",
+            "target": "json",
+            "relation": "imports"
+        },
+        {
+            "source": "query_engine.find_dependents",
+            "target": "items",
+            "relation": "calls"
+        },
+        {
+            "source": "query_engine.most_connected_model",
+            "target": "items",
+            "relation": "calls"
+        },
+        {
+            "source": "query_engine.most_connected_model",
+            "target": "find_dependents",
+            "relation": "calls"
+        },
+        {
+            "source": "query_engine.most_connected_model",
+            "target": "get_models",
+            "relation": "calls"
+        },
+        {
+            "source": "query_engine.most_connected_model",
+            "target": "get_relationships",
+            "relation": "calls"
+        },
+        {
+            "source": "query_engine.most_connected_model",
+            "target": "most_connected_model",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\project_mapper\\archive\\test_engine.py",
+            "target": "architecture_engine",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\reports\\admin.py",
+            "target": "django.contrib",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\reports\\apps.py",
+            "target": "django.apps",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\reports\\models.py",
+            "target": "django.db",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\reports\\tests.py",
+            "target": "django.test",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\reports\\urls.py",
+            "target": "django.urls",
+            "relation": "imports"
+        },
+        {
+            "source": "url:export/csv/",
+            "target": "views.export_csv_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:export/excel/",
+            "target": "views.export_excel_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "url:employee/<int:employee_id>/",
+            "target": "views.employee_detail_report_view",
+            "relation": "routes_to"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py",
+            "target": "csv",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py",
+            "target": "calendar",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py",
+            "target": "datetime",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py",
+            "target": "django.shortcuts",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py",
+            "target": "django.contrib.auth.decorators",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py",
+            "target": "django.http",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py",
+            "target": "django.db.models",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py",
+            "target": "attendance.models",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py",
+            "target": "leave_management.models",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py",
+            "target": "accounts.models",
+            "relation": "imports"
+        },
+        {
+            "source": "views.monthly_report_view",
+            "target": "today",
+            "relation": "calls"
+        },
+        {
+            "source": "views.monthly_report_view",
+            "target": "strftime",
+            "relation": "calls"
+        },
+        {
+            "source": "views.monthly_report_view",
+            "target": "monthcalendar",
+            "relation": "calls"
+        },
+        {
+            "source": "views.monthly_report_view",
+            "target": "model.AttendanceRecord",
+            "relation": "uses_model"
+        },
+        {
+            "source": "views.monthly_report_view",
+            "target": "model.Employee",
+            "relation": "uses_model"
+        },
+        {
+            "source": "views.monthly_report_view",
+            "target": "aggregate",
+            "relation": "calls"
+        },
+        {
+            "source": "views.monthly_report_view",
+            "target": "Sum",
+            "relation": "calls"
+        },
+        {
+            "source": "views.monthly_report_view",
+            "target": "model.LeaveRequest",
+            "relation": "uses_model"
+        },
+        {
+            "source": "views.export_csv_view",
+            "target": "strftime",
+            "relation": "calls"
+        },
+        {
+            "source": "views.export_csv_view",
+            "target": "today",
+            "relation": "calls"
+        },
+        {
+            "source": "views.export_csv_view",
+            "target": "HttpResponse",
+            "relation": "calls"
+        },
+        {
+            "source": "views.export_csv_view",
+            "target": "writer",
+            "relation": "calls"
+        },
+        {
+            "source": "views.export_csv_view",
+            "target": "writerow",
+            "relation": "calls"
+        },
+        {
+            "source": "views.export_csv_view",
+            "target": "model.AttendanceRecord",
+            "relation": "uses_model"
+        },
+        {
+            "source": "views.export_csv_view",
+            "target": "none",
+            "relation": "calls"
+        },
+        {
+            "source": "views.export_csv_view",
+            "target": "get_full_name",
+            "relation": "calls"
+        },
+        {
+            "source": "views.export_csv_view",
+            "target": "get_attendance_status_display",
+            "relation": "calls"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py",
+            "target": "openpyxl",
+            "relation": "imports"
+        },
+        {
+            "source": "E:\\WORK\\python\\ATTENDENCE\\reports\\views.py",
+            "target": "openpyxl.styles",
+            "relation": "imports"
+        },
+        {
+            "source": "views.export_excel_view",
+            "target": "strftime",
+            "relation": "calls"
+        },
+        {
+            "source": "views.export_excel_view",
+            "target": "today",
+            "relation": "calls"
+        },
+        {
+            "source": "views.export_excel_view",
+            "target": "Workbook",
+            "relation": "calls"
+        },
+        {
+            "source": "views.export_excel_view",
+            "target": "Font",
+            "relation": "calls"
+        },
+        {
+            "source": "views.export_excel_view",
+            "target": "PatternFill",
+            "relation": "calls"
+        },
+        {
+            "source": "views.export_excel_view",
+            "target": "model.AttendanceRecord",
+            "relation": "uses_model"
+        },
+        {
+            "source": "views.export_excel_view",
+            "target": "none",
+            "relation": "calls"
+        },
+        {
+            "source": "views.export_excel_view",
+            "target": "get_full_name",
+            "relation": "calls"
+        },
+        {
+            "source": "views.export_excel_view",
+            "target": "get_attendance_status_display",
+            "relation": "calls"
+        },
+        {
+            "source": "views.export_excel_view",
+            "target": "HttpResponse",
+            "relation": "calls"
+        },
+        {
+            "source": "views.employee_detail_report_view",
+            "target": "get_object_or_404",
+            "relation": "calls"
+        },
+        {
+            "source": "views.employee_detail_report_view",
+            "target": "today",
+            "relation": "calls"
+        },
+        {
+            "source": "views.employee_detail_report_view",
+            "target": "strftime",
+            "relation": "calls"
+        },
+        {
+            "source": "views.employee_detail_report_view",
+            "target": "model.AttendanceRecord",
+            "relation": "uses_model"
+        },
+        {
+            "source": "views.employee_detail_report_view",
+            "target": "monthcalendar",
+            "relation": "calls"
+        },
+        {
+            "source": "views.employee_detail_report_view",
+            "target": "enumerate",
+            "relation": "calls"
+        },
+        {
+            "source": "views.employee_detail_report_view",
+            "target": "date",
+            "relation": "calls"
+        },
+        {
+            "source": "views.employee_detail_report_view",
+            "target": "values_list",
+            "relation": "calls"
+        },
+        {
+            "source": "views.employee_detail_report_view",
+            "target": "model.LeaveRequest",
+            "relation": "uses_model"
+        },
+        {
+            "source": "views.employee_detail_report_view",
+            "target": "get_attendance_status_display",
+            "relation": "calls"
+        },
+        {
+            "source": "views.employee_detail_report_view",
+            "target": "get_full_name",
+            "relation": "calls"
+        }
+    ]
+}
