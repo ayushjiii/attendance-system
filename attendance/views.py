@@ -201,14 +201,14 @@ def attendance_history_view(request):
     records = AttendanceRecord.objects.filter(employee=request.user)
     month = request.GET.get('month', '')
     if month:
-        try:
-            year, m = month.split('-')
-            records = records.filter(
-                date__year=int(year),
-                date__month=int(m)
-            )
-        except (ValueError, AttributeError):
-            pass  # Ignore invalid month format
+            try:
+                year, m = month.split('-')
+                records = records.filter(
+                    date__year=int(year),
+                    date__month=int(m)
+                )
+            except (ValueError, AttributeError, Exception):
+                pass  # Ignore invalid month format or database validation errors
 
     records = records.order_by('-date')
     return render(request, 'attendance/history.html', {
@@ -244,7 +244,10 @@ def admin_attendance_view(request):
         )
 
     if date_filter:
-        records = records.filter(date=date_filter)
+        try:
+            records = records.filter(date=date_filter)
+        except Exception:
+            pass # Ignore invalid date format
 
     if month_filter:
         try:
@@ -253,7 +256,7 @@ def admin_attendance_view(request):
                 date__year=int(year),
                 date__month=int(month)
             )
-        except (ValueError, AttributeError):
+        except (ValueError, AttributeError, Exception):
             pass
 
     records = records.order_by('-date')

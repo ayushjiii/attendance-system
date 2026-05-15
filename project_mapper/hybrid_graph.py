@@ -23,6 +23,9 @@ MIN_CONNECTIONS = 2
 
 # LOAD GRAPH
 
+if not INPUT_FILE.exists():
+    print(f"ERROR: {INPUT_FILE} not found. Please run the indexer first.")
+    exit(1)
 
 with open(
     INPUT_FILE,
@@ -58,6 +61,8 @@ for caller, callees in call_graph.items():
 
 # SAVE
 
+# Ensure parent directory exists
+OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
 
 with open(
     OUTPUT_FILE,

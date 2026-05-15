@@ -11,6 +11,10 @@ CALL_GRAPH_FILE = Path(
 
 # LOAD GRAPH
 
+if not CALL_GRAPH_FILE.exists():
+    print(f"ERROR: {CALL_GRAPH_FILE} not found. Please run the indexer first.")
+    exit(1)
+
 with open(
     CALL_GRAPH_FILE,
     "r",

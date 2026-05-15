@@ -28,9 +28,12 @@ def monthly_report_view(request):
     cal = calendar.monthcalendar(year, month)
     working_days = sum(1 for week in cal for day in week[:6] if day != 0)
 
-    records = AttendanceRecord.objects.filter(
-        date__year=year, date__month=month
-    ).select_related('employee')
+    try:
+        records = AttendanceRecord.objects.filter(
+            date__year=year, date__month=month
+        ).select_related('employee')
+    except Exception:
+        records = AttendanceRecord.objects.none()
 
     employees = Employee.objects.filter(role='employee')
     report_data = []
@@ -203,12 +206,14 @@ def employee_detail_report_view(request, employee_id):
             checkin_minutes = record.check_in_time.hour * 60 + record.check_in_time.minute
             checkin_str = record.check_in_time.strftime('%I:%M %p')
             checkout_str = record.check_out_time.strftime('%I:%M %p') if record.check_out_time else '-'
+            date_obj = record.check_in_time
         elif work_date in approved_leaves:
             status = 'On Leave'
             hours = 0
             checkin_minutes = None
             checkin_str = '-'
             checkout_str = '-'
+            date_obj = None
         elif work_date > today:
             status = 'Upcoming'
             hours = 0
@@ -229,6 +234,7 @@ def employee_detail_report_view(request, employee_id):
             'check_in': checkin_str,
             'check_out': checkout_str,
             'hours': hours,
+            'date_obj': date_obj,
         })
 
         chart_labels.append(work_date.strftime('%d %b'))
@@ -242,29 +248,38 @@ def employee_detail_report_view(request, employee_id):
     total_hours = sum(d['hours'] for d in daily_data)
     avg_hours = round(total_hours / present_count, 2) if present_count else 0
 
-    # Average check-in time
-    checkin_times = [d['check_in'] for d in daily_data if d['check_in'] != '-']
-    if checkin_times:
-        total_minutes = sum(
-            int(t.split(':')[0]) * 60 + int(t.split(':')[1].split()[0])
-            for t in checkin_times
-        )
-        avg_minutes = total_minutes // len(checkin_times)
+    # Average check-in time calculation (math-based instead of string-based)
+    checkin_minute_list = [
+        (d['date_obj'].hour * 60 + d['date_obj'].minute) 
+        for d in daily_data if d.get('date_obj')
+    ]
+    
+    if checkin_minute_list:
+        avg_minutes = sum(checkin_minute_list) // len(checkin_minute_list)
         hour = avg_minutes // 60
         minute = avg_minutes % 60
         period = 'AM' if hour < 12 else 'PM'
         hour_12 = hour % 12 or 12
         avg_checkin = f"{hour_12:02d}:{minute:02d} {period}"
-
-
     else:
         avg_checkin = 'N/A'
+        avg_minutes = None
 
     # Generate description
     if present_count == 0:
         description = f"{employee.get_full_name()} has no attendance records for this month."
     else:
-        punctuality = "excellent" if avg_checkin <= "09:30" else "good" if avg_checkin <= "09:30" else "needs improvement"
+        # Numeric punctuality check (threshold: 9:30 AM = 570 mins)
+        if avg_minutes is not None:
+            if avg_minutes <= 570:
+                punctuality = "excellent"
+            elif avg_minutes <= 600: # 10:00 AM
+                punctuality = "good"
+            else:
+                punctuality = "needs improvement"
+        else:
+            punctuality = "N/A"
+
         description = (
             f"{employee.get_full_name()} was present for {present_count} out of "
             f"{len([d for d in daily_data if d['status'] != 'Upcoming'])} working days this month, "

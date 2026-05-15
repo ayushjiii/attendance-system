@@ -172,7 +172,10 @@ def admin_leaves_view(request):
     # Optional filter by status
     status_filter = request.GET.get('status', '').strip()
     if status_filter:
-        leaves = leaves.filter(status=status_filter)
+        try:
+            leaves = leaves.filter(status=status_filter)
+        except Exception:
+            pass
 
     return render(request, 'leave_management/admin_leaves.html', {
         'leaves': leaves,
@@ -272,10 +275,16 @@ def admin_leave_balance_view(request):
 
     from .models import LeaveBalance
     from accounts.models import Employee
-    employees = Employee.objects.filter(role='employee')
+    # Optimized query with prefetch_related to avoid N+1 queries
+    employees = Employee.objects.filter(role='employee').prefetch_related('leave_balance')
     data = []
     for emp in employees:
-        balance, _ = LeaveBalance.objects.get_or_create(employee=emp)
+        # Check if leave balance exists, otherwise create it (try to avoid creating in loops in production)
+        try:
+            balance = emp.leave_balance
+        except LeaveBalance.DoesNotExist:
+            balance, _ = LeaveBalance.objects.get_or_create(employee=emp)
+            
         data.append({
             'employee': emp,
             'summary': balance.get_summary(),
