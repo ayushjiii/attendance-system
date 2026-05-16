@@ -16,12 +16,14 @@ class Employee(AbstractUser):
     def save(self, *args, **kwargs):
         # Auto-generate employee ID only if not already set
         if not self.employee_id:
-            last = Employee.objects.order_by('-id').first()
-            if last and last.employee_id.startswith('EMP'):
+            # Find the highest existing EMP ID
+            last_emp = Employee.objects.filter(employee_id__startswith='EMP').order_by('employee_id').last()
+            if last_emp:
                 try:
-                    last_number = int(last.employee_id[3:])
+                    # Extract the number and increment it
+                    last_number = int(last_emp.employee_id[3:])
                     self.employee_id = f'EMP{(last_number + 1):03d}'
-                except ValueError:
+                except (ValueError, IndexError):
                     self.employee_id = 'EMP001'
             else:
                 self.employee_id = 'EMP001'

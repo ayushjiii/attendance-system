@@ -5,9 +5,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.db.models import Sum
+from django.utils import timezone
 from attendance.models import AttendanceRecord
 from leave_management.models import LeaveRequest
 from accounts.models import Employee
+from holidays.models import Holiday
 
 
 @login_required
@@ -15,7 +17,7 @@ def monthly_report_view(request):
     if not request.user.is_admin_role:
         return redirect('attendance:dashboard')
 
-    today = date.today()
+    today = timezone.localdate()
     month_str = request.GET.get('month', today.strftime('%Y-%m'))
 
     try:
@@ -24,9 +26,23 @@ def monthly_report_view(request):
     except (ValueError, AttributeError):
         year, month = today.year, today.month
 
-    # Count working days (Mon-sat)
+    # Count working days (Mon-Sat) excluding holidays
     cal = calendar.monthcalendar(year, month)
-    working_days = sum(1 for week in cal for day in week[:6] if day != 0)
+    
+    # Get all holiday dates for this month
+    holidays_this_month = Holiday.objects.filter(
+        date__year=year, date__month=month
+    ).values_list('date', flat=True)
+
+    working_days_list = []
+    for week in cal:
+        for i, day in enumerate(week[:6]): # Mon-Sat
+            if day != 0:
+                d = date(year, month, day)
+                if d not in holidays_this_month:
+                    working_days_list.append(d)
+    
+    working_days_count = len(working_days_list)
 
     try:
         records = AttendanceRecord.objects.filter(
@@ -54,7 +70,7 @@ def monthly_report_view(request):
             'employee': emp,
             'present_days': present,
             'late_days': late,
-            'absent_days': working_days - present - leaves_approved,
+            'absent_days': working_days_count - present - leaves_approved,
             'approved_leaves': leaves_approved,
             'total_hours': round(total_hours, 2),
         })
@@ -62,7 +78,7 @@ def monthly_report_view(request):
     return render(request, 'reports/monthly_report.html', {
         'report_data': report_data,
         'month_str': month_str,
-        'working_days': working_days,
+        'working_days': working_days_count,
     })
 
 @login_required
@@ -109,7 +125,7 @@ def export_excel_view(request):
     import openpyxl
     from openpyxl.styles import Font, PatternFill
 
-    month_str = request.GET.get('month', date.today().strftime('%Y-%m'))
+    month_str = request.GET.get('month', timezone.localdate().strftime('%Y-%m'))
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = f'Attendance {month_str}'
@@ -160,7 +176,7 @@ def employee_detail_report_view(request, employee_id):
     import calendar
 
     employee = get_object_or_404(Employee, id=employee_id)
-    today = date.today()
+    today = timezone.localdate()
     month_str = request.GET.get('month', today.strftime('%Y-%m'))
 
     try:
@@ -176,13 +192,20 @@ def employee_detail_report_view(request, employee_id):
         date__month=month
     ).order_by('date')
 
+    # Check holidays this month
+    holidays_this_month = Holiday.objects.filter(
+        date__year=year, date__month=month
+    ).values_list('date', flat=True)
+
     # Build daily data for chart and table
     cal = calendar.monthcalendar(year, month)
     working_days = []
     for week in cal:
         for i, day in enumerate(week):
-            if day != 0 and i < 6:  # Mon-sat
-                working_days.append(date(year, month, day))
+            if day != 0 and i < 6:  # Mon-Sat
+                d = date(year, month, day)
+                if d not in holidays_this_month:
+                    working_days.append(d)
 
     # Check approved leaves
     approved_leaves = LeaveRequest.objects.filter(
@@ -220,12 +243,14 @@ def employee_detail_report_view(request, employee_id):
             checkin_minutes = None
             checkin_str = '-'
             checkout_str = '-'
+            date_obj = None
         else:
             status = 'Absent'
             hours = 0
             checkin_minutes = None
             checkin_str = '-'
             checkout_str = '-'
+            date_obj = None
 
         daily_data.append({
             'date': work_date,

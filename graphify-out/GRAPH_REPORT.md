@@ -1,12 +1,12 @@
-# Graph Report - ATTENDENCE  (2026-05-15)
+# Graph Report - ATTENDENCE  (2026-05-16)
 
 ## Corpus Check
-- 91 files · ~1,646,877 words
+- 91 files · ~1,646,999 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 621 nodes · 1260 edges · 48 communities detected
-- Extraction: 88% EXTRACTED · 12% INFERRED · 0% AMBIGUOUS · INFERRED: 146 edges (avg confidence: 0.66)
+- 664 nodes · 1306 edges · 47 communities detected
+- Extraction: 88% EXTRACTED · 12% INFERRED · 0% AMBIGUOUS · INFERRED: 155 edges (avg confidence: 0.68)
 - Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
@@ -33,328 +33,315 @@
 - [[_COMMUNITY_Community 20|Community 20]]
 - [[_COMMUNITY_Community 21|Community 21]]
 - [[_COMMUNITY_Community 22|Community 22]]
+- [[_COMMUNITY_Community 23|Community 23]]
 - [[_COMMUNITY_Community 24|Community 24]]
 - [[_COMMUNITY_Community 25|Community 25]]
 - [[_COMMUNITY_Community 26|Community 26]]
 - [[_COMMUNITY_Community 28|Community 28]]
+- [[_COMMUNITY_Community 29|Community 29]]
 - [[_COMMUNITY_Community 30|Community 30]]
 - [[_COMMUNITY_Community 31|Community 31]]
 - [[_COMMUNITY_Community 32|Community 32]]
 - [[_COMMUNITY_Community 33|Community 33]]
+- [[_COMMUNITY_Community 34|Community 34]]
 - [[_COMMUNITY_Community 36|Community 36]]
-- [[_COMMUNITY_Community 45|Community 45]]
-- [[_COMMUNITY_Community 46|Community 46]]
-- [[_COMMUNITY_Community 70|Community 70]]
-- [[_COMMUNITY_Community 71|Community 71]]
-- [[_COMMUNITY_Community 72|Community 72]]
-- [[_COMMUNITY_Community 73|Community 73]]
-- [[_COMMUNITY_Community 74|Community 74]]
-- [[_COMMUNITY_Community 75|Community 75]]
-- [[_COMMUNITY_Community 76|Community 76]]
-- [[_COMMUNITY_Community 77|Community 77]]
+- [[_COMMUNITY_Community 38|Community 38]]
+- [[_COMMUNITY_Community 39|Community 39]]
+- [[_COMMUNITY_Community 40|Community 40]]
+- [[_COMMUNITY_Community 41|Community 41]]
+- [[_COMMUNITY_Community 44|Community 44]]
+- [[_COMMUNITY_Community 53|Community 53]]
+- [[_COMMUNITY_Community 54|Community 54]]
 - [[_COMMUNITY_Community 78|Community 78]]
 - [[_COMMUNITY_Community 79|Community 79]]
 - [[_COMMUNITY_Community 80|Community 80]]
 - [[_COMMUNITY_Community 81|Community 81]]
 - [[_COMMUNITY_Community 82|Community 82]]
-- [[_COMMUNITY_Community 83|Community 83]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `J` - 89 edges
 2. `Nk()` - 33 edges
 3. `Ak()` - 32 edges
-4. `Employee` - 21 edges
-5. `LeaveRequest` - 18 edges
-6. `t()` - 17 edges
-7. `LeaveBalance` - 16 edges
+4. `Employee` - 19 edges
+5. `t()` - 17 edges
+6. `LeaveRequest` - 16 edges
+7. `AttendanceRecord` - 15 edges
 8. `y()` - 15 edges
-9. `c()` - 14 edges
-10. `Qc()` - 14 edges
+9. `LeaveBalance` - 14 edges
+10. `c()` - 14 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `monthly_report_view()` --rationale_for--> `Reports as Most Central App`  [INFERRED]
+  reports\views.py → project_mapper/outputs/reports/ARCHITECTURE_REPORT.md
+- `monthly_report_view()` --conceptually_related_to--> `Reporting Engine`  [INFERRED]
+  reports\views.py → README.md
 - `AttendanceRecordAdmin` --uses--> `AttendanceRecord`  [INFERRED]
   attendance\admin.py → attendance\models.py
-- `AttendanceRecord` --uses--> `Main page after login.     Shows today's check-in status and last 7 days of att`  [INFERRED]
-  attendance\models.py → attendance\views.py
-- `AttendanceRecord` --uses--> `Handle the Check In button.          Security checks (in order):     1. Must`  [INFERRED]
-  attendance\models.py → attendance\views.py
-- `AttendanceRecord` --uses--> `Handle the Check Out button.          Validation:     - Must have checked in`  [INFERRED]
-  attendance\models.py → attendance\views.py
-- `AttendanceRecord` --uses--> `Employee's personal attendance history.     Can be filtered by month using ?mon`  [INFERRED]
-  attendance\models.py → attendance\views.py
+- `Main page after login.     Shows today's check-in status and last 7 days of att` --uses--> `AttendanceRecord`  [INFERRED]
+  attendance\views.py → attendance\models.py
+- `Handle the Check In button.          Security checks (in order):     1. Must` --uses--> `AttendanceRecord`  [INFERRED]
+  attendance\views.py → attendance\models.py
+
+## Hyperedges (group relationships)
+- **Reports Cross App Data Aggregation** — views_monthly_report_view, views_attendance_record, views_leave_request, views_employee [EXTRACTED 1.00]
+- **Employee Detail Reporting Flow** — views_employee_detail_report_view, views_employee_daily_data, views_employee_report_charts, views_attendance_record [EXTRACTED 1.00]
+- **Project Intelligence Layer** — readme_graphify, readme_project_mapper, readme_hybrid_retrieval, tester_rag_testing [INFERRED 0.86]
+- **Attendance Self-Service Flow** — dashboard_today_attendance_card, dashboard_check_in_gps_capture, dashboard_check_out_workflow, history_attendance_history [INFERRED 0.86]
+- **Leave Request Lifecycle** — submit_leave_apply_for_leave, my_leaves_my_leave_requests, admin_leaves_all_leave_requests, approve_reject_leave_request_decision [INFERRED 0.90]
+- **Monthly Reporting Workflow** — monthly_report_monthly_attendance_report, monthly_report_export_actions, monthly_report_employee_drilldown, employee_detail_employee_report [EXTRACTED 1.00]
 
 ## Communities
 
 ### Community 0 - "Community 0"
 Cohesion: 0.05
-Nodes (26): load_cache(), _(), A(), b, c(), f(), g(), h() (+18 more)
+Nodes (24): load_cache(), _(), A(), c(), e(), g(), h(), I() (+16 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.05
-Nodes (54): AbstractUser, EmployeeAdmin, HolidayAdmin, LeaveBalanceAdmin, LeaveRequestAdmin, EditProfileForm, EmployeeCreationForm, HolidayForm (+46 more)
+Nodes (55): AbstractUser, EmployeeAdmin, HolidayAdmin, LeaveBalanceAdmin, LeaveRequestAdmin, EditProfileForm, EmployeeCreationForm, HolidayForm (+47 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.05
-Nodes (33): aT(), Ax(), bg(), Bk(), Bx(), Cg(), Eg(), fm() (+25 more)
+Nodes (31): aT(), Ax(), _b(), Bk(), Bx(), eT(), fm(), Gd() (+23 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.09
-Nodes (24): AttendanceRecordAdmin, AttendanceRecord, Stores one attendance record per employee per day.          Fields:     - emp, Calculate total hours worked.         Called automatically when the employee ch, calculate_distance_meters(), get_client_ip(), get_device_info(), is_office_ip() (+16 more)
+Cohesion: 0.07
+Nodes (29): AttendanceRecordAdmin, AttendanceRecord, Stores one attendance record per employee per day.          Fields:     - emp, Calculate total hours worked.         Called automatically when the employee ch, calculate_distance_meters(), get_client_ip(), get_device_info(), is_office_ip() (+21 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.11
-Nodes (24): bfs_paths(), find_start_nodes(), graph_search(), hybrid_search(), merge_results(), normalize_results(), apply_edit(), backup_file() (+16 more)
+Cohesion: 0.1
+Nodes (25): bfs_paths(), find_start_nodes(), graph_search(), hybrid_search(), merge_results(), normalize_results(), apply_edit(), backup_file() (+17 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.12
-Nodes (31): aC(), Ak(), aO(), bE(), BO(), DE(), eC(), eO() (+23 more)
+Cohesion: 0.11
+Nodes (33): aC(), AE(), Ak(), aO(), bE(), BO(), DE(), eC() (+25 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.13
-Nodes (22): d(), a(), C(), eT(), f(), FS(), gE(), h() (+14 more)
+Cohesion: 0.16
+Nodes (20): Ay(), cm(), em(), Fy(), Gc(), im(), Jc(), jy() (+12 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.2
-Nodes (20): ab(), _b(), bb(), cb(), db(), Eb(), fb(), gb() (+12 more)
+Cohesion: 0.16
+Nodes (20): d(), R(), a(), C(), f(), FS(), gE(), l() (+12 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.17
-Nodes (19): Ay(), em(), Fy(), Gc(), im(), Jc(), jy(), Kc() (+11 more)
+Cohesion: 0.13
+Nodes (20): bC(), BS(), Dy(), e(), hm(), Hv(), Ig(), jg() (+12 more)
 
 ### Community 9 - "Community 9"
-Cohesion: 0.17
-Nodes (14): e(), bC(), BS(), cm(), e(), hm(), Hv(), i() (+6 more)
+Cohesion: 0.24
+Nodes (18): ab(), bb(), cb(), db(), Eb(), fb(), gb(), hb() (+10 more)
 
 ### Community 10 - "Community 10"
-Cohesion: 0.14
-Nodes (14): AE(), cO(), $d(), GO(), jE(), jx(), KO(), My() (+6 more)
+Cohesion: 0.13
+Nodes (17): All Attendance Records, Attendance Admin Filters, Attendance Status Badges, Check-In GPS Capture, Check-Out Workflow, Employee Attendance Dashboard, Recent Attendance, Today's Attendance Card (+9 more)
 
 ### Community 11 - "Community 11"
-Cohesion: 0.26
-Nodes (4): add_edge(), add_node(), extract_urls(), GraphVisitor
+Cohesion: 0.13
+Nodes (15): cO(), $d(), GO(), i(), jx(), KO(), My(), Pk() (+7 more)
 
 ### Community 12 - "Community 12"
-Cohesion: 0.21
-Nodes (12): Dy(), Ig(), jg(), Kv(), mg(), pg(), py(), qg() (+4 more)
+Cohesion: 0.26
+Nodes (4): add_edge(), add_node(), extract_urls(), GraphVisitor
 
 ### Community 13 - "Community 13"
 Cohesion: 0.18
 Nodes (6): AppConfig, AccountsConfig, AttendanceConfig, HolidaysConfig, LeaveManagementConfig, ReportsConfig
 
 ### Community 14 - "Community 14"
+Cohesion: 0.28
+Nodes (9): All Leave Requests, Leave Approval Actions, Leave Status Filter, Admin Comment, Leave Request Decision, Apply for Leave Link, My Leave Requests, 36 Hour Leave Notice Rule (+1 more)
+
+### Community 15 - "Community 15"
 Cohesion: 0.54
 Nodes (7): calculate_metadata_score(), fuzzy_match(), load_index(), metadata_search(), normalize(), score_word_match(), tokenize()
 
-### Community 15 - "Community 15"
+### Community 16 - "Community 16"
+Cohesion: 0.29
+Nodes (8): bg(), Cg(), Eg(), _g(), kg(), Og(), wg(), xg()
+
+### Community 17 - "Community 17"
+Cohesion: 0.25
+Nodes (8): Application Dependency Graph, Holidays as Isolated App, Reports as Most Central App, Project Mapper Automated Edit Log, Graphify Codebase Knowledge Graph, Hybrid Retrieval, Project Mapper Local RAG Engine, RAG Testing Results
+
+### Community 18 - "Community 18"
 Cohesion: 0.29
 Nodes (2): get_file_hash(), read_file_content()
 
-### Community 16 - "Community 16"
+### Community 19 - "Community 19"
+Cohesion: 0.48
+Nodes (1): b
+
+### Community 20 - "Community 20"
 Cohesion: 0.33
 Nodes (2): FunctionModelVisitor, Detect patterns like:          AttendanceRecord.objects.filter()         Empl
 
-### Community 17 - "Community 17"
+### Community 21 - "Community 21"
 Cohesion: 0.6
 Nodes (5): filterHighlight(), highlightFilter(), neighbourhoodHighlight(), selectNode(), selectNodes()
 
-### Community 18 - "Community 18"
+### Community 22 - "Community 22"
 Cohesion: 0.4
 Nodes (1): Migration
 
-### Community 19 - "Community 19"
+### Community 23 - "Community 23"
 Cohesion: 0.4
 Nodes (1): CodeChunkVisitor
 
-### Community 20 - "Community 20"
+### Community 24 - "Community 24"
 Cohesion: 0.7
 Nodes (4): boost_important_results(), diversify_results(), remove_duplicate_results(), rerank_results()
 
-### Community 21 - "Community 21"
+### Community 25 - "Community 25"
 Cohesion: 0.5
 Nodes (2): apply_intent_boost(), detect_query_intent()
 
-### Community 22 - "Community 22"
+### Community 26 - "Community 26"
 Cohesion: 0.4
 Nodes (1): CallGraphVisitor
 
-### Community 24 - "Community 24"
+### Community 28 - "Community 28"
 Cohesion: 0.83
 Nodes (3): clear_cache(), main(), run_indexer()
 
-### Community 25 - "Community 25"
+### Community 29 - "Community 29"
+Cohesion: 0.5
+Nodes (4): Employee Leave Balances, Remaining Leave Threshold Colors, My Leave Balance, Leave Balance Progress Visualization
+
+### Community 30 - "Community 30"
 Cohesion: 0.67
 Nodes (2): main(), Run administrative tasks.
 
-### Community 26 - "Community 26"
+### Community 31 - "Community 31"
 Cohesion: 0.67
 Nodes (2): format_hours(), Converts decimal hours to human readable format.     0.75 -> '45 min'     4.75
 
-### Community 28 - "Community 28"
-Cohesion: 1.0
-Nodes (1): Migration
-
-### Community 30 - "Community 30"
-Cohesion: 1.0
-Nodes (1): ASGI config for attendance_system project.  It exposes the ASGI callable as a
-
-### Community 31 - "Community 31"
-Cohesion: 1.0
-Nodes (1): Django settings for attendance_system project.  Generated by 'django-admin sta
-
 ### Community 32 - "Community 32"
-Cohesion: 1.0
-Nodes (1): URL configuration for attendance_system project.  The `urlpatterns` list route
+Cohesion: 0.67
+Nodes (3): Django CSRF Login Form, Employee Login, Login Message Alerts
 
 ### Community 33 - "Community 33"
+Cohesion: 0.67
+Nodes (3): Employee Identity Fields, Employee Profile, Profile Edit and Password Actions
+
+### Community 34 - "Community 34"
 Cohesion: 1.0
-Nodes (1): WSGI config for attendance_system project.  It exposes the WSGI callable as a
+Nodes (3): Add Holiday Form, Admin Holiday Actions, Public Holidays List
 
 ### Community 36 - "Community 36"
 Cohesion: 1.0
 Nodes (1): Migration
 
-### Community 45 - "Community 45"
+### Community 38 - "Community 38"
+Cohesion: 1.0
+Nodes (1): ASGI config for attendance_system project.  It exposes the ASGI callable as a
+
+### Community 39 - "Community 39"
+Cohesion: 1.0
+Nodes (1): Django settings for attendance_system project.  Generated by 'django-admin sta
+
+### Community 40 - "Community 40"
+Cohesion: 1.0
+Nodes (1): URL configuration for attendance_system project.  The `urlpatterns` list route
+
+### Community 41 - "Community 41"
+Cohesion: 1.0
+Nodes (1): WSGI config for attendance_system project.  It exposes the WSGI callable as a
+
+### Community 44 - "Community 44"
+Cohesion: 1.0
+Nodes (1): Migration
+
+### Community 53 - "Community 53"
 Cohesion: 1.0
 Nodes (1): True if employee has checked in today.
 
-### Community 46 - "Community 46"
+### Community 54 - "Community 54"
 Cohesion: 1.0
 Nodes (1): True if employee has checked out today.
 
-### Community 70 - "Community 70"
-Cohesion: 1.0
-Nodes (1): RAG Testing Level 1
-
-### Community 71 - "Community 71"
-Cohesion: 1.0
-Nodes (1): RAG Testing Level 2
-
-### Community 72 - "Community 72"
-Cohesion: 1.0
-Nodes (1): RAG Testing Level 3
-
-### Community 73 - "Community 73"
-Cohesion: 1.0
-Nodes (1): RAG Testing Level 4
-
-### Community 74 - "Community 74"
-Cohesion: 1.0
-Nodes (1): RAG Testing Level 5
-
-### Community 75 - "Community 75"
-Cohesion: 1.0
-Nodes (1): RAG Testing Level 6
-
-### Community 76 - "Community 76"
-Cohesion: 1.0
-Nodes (1): RAG Testing V3
-
-### Community 77 - "Community 77"
-Cohesion: 1.0
-Nodes (1): Feature Analyzer Modification Logs
-
 ### Community 78 - "Community 78"
 Cohesion: 1.0
-Nodes (1): Architecture Overview Report
+Nodes (1): Calculate the distance between two GPS coordinates in meters.     Uses the Have
 
 ### Community 79 - "Community 79"
 Cohesion: 1.0
-Nodes (1): Global Navigation Bar
+Nodes (1): Return True if the given GPS coordinates are within     the allowed office radi
 
 ### Community 80 - "Community 80"
 Cohesion: 1.0
-Nodes (1): GPS-based Check-in Workflow
+Nodes (1): Extract browser and OS info from the HTTP User-Agent header.     Stored for aud
 
 ### Community 81 - "Community 81"
 Cohesion: 1.0
-Nodes (1): Leave Request Rules (36h Notice)
+Nodes (1): AttendanceRecord Impact Query
 
 ### Community 82 - "Community 82"
 Cohesion: 1.0
-Nodes (1): Monthly Report Export Actions
-
-### Community 83 - "Community 83"
-Cohesion: 1.0
-Nodes (1): Employee Attendance Analytics Charts
+Nodes (1): Invalid Checkout Rules Query
 
 ## Knowledge Gaps
-- **33 isolated node(s):** `Run administrative tasks.`, `Migration`, `Stores one attendance record per employee per day.          Fields:     - emp`, `Calculate total hours worked.         Called automatically when the employee ch`, `True if employee has checked in today.` (+28 more)
+- **48 isolated node(s):** `Run administrative tasks.`, `Migration`, `Stores one attendance record per employee per day.          Fields:     - emp`, `Calculate total hours worked.         Called automatically when the employee ch`, `True if employee has checked in today.` (+43 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **Thin community `Community 15`** (7 nodes): `create_chunks()`, `detect_file_type()`, `detect_module()`, `extract_python_metadata()`, `get_file_hash()`, `read_file_content()`, `auto_indexer.py`
+- **Thin community `Community 18`** (7 nodes): `create_chunks()`, `detect_file_type()`, `detect_module()`, `extract_python_metadata()`, `get_file_hash()`, `read_file_content()`, `auto_indexer.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 16`** (6 nodes): `FunctionModelVisitor`, `.__init__()`, `.visit_Call()`, `.visit_FunctionDef()`, `Detect patterns like:          AttendanceRecord.objects.filter()         Empl`, `model_usage_mapper.py`
+- **Thin community `Community 19`** (7 nodes): `b`, `.constructor()`, `.getScoreFunction()`, `.getSortFunction()`, `.prepareSearch()`, `.search()`, `.tokenize()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 18`** (5 nodes): `Migration`, `0001_initial.py`, `0001_initial.py`, `0001_initial.py`, `0001_initial.py`
+- **Thin community `Community 20`** (6 nodes): `FunctionModelVisitor`, `.__init__()`, `.visit_Call()`, `.visit_FunctionDef()`, `Detect patterns like:          AttendanceRecord.objects.filter()         Empl`, `model_usage_mapper.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 19`** (5 nodes): `CodeChunkVisitor`, `.__init__()`, `.visit_ClassDef()`, `.visit_FunctionDef()`, `code_chunk_mapper.py`
+- **Thin community `Community 22`** (5 nodes): `Migration`, `0001_initial.py`, `0001_initial.py`, `0001_initial.py`, `0001_initial.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 21`** (5 nodes): `retrieval_ranker.py`, `apply_intent_boost()`, `deduplicate_results()`, `detect_query_intent()`, `should_ignore_file()`
+- **Thin community `Community 23`** (5 nodes): `CodeChunkVisitor`, `.__init__()`, `.visit_ClassDef()`, `.visit_FunctionDef()`, `code_chunk_mapper.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 22`** (5 nodes): `CallGraphVisitor`, `.__init__()`, `.visit_Call()`, `.visit_FunctionDef()`, `call_graph_mapper.py`
+- **Thin community `Community 25`** (5 nodes): `retrieval_ranker.py`, `apply_intent_boost()`, `deduplicate_results()`, `detect_query_intent()`, `should_ignore_file()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 25`** (3 nodes): `main()`, `manage.py`, `Run administrative tasks.`
+- **Thin community `Community 26`** (5 nodes): `CallGraphVisitor`, `.__init__()`, `.visit_Call()`, `.visit_FunctionDef()`, `call_graph_mapper.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 26`** (3 nodes): `format_hours()`, `Converts decimal hours to human readable format.     0.75 -> '45 min'     4.75`, `attendance_filters.py`
+- **Thin community `Community 30`** (3 nodes): `main()`, `manage.py`, `Run administrative tasks.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 28`** (2 nodes): `Migration`, `0002_alter_employee_options_alter_employee_department_and_more.py`
+- **Thin community `Community 31`** (3 nodes): `format_hours()`, `Converts decimal hours to human readable format.     0.75 -> '45 min'     4.75`, `attendance_filters.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 30`** (2 nodes): `ASGI config for attendance_system project.  It exposes the ASGI callable as a`, `asgi.py`
+- **Thin community `Community 36`** (2 nodes): `Migration`, `0002_alter_employee_options_alter_employee_department_and_more.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 31`** (2 nodes): `settings.py`, `Django settings for attendance_system project.  Generated by 'django-admin sta`
+- **Thin community `Community 38`** (2 nodes): `ASGI config for attendance_system project.  It exposes the ASGI callable as a`, `asgi.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 32`** (2 nodes): `urls.py`, `URL configuration for attendance_system project.  The `urlpatterns` list route`
+- **Thin community `Community 39`** (2 nodes): `settings.py`, `Django settings for attendance_system project.  Generated by 'django-admin sta`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 33`** (2 nodes): `wsgi.py`, `WSGI config for attendance_system project.  It exposes the WSGI callable as a`
+- **Thin community `Community 40`** (2 nodes): `urls.py`, `URL configuration for attendance_system project.  The `urlpatterns` list route`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 36`** (2 nodes): `Migration`, `0002_leavebalance.py`
+- **Thin community `Community 41`** (2 nodes): `wsgi.py`, `WSGI config for attendance_system project.  It exposes the WSGI callable as a`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 45`** (1 nodes): `True if employee has checked in today.`
+- **Thin community `Community 44`** (2 nodes): `Migration`, `0002_leavebalance.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 46`** (1 nodes): `True if employee has checked out today.`
+- **Thin community `Community 53`** (1 nodes): `True if employee has checked in today.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 70`** (1 nodes): `RAG Testing Level 1`
+- **Thin community `Community 54`** (1 nodes): `True if employee has checked out today.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 71`** (1 nodes): `RAG Testing Level 2`
+- **Thin community `Community 78`** (1 nodes): `Calculate the distance between two GPS coordinates in meters.     Uses the Have`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 72`** (1 nodes): `RAG Testing Level 3`
+- **Thin community `Community 79`** (1 nodes): `Return True if the given GPS coordinates are within     the allowed office radi`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 73`** (1 nodes): `RAG Testing Level 4`
+- **Thin community `Community 80`** (1 nodes): `Extract browser and OS info from the HTTP User-Agent header.     Stored for aud`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 74`** (1 nodes): `RAG Testing Level 5`
+- **Thin community `Community 81`** (1 nodes): `AttendanceRecord Impact Query`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 75`** (1 nodes): `RAG Testing Level 6`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `RAG Testing V3`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 77`** (1 nodes): `Feature Analyzer Modification Logs`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 78`** (1 nodes): `Architecture Overview Report`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 79`** (1 nodes): `Global Navigation Bar`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 80`** (1 nodes): `GPS-based Check-in Workflow`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 81`** (1 nodes): `Leave Request Rules (36h Notice)`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 82`** (1 nodes): `Monthly Report Export Actions`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 83`** (1 nodes): `Employee Attendance Analytics Charts`
+- **Thin community `Community 82`** (1 nodes): `Invalid Checkout Rules Query`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `J` connect `Community 0` to `Community 1`, `Community 4`?**
-  _High betweenness centrality (0.208) - this node is a cross-community bridge._
-- **Why does `d()` connect `Community 6` to `Community 0`, `Community 1`?**
-  _High betweenness centrality (0.123) - this node is a cross-community bridge._
-- **Why does `t()` connect `Community 9` to `Community 0`, `Community 2`, `Community 6`, `Community 8`, `Community 10`, `Community 12`?**
-  _High betweenness centrality (0.089) - this node is a cross-community bridge._
-- **Are the 17 inferred relationships involving `Employee` (e.g. with `EmployeeAdmin` and `EmployeeCreationForm`) actually correct?**
-  _`Employee` has 17 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 14 inferred relationships involving `LeaveRequest` (e.g. with `LeaveRequestAdmin` and `LeaveBalanceAdmin`) actually correct?**
-  _`LeaveRequest` has 14 INFERRED edges - model-reasoned connections that need verification._
+  _High betweenness centrality (0.190) - this node is a cross-community bridge._
+- **Why does `d()` connect `Community 7` to `Community 0`, `Community 1`?**
+  _High betweenness centrality (0.118) - this node is a cross-community bridge._
+- **Why does `t()` connect `Community 8` to `Community 0`, `Community 2`, `Community 6`, `Community 7`, `Community 11`?**
+  _High betweenness centrality (0.078) - this node is a cross-community bridge._
+- **Are the 15 inferred relationships involving `Employee` (e.g. with `EmployeeAdmin` and `EmployeeCreationForm`) actually correct?**
+  _`Employee` has 15 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 3 inferred relationships involving `t()` (e.g. with `.clear()` and `.on()`) actually correct?**
+  _`t()` has 3 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `Run administrative tasks.`, `Migration`, `Stores one attendance record per employee per day.          Fields:     - emp` to the rest of the system?**
-  _33 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _48 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._

@@ -23,13 +23,10 @@ def get_client_ip(request):
 def is_office_ip(ip_address):
     """
     Check if an IP address is in the allowed office network.
-    
-    Supports:
-    - Exact match: '192.168.1.100'
-    - /24 subnet: '192.168.1.0/24' matches any 192.168.1.x
-    
-    IPs are defined in settings.ALLOWED_OFFICE_IPS
     """
+    if not ip_address:
+        return False
+
     allowed_ips = getattr(settings, 'ALLOWED_OFFICE_IPS', [])
 
     for allowed in allowed_ips:

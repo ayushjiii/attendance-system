@@ -1,0 +1,1313 @@
+{
+  "communities": {
+    "0": [
+      "e_work_python_attendence_project_mapper_lib_vis_9_1_2_vis_network_min_js",
+      "project_mapper_lib_vis_9_1_2_vis_network_min_js",
+      "tom_select_complete_min_t_on",
+      "vis_network_min_a",
+      "vis_network_min_ab",
+      "vis_network_min_ac",
+      "vis_network_min_ae",
+      "vis_network_min_ak",
+      "vis_network_min_am",
+      "vis_network_min_an",
+      "vis_network_min_ao",
+      "vis_network_min_at",
+      "vis_network_min_ax",
+      "vis_network_min_ay",
+      "vis_network_min_b",
+      "vis_network_min_bb",
+      "vis_network_min_bc",
+      "vis_network_min_be",
+      "vis_network_min_bg",
+      "vis_network_min_bk",
+      "vis_network_min_bo",
+      "vis_network_min_bs",
+      "vis_network_min_bx",
+      "vis_network_min_by",
+      "vis_network_min_c",
+      "vis_network_min_cb",
+      "vis_network_min_cg",
+      "vis_network_min_cm",
+      "vis_network_min_co",
+      "vis_network_min_ct",
+      "vis_network_min_d",
+      "vis_network_min_db",
+      "vis_network_min_de",
+      "vis_network_min_dm",
+      "vis_network_min_dx",
+      "vis_network_min_dy",
+      "vis_network_min_e",
+      "vis_network_min_eb",
+      "vis_network_min_ec",
+      "vis_network_min_eg",
+      "vis_network_min_em",
+      "vis_network_min_eo",
+      "vis_network_min_et",
+      "vis_network_min_ey",
+      "vis_network_min_f",
+      "vis_network_min_fb",
+      "vis_network_min_fm",
+      "vis_network_min_fn",
+      "vis_network_min_fs",
+      "vis_network_min_fy",
+      "vis_network_min_g",
+      "vis_network_min_gb",
+      "vis_network_min_gc",
+      "vis_network_min_gd",
+      "vis_network_min_ge",
+      "vis_network_min_gg",
+      "vis_network_min_gm",
+      "vis_network_min_go",
+      "vis_network_min_gy",
+      "vis_network_min_h",
+      "vis_network_min_hb",
+      "vis_network_min_hc",
+      "vis_network_min_he",
+      "vis_network_min_hm",
+      "vis_network_min_ht",
+      "vis_network_min_hv",
+      "vis_network_min_hx",
+      "vis_network_min_i",
+      "vis_network_min_ic",
+      "vis_network_min_ig",
+      "vis_network_min_im",
+      "vis_network_min_is",
+      "vis_network_min_it",
+      "vis_network_min_iy",
+      "vis_network_min_jc",
+      "vis_network_min_je",
+      "vis_network_min_jg",
+      "vis_network_min_jn",
+      "vis_network_min_jo",
+      "vis_network_min_jx",
+      "vis_network_min_jy",
+      "vis_network_min_kb",
+      "vis_network_min_kc",
+      "vis_network_min_kd",
+      "vis_network_min_ke",
+      "vis_network_min_kg",
+      "vis_network_min_km",
+      "vis_network_min_ko",
+      "vis_network_min_kv",
+      "vis_network_min_ky",
+      "vis_network_min_l",
+      "vis_network_min_lb",
+      "vis_network_min_lc",
+      "vis_network_min_lo",
+      "vis_network_min_ls",
+      "vis_network_min_lv",
+      "vis_network_min_lx",
+      "vis_network_min_ly",
+      "vis_network_min_m",
+      "vis_network_min_mb",
+      "vis_network_min_mc",
+      "vis_network_min_me",
+      "vis_network_min_mg",
+      "vis_network_min_mm",
+      "vis_network_min_my",
+      "vis_network_min_n",
+      "vis_network_min_nc",
+      "vis_network_min_ne",
+      "vis_network_min_nk",
+      "vis_network_min_nm",
+      "vis_network_min_nn",
+      "vis_network_min_no",
+      "vis_network_min_ns",
+      "vis_network_min_nt",
+      "vis_network_min_ny",
+      "vis_network_min_o",
+      "vis_network_min_oc",
+      "vis_network_min_og",
+      "vis_network_min_om",
+      "vis_network_min_ot",
+      "vis_network_min_oy",
+      "vis_network_min_p",
+      "vis_network_min_pb",
+      "vis_network_min_pg",
+      "vis_network_min_pk",
+      "vis_network_min_pm",
+      "vis_network_min_po",
+      "vis_network_min_py",
+      "vis_network_min_qc",
+      "vis_network_min_qe",
+      "vis_network_min_qg",
+      "vis_network_min_qo",
+      "vis_network_min_qx",
+      "vis_network_min_qy",
+      "vis_network_min_rc",
+      "vis_network_min_re",
+      "vis_network_min_rg",
+      "vis_network_min_rm",
+      "vis_network_min_rn",
+      "vis_network_min_ro",
+      "vis_network_min_rs",
+      "vis_network_min_rv",
+      "vis_network_min_rx",
+      "vis_network_min_ry",
+      "vis_network_min_s",
+      "vis_network_min_sb",
+      "vis_network_min_se",
+      "vis_network_min_sg",
+      "vis_network_min_sm",
+      "vis_network_min_so",
+      "vis_network_min_sy",
+      "vis_network_min_t",
+      "vis_network_min_tc",
+      "vis_network_min_tg",
+      "vis_network_min_ty",
+      "vis_network_min_u",
+      "vis_network_min_ub",
+      "vis_network_min_ue",
+      "vis_network_min_uo",
+      "vis_network_min_ux",
+      "vis_network_min_v",
+      "vis_network_min_vb",
+      "vis_network_min_vg",
+      "vis_network_min_vm",
+      "vis_network_min_vo",
+      "vis_network_min_vs",
+      "vis_network_min_wb",
+      "vis_network_min_wg",
+      "vis_network_min_wm",
+      "vis_network_min_wx",
+      "vis_network_min_wy",
+      "vis_network_min_x",
+      "vis_network_min_xb",
+      "vis_network_min_xc",
+      "vis_network_min_xe",
+      "vis_network_min_xg",
+      "vis_network_min_xm",
+      "vis_network_min_xt",
+      "vis_network_min_y",
+      "vis_network_min_yb",
+      "vis_network_min_yd",
+      "vis_network_min_ye",
+      "vis_network_min_ym",
+      "vis_network_min_ze",
+      "vis_network_min_zk",
+      "vis_network_min_zo",
+      "vis_network_min_zs",
+      "vis_network_min_zx",
+      "vis_network_min_zy"
+    ],
+    "1": [
+      "e_work_python_attendence_project_mapper_lib_tom_select_tom_select_complete_min_js",
+      "project_mapper_lib_tom_select_tom_select_complete_min_js",
+      "tom_select_complete_min",
+      "tom_select_complete_min_a",
+      "tom_select_complete_min_b",
+      "tom_select_complete_min_b_constructor",
+      "tom_select_complete_min_b_getscorefunction",
+      "tom_select_complete_min_b_getsortfunction",
+      "tom_select_complete_min_b_preparesearch",
+      "tom_select_complete_min_b_search",
+      "tom_select_complete_min_b_tokenize",
+      "tom_select_complete_min_c",
+      "tom_select_complete_min_d",
+      "tom_select_complete_min_e",
+      "tom_select_complete_min_f",
+      "tom_select_complete_min_g",
+      "tom_select_complete_min_h",
+      "tom_select_complete_min_i",
+      "tom_select_complete_min_j",
+      "tom_select_complete_min_j_additem",
+      "tom_select_complete_min_j_additems",
+      "tom_select_complete_min_j_addoption",
+      "tom_select_complete_min_j_addoptiongroup",
+      "tom_select_complete_min_j_addoptions",
+      "tom_select_complete_min_j_advanceselection",
+      "tom_select_complete_min_j_blur",
+      "tom_select_complete_min_j_cancreate",
+      "tom_select_complete_min_j_canload",
+      "tom_select_complete_min_j_clear",
+      "tom_select_complete_min_j_clearactiveitems",
+      "tom_select_complete_min_j_clearactiveoption",
+      "tom_select_complete_min_j_clearcache",
+      "tom_select_complete_min_j_clearoptiongroups",
+      "tom_select_complete_min_j_clearoptions",
+      "tom_select_complete_min_j_close",
+      "tom_select_complete_min_j_constructor",
+      "tom_select_complete_min_j_controlchildren",
+      "tom_select_complete_min_j_createitem",
+      "tom_select_complete_min_j_deleteselection",
+      "tom_select_complete_min_j_destroy",
+      "tom_select_complete_min_j_disable",
+      "tom_select_complete_min_j_enable",
+      "tom_select_complete_min_j_focus",
+      "tom_select_complete_min_j_getadjacent",
+      "tom_select_complete_min_j_getitem",
+      "tom_select_complete_min_j_getlastactive",
+      "tom_select_complete_min_j_getoption",
+      "tom_select_complete_min_j_getvalue",
+      "tom_select_complete_min_j_hideinput",
+      "tom_select_complete_min_j_hook",
+      "tom_select_complete_min_j_inputstate",
+      "tom_select_complete_min_j_inputvalue",
+      "tom_select_complete_min_j_insertatcaret",
+      "tom_select_complete_min_j_isfull",
+      "tom_select_complete_min_j_load",
+      "tom_select_complete_min_j_loadcallback",
+      "tom_select_complete_min_j_lock",
+      "tom_select_complete_min_j_movecaret",
+      "tom_select_complete_min_j_onblur",
+      "tom_select_complete_min_j_onchange",
+      "tom_select_complete_min_j_onclick",
+      "tom_select_complete_min_j_onfocus",
+      "tom_select_complete_min_j_oninput",
+      "tom_select_complete_min_j_onitemselect",
+      "tom_select_complete_min_j_onkeydown",
+      "tom_select_complete_min_j_onkeypress",
+      "tom_select_complete_min_j_onmousedown",
+      "tom_select_complete_min_j_onoptionselect",
+      "tom_select_complete_min_j_onpaste",
+      "tom_select_complete_min_j_open",
+      "tom_select_complete_min_j_positiondropdown",
+      "tom_select_complete_min_j_preload",
+      "tom_select_complete_min_j_refreshitems",
+      "tom_select_complete_min_j_refreshoptions",
+      "tom_select_complete_min_j_refreshstate",
+      "tom_select_complete_min_j_refreshvaliditystate",
+      "tom_select_complete_min_j_registeroption",
+      "tom_select_complete_min_j_registeroptiongroup",
+      "tom_select_complete_min_j_removeactiveitem",
+      "tom_select_complete_min_j_removeitem",
+      "tom_select_complete_min_j_removeoption",
+      "tom_select_complete_min_j_removeoptiongroup",
+      "tom_select_complete_min_j_scroll",
+      "tom_select_complete_min_j_scrolltooption",
+      "tom_select_complete_min_j_selectable",
+      "tom_select_complete_min_j_selectall",
+      "tom_select_complete_min_j_setactiveitem",
+      "tom_select_complete_min_j_setactiveitemclass",
+      "tom_select_complete_min_j_setactiveoption",
+      "tom_select_complete_min_j_setcaret",
+      "tom_select_complete_min_j_setmaxitems",
+      "tom_select_complete_min_j_settextboxvalue",
+      "tom_select_complete_min_j_setup",
+      "tom_select_complete_min_j_setupcallbacks",
+      "tom_select_complete_min_j_setupoptions",
+      "tom_select_complete_min_j_setuptemplates",
+      "tom_select_complete_min_j_setvalue",
+      "tom_select_complete_min_j_showinput",
+      "tom_select_complete_min_j_sync",
+      "tom_select_complete_min_j_uncachevalue",
+      "tom_select_complete_min_j_unlock",
+      "tom_select_complete_min_j_updateoption",
+      "tom_select_complete_min_j_updateoriginalinput",
+      "tom_select_complete_min_k",
+      "tom_select_complete_min_l",
+      "tom_select_complete_min_m",
+      "tom_select_complete_min_n",
+      "tom_select_complete_min_o",
+      "tom_select_complete_min_p",
+      "tom_select_complete_min_q",
+      "tom_select_complete_min_r",
+      "tom_select_complete_min_s",
+      "tom_select_complete_min_t",
+      "tom_select_complete_min_t_constructor",
+      "tom_select_complete_min_t_off",
+      "tom_select_complete_min_t_trigger",
+      "tom_select_complete_min_u",
+      "tom_select_complete_min_v",
+      "tom_select_complete_min_w",
+      "tom_select_complete_min_x",
+      "tom_select_complete_min_y",
+      "tom_select_complete_min_z"
+    ],
+    "2": [
+      "abstractuser",
+      "accounts_admin_py",
+      "accounts_forms_py",
+      "accounts_models_py",
+      "accounts_views_py",
+      "admin_employeeadmin",
+      "admin_holidayadmin",
+      "admin_leavebalanceadmin",
+      "admin_leaverequestadmin",
+      "e_work_python_attendence_accounts_admin_py",
+      "e_work_python_attendence_accounts_forms_py",
+      "e_work_python_attendence_accounts_models_py",
+      "e_work_python_attendence_accounts_views_py",
+      "e_work_python_attendence_holidays_admin_py",
+      "e_work_python_attendence_holidays_forms_py",
+      "e_work_python_attendence_holidays_models_py",
+      "e_work_python_attendence_holidays_views_py",
+      "e_work_python_attendence_leave_management_admin_py",
+      "e_work_python_attendence_leave_management_forms_py",
+      "e_work_python_attendence_leave_management_models_py",
+      "e_work_python_attendence_leave_management_views_py",
+      "forms_editprofileform",
+      "forms_employeecreationform",
+      "forms_employeecreationform_init",
+      "forms_holidayform",
+      "forms_leaverequestform",
+      "forms_meta",
+      "forms_rationale_6",
+      "holidays_admin_py",
+      "holidays_forms_py",
+      "holidays_models_py",
+      "holidays_views_py",
+      "leave_management_admin_py",
+      "leave_management_forms_py",
+      "leave_management_models_py",
+      "leave_management_views_py",
+      "models_create_leave_balance",
+      "models_employee",
+      "models_employee_save",
+      "models_employee_str",
+      "models_holiday",
+      "models_holiday_str",
+      "models_is_admin_role",
+      "models_leavebalance",
+      "models_leavebalance_get_remaining",
+      "models_leavebalance_get_summary",
+      "models_leavebalance_get_used",
+      "models_leavebalance_str",
+      "models_leaverequest",
+      "models_leaverequest_hours_until_leave",
+      "models_leaverequest_passes_36_hour_rule",
+      "models_leaverequest_str",
+      "models_meta",
+      "models_rationale_106",
+      "tom_select_complete_min_j_render",
+      "useradmin",
+      "usercreationform",
+      "views_add_holiday_view",
+      "views_admin_leave_balance_view",
+      "views_admin_leaves_view",
+      "views_approve_leave_view",
+      "views_change_password_view",
+      "views_create_employee_view",
+      "views_delete_holiday_view",
+      "views_delete_leave_view",
+      "views_edit_profile_view",
+      "views_employee_list_view",
+      "views_holiday_list_view",
+      "views_leave_balance_view",
+      "views_login_view",
+      "views_logout_view",
+      "views_my_leaves_view",
+      "views_profile_view",
+      "views_rationale_10",
+      "views_rationale_113",
+      "views_rationale_13",
+      "views_rationale_152",
+      "views_rationale_162",
+      "views_rationale_189",
+      "views_rationale_220",
+      "views_rationale_41",
+      "views_rationale_51",
+      "views_rationale_67",
+      "views_rationale_83",
+      "views_reject_leave_view",
+      "views_send_leave_email_to_admin",
+      "views_send_status_notification_email",
+      "views_submit_leave_view"
+    ],
+    "3": [
+      "e_work_python_attendence_project_mapper_graph_retriever_py",
+      "e_work_python_attendence_project_mapper_hybrid_retriever_py",
+      "e_work_python_attendence_project_mapper_local_llm_interface_py",
+      "e_work_python_attendence_project_mapper_sementic_retriever_py",
+      "graph_retriever_bfs_paths",
+      "graph_retriever_find_start_nodes",
+      "graph_retriever_graph_search",
+      "hybrid_retriever_hybrid_search",
+      "hybrid_retriever_merge_results",
+      "hybrid_retriever_normalize_results",
+      "local_llm_interface_apply_edit",
+      "local_llm_interface_backup_file",
+      "local_llm_interface_build_cache_key",
+      "local_llm_interface_build_context",
+      "local_llm_interface_build_prompt",
+      "local_llm_interface_call_llm",
+      "local_llm_interface_detect_analysis_type",
+      "local_llm_interface_detect_file",
+      "local_llm_interface_detect_retrieval_mode",
+      "local_llm_interface_is_edit_request",
+      "local_llm_interface_load_cache",
+      "local_llm_interface_log_edit",
+      "local_llm_interface_main",
+      "local_llm_interface_normalize",
+      "local_llm_interface_parse_intent",
+      "local_llm_interface_run_analysis",
+      "local_llm_interface_save_cache",
+      "project_mapper_graph_retriever_py",
+      "project_mapper_hybrid_retriever_py",
+      "project_mapper_local_llm_interface_py",
+      "project_mapper_sementic_retriever_py",
+      "sementic_retriever_cosine_similarity",
+      "sementic_retriever_display_results",
+      "sementic_retriever_semantic_search",
+      "tom_select_complete_min_j_getscorefunction",
+      "tom_select_complete_min_j_getsearchoptions",
+      "tom_select_complete_min_j_search"
+    ],
+    "4": [
+      "admin_attendancerecordadmin",
+      "attendance_admin_py",
+      "attendance_models_py",
+      "attendance_utils_py",
+      "attendance_views_py",
+      "e_work_python_attendence_attendance_admin_py",
+      "e_work_python_attendence_attendance_models_py",
+      "e_work_python_attendence_attendance_utils_py",
+      "e_work_python_attendence_attendance_views_py",
+      "models_attendancerecord",
+      "models_attendancerecord_calculate_working_hours",
+      "models_attendancerecord_str",
+      "models_is_checked_in",
+      "models_is_checked_out",
+      "models_rationale_7",
+      "models_rationale_70",
+      "utils_calculate_distance_meters",
+      "utils_get_client_ip",
+      "utils_get_device_info",
+      "utils_is_office_ip",
+      "utils_is_within_office_radius",
+      "utils_rationale_24",
+      "utils_rationale_49",
+      "utils_rationale_6",
+      "utils_rationale_77",
+      "utils_rationale_99",
+      "views_admin_attendance_view",
+      "views_attendance_history_view",
+      "views_check_in_view",
+      "views_check_out_view",
+      "views_dashboard_view",
+      "views_rationale_135",
+      "views_rationale_14",
+      "views_rationale_197",
+      "views_rationale_222",
+      "views_rationale_46"
+    ],
+    "5": [
+      "architecture_graph_app_dependency_graph",
+      "architecture_report_holidays_isolated",
+      "architecture_report_reports_central",
+      "base_admin_navigation",
+      "base_employee_navigation",
+      "create_employee_form",
+      "edit_log_automated_edits",
+      "edit_profile_form",
+      "employee_list_table",
+      "locked_out_account_lockout_page",
+      "readme_attendance_system",
+      "readme_graphify",
+      "readme_hybrid_retrieval",
+      "readme_project_mapper",
+      "readme_reporting_engine",
+      "reports_views_py",
+      "tester_attendance_record_impact",
+      "tester_invalid_checkout_rules",
+      "tester_rag_testing",
+      "views_admin_report_gate",
+      "views_attendance_record",
+      "views_employee",
+      "views_employee_daily_data",
+      "views_employee_detail_report_view",
+      "views_employee_report_charts",
+      "views_export_csv_view",
+      "views_export_excel_view",
+      "views_leave_request",
+      "views_monthly_report_data",
+      "views_monthly_report_view"
+    ],
+    "6": [
+      "admin_attendance_all_attendance_records",
+      "admin_attendance_attendance_filters",
+      "admin_attendance_attendance_status_badges",
+      "dashboard_check_in_gps_capture",
+      "dashboard_check_out_workflow",
+      "dashboard_employee_dashboard",
+      "dashboard_recent_attendance",
+      "dashboard_today_attendance_card",
+      "employee_detail_attendance_charts",
+      "employee_detail_daily_breakdown",
+      "employee_detail_employee_report",
+      "employee_detail_report_summary_cards",
+      "history_attendance_history",
+      "history_month_filter",
+      "monthly_report_employee_drilldown",
+      "monthly_report_export_actions",
+      "monthly_report_monthly_attendance_report"
+    ],
+    "7": [
+      "accounts_apps_py",
+      "appconfig",
+      "apps_accountsconfig",
+      "apps_attendanceconfig",
+      "apps_holidaysconfig",
+      "apps_leavemanagementconfig",
+      "apps_reportsconfig",
+      "attendance_apps_py",
+      "e_work_python_attendence_accounts_apps_py",
+      "e_work_python_attendence_attendance_apps_py",
+      "e_work_python_attendence_holidays_apps_py",
+      "e_work_python_attendence_leave_management_apps_py",
+      "e_work_python_attendence_reports_apps_py",
+      "holidays_apps_py",
+      "leave_management_apps_py",
+      "reports_apps_py"
+    ],
+    "8": [
+      "e_work_python_attendence_project_mapper_unified_graph_builder_py",
+      "project_mapper_unified_graph_builder_py",
+      "unified_graph_builder_add_edge",
+      "unified_graph_builder_add_node",
+      "unified_graph_builder_extract_urls",
+      "unified_graph_builder_graphvisitor",
+      "unified_graph_builder_graphvisitor_init",
+      "unified_graph_builder_graphvisitor_visit_assign",
+      "unified_graph_builder_graphvisitor_visit_asyncfunctiondef",
+      "unified_graph_builder_graphvisitor_visit_call",
+      "unified_graph_builder_graphvisitor_visit_classdef",
+      "unified_graph_builder_graphvisitor_visit_functiondef",
+      "unified_graph_builder_graphvisitor_visit_import",
+      "unified_graph_builder_graphvisitor_visit_importfrom"
+    ],
+    "9": [
+      "0001_initial_migration",
+      "accounts_migrations_0001_initial_py",
+      "attendance_migrations_0001_initial_py",
+      "e_work_python_attendence_accounts_migrations_0001_initial_py",
+      "e_work_python_attendence_attendance_migrations_0001_initial_py",
+      "e_work_python_attendence_holidays_migrations_0001_initial_py",
+      "e_work_python_attendence_leave_management_migrations_0001_initial_py",
+      "holidays_migrations_0001_initial_py",
+      "leave_management_migrations_0001_initial_py"
+    ],
+    "10": [
+      "e_work_python_attendence_project_mapper_metadata_retriever_py",
+      "metadata_retriever_calculate_metadata_score",
+      "metadata_retriever_fuzzy_match",
+      "metadata_retriever_load_index",
+      "metadata_retriever_metadata_search",
+      "metadata_retriever_normalize",
+      "metadata_retriever_score_word_match",
+      "metadata_retriever_tokenize",
+      "project_mapper_metadata_retriever_py"
+    ],
+    "11": [
+      "admin_leaves_all_leave_requests",
+      "admin_leaves_approval_actions",
+      "admin_leaves_leave_status_filter",
+      "approve_reject_admin_comment",
+      "approve_reject_leave_request_decision",
+      "my_leaves_apply_for_leave_link",
+      "my_leaves_my_leave_requests",
+      "submit_leave_36_hour_notice_rule",
+      "submit_leave_apply_for_leave"
+    ],
+    "12": [
+      "auto_indexer_create_chunks",
+      "auto_indexer_detect_file_type",
+      "auto_indexer_detect_module",
+      "auto_indexer_extract_python_metadata",
+      "auto_indexer_get_file_hash",
+      "auto_indexer_read_file_content",
+      "e_work_python_attendence_project_mapper_auto_indexer_py",
+      "project_mapper_auto_indexer_py"
+    ],
+    "13": [
+      "e_work_python_attendence_project_mapper_model_usage_mapper_py",
+      "model_usage_mapper_functionmodelvisitor",
+      "model_usage_mapper_functionmodelvisitor_init",
+      "model_usage_mapper_functionmodelvisitor_visit_call",
+      "model_usage_mapper_functionmodelvisitor_visit_functiondef",
+      "model_usage_mapper_rationale_79",
+      "project_mapper_model_usage_mapper_py"
+    ],
+    "14": [
+      "e_work_python_attendence_project_mapper_lib_bindings_utils_js",
+      "project_mapper_lib_bindings_utils_js",
+      "utils_filterhighlight",
+      "utils_highlightfilter",
+      "utils_neighbourhoodhighlight",
+      "utils_selectnode",
+      "utils_selectnodes"
+    ],
+    "15": [
+      "code_chunk_mapper_codechunkvisitor",
+      "code_chunk_mapper_codechunkvisitor_init",
+      "code_chunk_mapper_codechunkvisitor_visit_classdef",
+      "code_chunk_mapper_codechunkvisitor_visit_functiondef",
+      "e_work_python_attendence_project_mapper_code_chunk_mapper_py",
+      "project_mapper_code_chunk_mapper_py"
+    ],
+    "16": [
+      "e_work_python_attendence_project_mapper_reranker_py",
+      "project_mapper_reranker_py",
+      "reranker_boost_important_results",
+      "reranker_diversify_results",
+      "reranker_remove_duplicate_results",
+      "reranker_rerank_results"
+    ],
+    "17": [
+      "e_work_python_attendence_project_mapper_retrieval_ranker_py",
+      "project_mapper_retrieval_ranker_py",
+      "retrieval_ranker_apply_intent_boost",
+      "retrieval_ranker_deduplicate_results",
+      "retrieval_ranker_detect_query_intent",
+      "retrieval_ranker_should_ignore_file"
+    ],
+    "18": [
+      "call_graph_mapper_callgraphvisitor",
+      "call_graph_mapper_callgraphvisitor_init",
+      "call_graph_mapper_callgraphvisitor_visit_call",
+      "call_graph_mapper_callgraphvisitor_visit_functiondef",
+      "e_work_python_attendence_project_mapper_archive_call_graph_mapper_py",
+      "project_mapper_archive_call_graph_mapper_py"
+    ],
+    "19": [
+      "e_work_python_attendence_project_mapper_archive_query_engine_py",
+      "project_mapper_archive_query_engine_py",
+      "query_engine_find_dependents",
+      "query_engine_get_models",
+      "query_engine_get_relationships",
+      "query_engine_most_connected_model"
+    ],
+    "20": [
+      "e_work_python_attendence_project_mapper_refresh_rag_py",
+      "project_mapper_refresh_rag_py",
+      "refresh_rag_clear_cache",
+      "refresh_rag_main",
+      "refresh_rag_run_indexer"
+    ],
+    "21": [
+      "e_work_python_attendence_manage_py",
+      "manage_main",
+      "manage_py",
+      "manage_rationale_8"
+    ],
+    "22": [
+      "attendance_filters_format_hours",
+      "attendance_filters_rationale_7",
+      "attendance_templatetags_attendance_filters_py",
+      "e_work_python_attendence_attendance_templatetags_attendance_filters_py"
+    ],
+    "23": [
+      "admin_leave_balance_employee_leave_balances",
+      "admin_leave_balance_remaining_threshold_colors",
+      "leave_balance_my_leave_balance",
+      "leave_balance_progress_visualization"
+    ],
+    "24": [
+      "0002_alter_employee_options_alter_employee_department_and_more_migration",
+      "accounts_migrations_0002_alter_employee_options_alter_employee_department_and_more_py",
+      "e_work_python_attendence_accounts_migrations_0002_alter_employee_options_alter_employee_department_and_more_py"
+    ],
+    "25": [
+      "asgi_rationale_1",
+      "attendance_system_asgi_py",
+      "e_work_python_attendence_attendance_system_asgi_py"
+    ],
+    "26": [
+      "attendance_system_settings_py",
+      "e_work_python_attendence_attendance_system_settings_py",
+      "settings_rationale_1"
+    ],
+    "27": [
+      "attendance_system_urls_py",
+      "e_work_python_attendence_attendance_system_urls_py",
+      "urls_rationale_1"
+    ],
+    "28": [
+      "attendance_system_wsgi_py",
+      "e_work_python_attendence_attendance_system_wsgi_py",
+      "wsgi_rationale_1"
+    ],
+    "29": [
+      "0002_leavebalance_migration",
+      "e_work_python_attendence_leave_management_migrations_0002_leavebalance_py",
+      "leave_management_migrations_0002_leavebalance_py"
+    ],
+    "30": [
+      "e_work_python_attendence_project_mapper_feature_analyzer_py",
+      "feature_analyzer_analyze_feature",
+      "project_mapper_feature_analyzer_py"
+    ],
+    "31": [
+      "e_work_python_attendence_project_mapper_impact_analyzer_py",
+      "impact_analyzer_trace_impact",
+      "project_mapper_impact_analyzer_py"
+    ],
+    "32": [
+      "e_work_python_attendence_project_mapper_path_finder_py",
+      "path_finder_find_path",
+      "project_mapper_path_finder_py"
+    ],
+    "33": [
+      "e_work_python_attendence_project_mapper_retrieval_filter_py",
+      "project_mapper_retrieval_filter_py",
+      "retrieval_filter_apply_retrieval_filters"
+    ],
+    "34": [
+      "e_work_python_attendence_project_mapper_workflow_tracer_py",
+      "project_mapper_workflow_tracer_py",
+      "workflow_tracer_trace_workflow"
+    ],
+    "35": [
+      "login_django_csrf_login_form",
+      "login_employee_login",
+      "login_message_alerts"
+    ],
+    "36": [
+      "profile_employee_identity_fields",
+      "profile_employee_profile",
+      "profile_profile_actions"
+    ],
+    "37": [
+      "add_holiday_holiday_form",
+      "holiday_list_admin_holiday_actions",
+      "holiday_list_public_holidays"
+    ],
+    "38": [
+      "accounts_init_py",
+      "accounts_urls_py"
+    ],
+    "39": [
+      "attendance_init_py",
+      "attendance_urls_py"
+    ],
+    "40": [
+      "holidays_init_py",
+      "holidays_urls_py"
+    ],
+    "41": [
+      "leave_management_init_py",
+      "leave_management_urls_py"
+    ],
+    "42": [
+      "reports_init_py",
+      "reports_urls_py"
+    ],
+    "43": [
+      "e_work_python_attendence_accounts_init_py",
+      "e_work_python_attendence_accounts_urls_py"
+    ],
+    "44": [
+      "e_work_python_attendence_attendance_init_py",
+      "e_work_python_attendence_attendance_urls_py"
+    ],
+    "45": [
+      "e_work_python_attendence_holidays_init_py",
+      "e_work_python_attendence_holidays_urls_py"
+    ],
+    "46": [
+      "e_work_python_attendence_leave_management_init_py",
+      "e_work_python_attendence_leave_management_urls_py"
+    ],
+    "47": [
+      "e_work_python_attendence_reports_init_py",
+      "e_work_python_attendence_reports_urls_py"
+    ],
+    "48": [
+      "accounts_tests_py"
+    ],
+    "49": [
+      "accounts_migrations_init_py"
+    ],
+    "50": [
+      "models_rationale_87"
+    ],
+    "51": [
+      "models_rationale_92"
+    ],
+    "52": [
+      "attendance_tests_py"
+    ],
+    "53": [
+      "attendance_migrations_init_py"
+    ],
+    "54": [
+      "attendance_templatetags_init_py"
+    ],
+    "55": [
+      "attendance_system_init_py"
+    ],
+    "56": [
+      "holidays_tests_py"
+    ],
+    "57": [
+      "holidays_migrations_init_py"
+    ],
+    "58": [
+      "leave_management_tests_py"
+    ],
+    "59": [
+      "leave_management_migrations_init_py"
+    ],
+    "60": [
+      "project_mapper_dependency_mapper_py"
+    ],
+    "61": [
+      "project_mapper_embedding_generator_py"
+    ],
+    "62": [
+      "project_mapper_function_mapper_py"
+    ],
+    "63": [
+      "project_mapper_human_graph_py"
+    ],
+    "64": [
+      "project_mapper_human_graph_visualizer_py"
+    ],
+    "65": [
+      "project_mapper_hybrid_graph_py"
+    ],
+    "66": [
+      "project_mapper_project_snapshot_py"
+    ],
+    "67": [
+      "project_mapper_smell_detector_py"
+    ],
+    "68": [
+      "project_mapper_snapshot_history_py"
+    ],
+    "69": [
+      "project_mapper_archive_function_call_graph_py"
+    ],
+    "70": [
+      "project_mapper_archive_test_engine_py"
+    ],
+    "71": [
+      "reports_admin_py"
+    ],
+    "72": [
+      "reports_models_py"
+    ],
+    "73": [
+      "reports_tests_py"
+    ],
+    "74": [
+      "reports_migrations_init_py"
+    ],
+    "75": [
+      "e_work_python_attendence_accounts_tests_py"
+    ],
+    "76": [
+      "e_work_python_attendence_accounts_migrations_init_py"
+    ],
+    "77": [
+      "e_work_python_attendence_attendance_tests_py"
+    ],
+    "78": [
+      "e_work_python_attendence_attendance_migrations_init_py"
+    ],
+    "79": [
+      "e_work_python_attendence_attendance_templatetags_init_py"
+    ],
+    "80": [
+      "e_work_python_attendence_attendance_system_init_py"
+    ],
+    "81": [
+      "e_work_python_attendence_holidays_tests_py"
+    ],
+    "82": [
+      "e_work_python_attendence_holidays_migrations_init_py"
+    ],
+    "83": [
+      "e_work_python_attendence_leave_management_tests_py"
+    ],
+    "84": [
+      "e_work_python_attendence_leave_management_migrations_init_py"
+    ],
+    "85": [
+      "e_work_python_attendence_project_mapper_dependency_mapper_py"
+    ],
+    "86": [
+      "e_work_python_attendence_project_mapper_embedding_generator_py"
+    ],
+    "87": [
+      "e_work_python_attendence_project_mapper_function_mapper_py"
+    ],
+    "88": [
+      "e_work_python_attendence_project_mapper_human_graph_py"
+    ],
+    "89": [
+      "e_work_python_attendence_project_mapper_human_graph_visualizer_py"
+    ],
+    "90": [
+      "e_work_python_attendence_project_mapper_hybrid_graph_py"
+    ],
+    "91": [
+      "e_work_python_attendence_project_mapper_project_snapshot_py"
+    ],
+    "92": [
+      "e_work_python_attendence_project_mapper_smell_detector_py"
+    ],
+    "93": [
+      "e_work_python_attendence_project_mapper_snapshot_history_py"
+    ],
+    "94": [
+      "e_work_python_attendence_project_mapper_archive_function_call_graph_py"
+    ],
+    "95": [
+      "e_work_python_attendence_project_mapper_archive_test_engine_py"
+    ],
+    "96": [
+      "e_work_python_attendence_reports_admin_py"
+    ],
+    "97": [
+      "e_work_python_attendence_reports_models_py"
+    ],
+    "98": [
+      "e_work_python_attendence_reports_tests_py"
+    ],
+    "99": [
+      "e_work_python_attendence_reports_migrations_init_py"
+    ]
+  },
+  "cohesion": {
+    "0": 0.04,
+    "1": 0.05,
+    "2": 0.06,
+    "3": 0.12,
+    "4": 0.1,
+    "5": 0.11,
+    "6": 0.13,
+    "7": 0.12,
+    "8": 0.26,
+    "9": 0.22,
+    "10": 0.61,
+    "11": 0.28,
+    "12": 0.43,
+    "13": 0.29,
+    "14": 0.67,
+    "15": 0.33,
+    "16": 0.73,
+    "17": 0.6,
+    "18": 0.33,
+    "19": 0.53,
+    "20": 0.8,
+    "21": 0.5,
+    "22": 0.5,
+    "23": 0.5,
+    "24": 0.67,
+    "25": 0.67,
+    "26": 0.67,
+    "27": 0.67,
+    "28": 0.67,
+    "29": 0.67,
+    "30": 0.67,
+    "31": 0.67,
+    "32": 0.67,
+    "33": 0.67,
+    "34": 0.67,
+    "35": 0.67,
+    "36": 0.67,
+    "37": 1.0,
+    "38": 1.0,
+    "39": 1.0,
+    "40": 1.0,
+    "41": 1.0,
+    "42": 1.0,
+    "43": 1.0,
+    "44": 1.0,
+    "45": 1.0,
+    "46": 1.0,
+    "47": 1.0,
+    "48": 1.0,
+    "49": 1.0,
+    "50": 1.0,
+    "51": 1.0,
+    "52": 1.0,
+    "53": 1.0,
+    "54": 1.0,
+    "55": 1.0,
+    "56": 1.0,
+    "57": 1.0,
+    "58": 1.0,
+    "59": 1.0,
+    "60": 1.0,
+    "61": 1.0,
+    "62": 1.0,
+    "63": 1.0,
+    "64": 1.0,
+    "65": 1.0,
+    "66": 1.0,
+    "67": 1.0,
+    "68": 1.0,
+    "69": 1.0,
+    "70": 1.0,
+    "71": 1.0,
+    "72": 1.0,
+    "73": 1.0,
+    "74": 1.0,
+    "75": 1.0,
+    "76": 1.0,
+    "77": 1.0,
+    "78": 1.0,
+    "79": 1.0,
+    "80": 1.0,
+    "81": 1.0,
+    "82": 1.0,
+    "83": 1.0,
+    "84": 1.0,
+    "85": 1.0,
+    "86": 1.0,
+    "87": 1.0,
+    "88": 1.0,
+    "89": 1.0,
+    "90": 1.0,
+    "91": 1.0,
+    "92": 1.0,
+    "93": 1.0,
+    "94": 1.0,
+    "95": 1.0,
+    "96": 1.0,
+    "97": 1.0,
+    "98": 1.0,
+    "99": 1.0
+  },
+  "gods": [
+    {
+      "id": "tom_select_complete_min_j",
+      "label": "J",
+      "degree": 90
+    },
+    {
+      "id": "vis_network_min_nk",
+      "label": "Nk()",
+      "degree": 34
+    },
+    {
+      "id": "vis_network_min_ak",
+      "label": "Ak()",
+      "degree": 33
+    },
+    {
+      "id": "models_employee",
+      "label": "Employee",
+      "degree": 20
+    },
+    {
+      "id": "vis_network_min_t",
+      "label": "t()",
+      "degree": 18
+    },
+    {
+      "id": "models_leaverequest",
+      "label": "LeaveRequest",
+      "degree": 17
+    },
+    {
+      "id": "tom_select_complete_min_y",
+      "label": "y()",
+      "degree": 16
+    },
+    {
+      "id": "models_leavebalance",
+      "label": "LeaveBalance",
+      "degree": 15
+    },
+    {
+      "id": "tom_select_complete_min_c",
+      "label": "c()",
+      "degree": 15
+    },
+    {
+      "id": "vis_network_min_qc",
+      "label": "Qc()",
+      "degree": 15
+    }
+  ],
+  "surprises": [
+    {
+      "source": "Reporting Engine",
+      "target": "Monthly Report View",
+      "source_files": [
+        "README.md",
+        "reports/views.py"
+      ],
+      "confidence": "INFERRED",
+      "relation": "conceptually_related_to",
+      "why": "inferred connection - not explicitly stated in source; crosses file types (code \u2194 doc); connects across different repos/directories; peripheral node `Reporting Engine` unexpectedly reaches hub `Monthly Report View`"
+    },
+    {
+      "source": "Invalid Checkout Rules Query",
+      "target": "AttendanceRecord",
+      "source_files": [
+        "tester.md",
+        "reports/views.py"
+      ],
+      "confidence": "INFERRED",
+      "relation": "conceptually_related_to",
+      "why": "inferred connection - not explicitly stated in source; crosses file types (code \u2194 doc); connects across different repos/directories; peripheral node `Invalid Checkout Rules Query` unexpectedly reaches hub `AttendanceRecord`"
+    },
+    {
+      "source": "Edit Profile Form",
+      "target": "Employee",
+      "source_files": [
+        "templates/accounts/edit_profile.html",
+        "reports/views.py"
+      ],
+      "confidence": "INFERRED",
+      "relation": "shares_data_with",
+      "why": "inferred connection - not explicitly stated in source; crosses file types (code \u2194 doc); connects across different repos/directories; peripheral node `Edit Profile Form` unexpectedly reaches hub `Employee`"
+    },
+    {
+      "source": "Reports as Most Central App",
+      "target": "Monthly Report View",
+      "source_files": [
+        "project_mapper/outputs/reports/ARCHITECTURE_REPORT.md",
+        "reports/views.py"
+      ],
+      "confidence": "INFERRED",
+      "relation": "rationale_for",
+      "why": "inferred connection - not explicitly stated in source; crosses file types (code \u2194 doc); connects across different repos/directories"
+    },
+    {
+      "source": "AttendanceRecord Impact Query",
+      "target": "Employee Detail Report View",
+      "source_files": [
+        "tester.md",
+        "reports/views.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "crosses file types (code \u2194 doc); connects across different repos/directories; peripheral node `AttendanceRecord Impact Query` unexpectedly reaches hub `Employee Detail Report View`"
+    }
+  ],
+  "suggested_questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `J` connect `Tom / Select / Complete` to `Leave / Forms / Models`, `Retriever / Search / Graph`?",
+      "why": "High betweenness centrality (0.161) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `d()` connect `Tom / Select / Complete` to `Vis / Network / Min`, `Leave / Forms / Models`?",
+      "why": "High betweenness centrality (0.110) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `t()` connect `Vis / Network / Min` to `Tom / Select / Complete`?",
+      "why": "High betweenness centrality (0.061) - this node is a cross-community bridge."
+    },
+    {
+      "type": "verify_inferred",
+      "question": "Are the 15 inferred relationships involving `Employee` (e.g. with `EmployeeAdmin` and `EmployeeCreationForm`) actually correct?",
+      "why": "`Employee` has 15 INFERRED edges - model-reasoned connections that need verification."
+    },
+    {
+      "type": "verify_inferred",
+      "question": "Are the 3 inferred relationships involving `t()` (e.g. with `.clear()` and `.on()`) actually correct?",
+      "why": "`t()` has 3 INFERRED edges - model-reasoned connections that need verification."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `Run administrative tasks.`, `Stores one attendance record per employee per day.          Fields:     - emp`, `Calculate total hours worked.         Called automatically when the employee ch` to the rest of the system?",
+      "why": "35 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Vis / Network / Min` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.04 - nodes in this community are weakly interconnected."
+    }
+  ],
+  "labels": {
+    "0": "Vis / Network / Min",
+    "1": "Tom / Select / Complete",
+    "2": "Leave / Forms / Models",
+    "3": "Retriever / Search / Graph",
+    "4": "The / Check / Attendance",
+    "5": "Report / Graph / App",
+    "6": "Attendance / Report / Monthly",
+    "7": "Apps / Appconfig / Accountsconfig",
+    "8": "Visit / Unified / Graph",
+    "9": "Initial / Migration",
+    "10": "Metadata / Retriever / Score",
+    "11": "Leave / Requests / Apply",
+    "12": "File / Detect / Auto",
+    "13": "Usage / Mapper / Visit",
+    "14": "Utils / Filterhighlight / Highlightfilter",
+    "15": "Visit / Code / Chunk",
+    "16": "Results / Reranker / Boost",
+    "17": "Retrieval / Ranker / Intent",
+    "18": "Call / Visit / Graph",
+    "19": "Query / Engine / Get",
+    "20": "Refresh / Rag / Clear",
+    "21": "Manage / Main / Run",
+    "22": "Format / Hours / Attendance",
+    "23": "Leave / Balance / Balances",
+    "24": "Alter / Options / Department",
+    "25": "Asgi / Config / For",
+    "26": "Settings / Django / For",
+    "27": "Urls / Url / Configuration",
+    "28": "Wsgi / Config / For",
+    "29": "Leavebalance / Migration",
+    "30": "Feature / Analyzer / Analyze",
+    "31": "Impact / Analyzer / Trace",
+    "32": "Path / Finder / Find",
+    "33": "Retrieval / Filter / Apply",
+    "34": "Workflow / Tracer / Trace",
+    "35": "Login / Django / Csrf",
+    "36": "Profile / Identity / Fields",
+    "37": "Holiday / Add / Actions",
+    "38": "Init / Urls",
+    "39": "Init / Urls",
+    "40": "Init / Urls",
+    "41": "Init / Urls",
+    "42": "Init / Urls",
+    "43": "Init / Urls",
+    "44": "Init / Urls",
+    "45": "Init / Urls",
+    "46": "Init / Urls",
+    "47": "Init / Urls",
+    "48": "Tests",
+    "49": "Init",
+    "50": "True / Has / Checked",
+    "51": "True / Has / Checked",
+    "52": "Tests",
+    "53": "Init",
+    "54": "Init",
+    "55": "Init",
+    "56": "Tests",
+    "57": "Init",
+    "58": "Tests",
+    "59": "Init",
+    "60": "Dependency / Mapper",
+    "61": "Embedding / Generator",
+    "62": "Function / Mapper",
+    "63": "Human / Graph",
+    "64": "Human / Graph / Visualizer",
+    "65": "Hybrid / Graph",
+    "66": "Project / Snapshot",
+    "67": "Smell / Detector",
+    "68": "Snapshot / History",
+    "69": "Function / Call / Graph",
+    "70": "Test / Engine",
+    "71": "Community 71",
+    "72": "Models",
+    "73": "Tests",
+    "74": "Init",
+    "75": "Tests",
+    "76": "Init",
+    "77": "Tests",
+    "78": "Init",
+    "79": "Init",
+    "80": "Init",
+    "81": "Tests",
+    "82": "Init",
+    "83": "Tests",
+    "84": "Init",
+    "85": "Dependency / Mapper",
+    "86": "Embedding / Generator",
+    "87": "Function / Mapper",
+    "88": "Human / Graph",
+    "89": "Human / Graph / Visualizer",
+    "90": "Hybrid / Graph",
+    "91": "Project / Snapshot",
+    "92": "Smell / Detector",
+    "93": "Snapshot / History",
+    "94": "Function / Call / Graph",
+    "95": "Test / Engine",
+    "96": "Community 96",
+    "97": "Models",
+    "98": "Tests",
+    "99": "Init"
+  }
+}

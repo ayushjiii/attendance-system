@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 from datetime import datetime, date, time as time_type
+from django.conf import settings
 
 
 from .models import AttendanceRecord
@@ -106,9 +107,16 @@ def check_in_view(request):
         record.gps_latitude = latitude
         record.gps_longitude = longitude
 
-    # Mark as late if check-in is after 10:00 AM
-    check_in_start = time_type(9, 30)   # office opens 9:30 AM
-    late_threshold = time_type(10, 0)   # late after 10:00 AM
+    # Mark as late if check-in is after LATE_THRESHOLD_TIME
+    try:
+        start_h, start_m = settings.OFFICE_START_TIME.split(':')
+        late_h, late_m = settings.LATE_THRESHOLD_TIME.split(':')
+        check_in_start = time_type(int(start_h), int(start_m))
+        late_threshold = time_type(int(late_h), int(late_m))
+    except (ValueError, AttributeError, Exception):
+        # Fallback to defaults if settings are misconfigured
+        check_in_start = time_type(9, 30)
+        late_threshold = time_type(10, 0)
 
     # Block check-in before 9:30 AM
     if now < check_in_start:
@@ -167,8 +175,8 @@ def check_out_view(request):
         return redirect('attendance:dashboard')
 
     # Prevent unrealistically short sessions (< 5 minutes)
-    check_in_dt = datetime.combine(date.today(), record.check_in_time)
-    check_out_dt = datetime.combine(date.today(), now)
+    check_in_dt = datetime.combine(today, record.check_in_time)
+    check_out_dt = datetime.combine(today, now)
     session_minutes = (check_out_dt - check_in_dt).total_seconds() / 60
 
     if session_minutes < 5:

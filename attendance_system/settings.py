@@ -168,7 +168,8 @@ AUTHENTICATION_BACKENDS = [
 AXES_FAILURE_LIMIT = 5
 AXES_COOLOFF_TIME =  0.00833 # locked for 30 seconds
 AXES_LOCKOUT_TEMPLATE = 'accounts/locked_out.html'
-AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP = True
+# Lockout by combination of username and IP (Modern setting)
+AXES_LOCKOUT_PARAMETERS = [["username", "ip_address"]]
 AXES_RESET_ON_SUCCESS = True
 
 
@@ -192,6 +193,12 @@ X_FRAME_OPTIONS = 'DENY'
 # Force HTTPS in production
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
+
+
+# --- Office Hours Configuration ---
+OFFICE_START_TIME = '09:30'   # Doors open
+LATE_THRESHOLD_TIME = '10:00' # Marked "Late" after this
+
 
 
 
