@@ -2,11 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
-from datetime import datetime, date, time as time_type
-from django.conf import settings
+from datetime import datetime, date
 
 
-from .models import AttendanceRecord
+from .models import AttendanceRecord, BreakRecord, CompanyPolicy, EmployeeShift
+from .templatetags.attendance_filters import format_hours_value
 from .utils import get_client_ip, is_office_ip, is_within_office_radius, get_device_info
 
 
@@ -15,20 +15,24 @@ def dashboard_view(request):
     """
     Main page after login.
     Shows today's check-in status and last 7 days of attendance.
-    
-    @login_required means: if user is NOT logged in,
-    Django automatically redirects them to the login page.
     """
     today = timezone.localdate()
 
-    # Try to find today's attendance record
-    try:
-        today_record = AttendanceRecord.objects.get(
+    # 1. Look for an active (not yet checked out) session
+    # This could be from yesterday if it's a night shift
+    active_record = AttendanceRecord.objects.filter(
+        employee=request.user,
+        check_out_time__isnull=True
+    ).order_by('-date', '-check_in_time').first()
+
+    # 2. If no active session, check if they already COMPLETED a shift today
+    # (Prevents the UNIQUE constraint error)
+    if not active_record:
+        active_record = AttendanceRecord.objects.filter(
             employee=request.user,
-            date=today
-        )
-    except AttendanceRecord.DoesNotExist:
-        today_record = None  # No check-in yet today
+            date=today,
+            check_out_time__isnull=False
+        ).first()
 
     # Get last 7 attendance entries
     recent_records = AttendanceRecord.objects.filter(
@@ -36,7 +40,7 @@ def dashboard_view(request):
     ).order_by('-date')[:7]
 
     return render(request, 'attendance/dashboard.html', {
-        'today_record': today_record,
+        'today_record': active_record,
         'recent_records': recent_records,
         'today': today,
     })
@@ -44,15 +48,6 @@ def dashboard_view(request):
 
 @login_required
 def check_in_view(request):
-    """
-    Handle the Check In button.
-    
-    Security checks (in order):
-    1. Must be a POST request (not just visiting the URL)
-    2. IP must be from the office network
-    3. GPS must be within office radius (if provided by browser)
-    4. Cannot check in twice in one day
-    """
     if request.method != 'POST':
         return redirect('attendance:dashboard')
 
@@ -69,17 +64,23 @@ def check_in_view(request):
         )
         return redirect('attendance:dashboard')
 
-    # --- Security Check 2: Already checked in today? ---
-    existing = AttendanceRecord.objects.filter(
+    # --- Security Check 2: Already have an active session? ---
+    active_session = AttendanceRecord.objects.filter(
         employee=request.user,
-        date=today
-    ).first()
+        check_out_time__isnull=True
+    ).exists()
 
-    if existing and existing.is_checked_in:
-        messages.warning(request, 'You have already checked in today.')
+    if active_session:
+        messages.warning(request, 'You already have an active session. Please check out first.')
         return redirect('attendance:dashboard')
 
-    # --- Security Check 3: GPS location (optional) ---
+    # --- Security Check 3: Already completed a shift on this calendar date? ---
+    # This prevents the IntegrityError (UNIQUE constraint)
+    if AttendanceRecord.objects.filter(employee=request.user, date=today).exists():
+        messages.warning(request, 'Your attendance for today is already complete.')
+        return redirect('attendance:dashboard')
+
+    # --- Security Check 4: GPS location ---
     latitude = request.POST.get('latitude')
     longitude = request.POST.get('longitude')
 
@@ -88,135 +89,163 @@ def check_in_view(request):
             if not is_within_office_radius(float(latitude), float(longitude)):
                 messages.error(
                     request,
-                    'Your GPS location is outside the office area. '
-                    'Please check in from the office.'
+                    'Your GPS location is outside the office area.'
                 )
                 return redirect('attendance:dashboard')
         except (ValueError, TypeError):
-            pass  # Invalid GPS data — skip the GPS check
+            pass
 
-    # --- All checks passed: save the check-in ---
-    record, created = AttendanceRecord.objects.get_or_create(
+    # --- All checks passed: create the record ---
+    record = AttendanceRecord.objects.create(
         employee=request.user,
-        date=today
+        date=today,
+        check_in_time=now,
+        ip_address=ip,
+        device_info=get_device_info(request)
     )
-    record.check_in_time = now
-    record.ip_address = ip
-    record.device_info = get_device_info(request)
     if latitude and longitude:
         record.gps_latitude = latitude
         record.gps_longitude = longitude
 
-    # Mark as late if check-in is after LATE_THRESHOLD_TIME
-    try:
-        start_h, start_m = settings.OFFICE_START_TIME.split(':')
-        late_h, late_m = settings.LATE_THRESHOLD_TIME.split(':')
-        check_in_start = time_type(int(start_h), int(start_m))
-        late_threshold = time_type(int(late_h), int(late_m))
-    except (ValueError, AttributeError, Exception):
-        # Fallback to defaults if settings are misconfigured
-        check_in_start = time_type(9, 30)
-        late_threshold = time_type(10, 0)
+    # --- Determine Late Threshold and Start Time ---
+    shift = EmployeeShift.get_active_for(request.user)
+    policy = CompanyPolicy.get_active()
+    
+    if shift:
+        check_in_start = shift.start_time
+        late_threshold = shift.late_threshold_time
+    else:
+        check_in_start = policy.office_start_time
+        late_threshold = policy.late_threshold_time
 
-    # Block check-in before 9:30 AM
+    # Block check-in before the configured office start time.
     if now < check_in_start:
-        messages.error(request, 'Check-in is not allowed before 9:30 AM.')
+        messages.error(
+            request,
+            f'Check-in is not allowed before {check_in_start.strftime("%I:%M %p")}.'
+        )
         return redirect('attendance:dashboard')
 
-    # Mark as late if after 10:00 AM
+    # Mark as late if after the threshold.
     if now > late_threshold:
         record.attendance_status = 'late'
     else:
         record.attendance_status = 'present'
 
     record.save()
-    
-    messages.success(
-        request,
-        f'Checked in successfully at {now.strftime("%H:%M")}.'
-    )
+    messages.success(request, f'Checked in successfully at {now.strftime("%I:%M %p")}.')
+    return redirect('attendance:dashboard')
+
+
+@login_required
+def start_break_view(request):
+    if request.method != 'POST':
+        return redirect('attendance:dashboard')
+
+    now = timezone.localtime().time()
+    record = AttendanceRecord.objects.filter(
+        employee=request.user,
+        check_out_time__isnull=True
+    ).order_by('-date', '-check_in_time').first()
+
+    if not record:
+        messages.error(request, 'You must check in before starting a break.')
+        return redirect('attendance:dashboard')
+
+    if record.is_on_break:
+        messages.warning(request, 'You are already on a break.')
+        return redirect('attendance:dashboard')
+
+    BreakRecord.objects.create(attendance=record, break_start=now)
+    messages.success(request, f'Break started at {now.strftime("%I:%M %p")}.')
+    return redirect('attendance:dashboard')
+
+
+@login_required
+def end_break_view(request):
+    if request.method != 'POST':
+        return redirect('attendance:dashboard')
+
+    now = timezone.localtime().time()
+    record = AttendanceRecord.objects.filter(
+        employee=request.user,
+        check_out_time__isnull=True
+    ).order_by('-date', '-check_in_time').first()
+
+    if not record:
+        messages.error(request, 'You do not have an active session.')
+        return redirect('attendance:dashboard')
+
+    active_break = record.active_break
+    if not active_break:
+        messages.warning(request, 'You are not currently on a break.')
+        return redirect('attendance:dashboard')
+
+    active_break.break_end = now
+    active_break.save()
+    messages.success(request, f'Break ended at {now.strftime("%I:%M %p")}.')
     return redirect('attendance:dashboard')
 
 
 @login_required
 def check_out_view(request):
-    """
-    Handle the Check Out button.
-    
-    Validation:
-    - Must have checked in today first
-    - Cannot check out twice
-    - Session must be at least 5 minutes long (prevents accidental instant checkout)
-    """
     if request.method != 'POST':
         return redirect('attendance:dashboard')
 
-    today = timezone.localdate()
-    now = timezone.localtime().time()
+    now_dt = timezone.localtime()
+    now_time = now_dt.time()
 
-    # Find today's record
-    try:
-        record = AttendanceRecord.objects.get(
-            employee=request.user,
-            date=today
-        )
-    except AttendanceRecord.DoesNotExist:
-        messages.error(request, 'You have not checked in today. Cannot check out.')
+    record = AttendanceRecord.objects.filter(
+        employee=request.user,
+        check_out_time__isnull=True
+    ).order_by('-date', '-check_in_time').first()
+
+    if not record:
+        messages.error(request, 'You have no active attendance record to check out from.')
         return redirect('attendance:dashboard')
 
-    # Prevent double checkout
-    if record.is_checked_out:
-        messages.warning(request, 'You have already checked out today.')
+    if record.is_on_break:
+        messages.error(request, 'Please end your active break before checking out.')
         return redirect('attendance:dashboard')
 
-    # Prevent checkout without check-in
-    if not record.is_checked_in:
-        messages.error(request, 'You must check in before checking out.')
-        return redirect('attendance:dashboard')
+    check_in_dt = datetime.combine(record.date, record.check_in_time)
+    if timezone.is_aware(now_dt):
+        from django.utils.timezone import get_current_timezone
+        check_in_dt = timezone.make_aware(check_in_dt, get_current_timezone())
 
-    # Prevent unrealistically short sessions (< 5 minutes)
-    check_in_dt = datetime.combine(today, record.check_in_time)
-    check_out_dt = datetime.combine(today, now)
-    session_minutes = (check_out_dt - check_in_dt).total_seconds() / 60
-
-    if session_minutes < 5:
+    session_minutes = (now_dt - check_in_dt).total_seconds() / 60
+    policy = CompanyPolicy.get_active()
+    
+    if session_minutes < policy.minimum_session_minutes:
         messages.error(
             request,
             f'Session too short ({int(session_minutes)} minutes). '
-            f'Minimum 5 minutes required before checkout.'
+            f'Minimum {policy.minimum_session_minutes} minutes required.'
         )
         return redirect('attendance:dashboard')
 
-    # Save checkout and calculate hours
-    record.check_out_time = now
+    record.check_out_time = now_time
     record.total_working_hours = record.calculate_working_hours()
     record.save()
 
     messages.success(
         request,
-        f'Checked out at {now.strftime("%H:%M")}. '
-        f'Total working time: {record.total_working_hours} hours.'
+        f'Checked out at {now_time.strftime("%I:%M %p")}. '
+        f'Total working time: {format_hours_value(record.total_working_hours)}.'
     )
     return redirect('attendance:dashboard')
 
 
 @login_required
 def attendance_history_view(request):
-    """
-    Employee's personal attendance history.
-    Can be filtered by month using ?month=2024-01 in the URL.
-    """
     records = AttendanceRecord.objects.filter(employee=request.user)
     month = request.GET.get('month', '')
     if month:
-            try:
-                year, m = month.split('-')
-                records = records.filter(
-                    date__year=int(year),
-                    date__month=int(m)
-                )
-            except (ValueError, AttributeError, Exception):
-                pass  # Ignore invalid month format or database validation errors
+        try:
+            year, m = month.split('-')
+            records = records.filter(date__year=int(year), date__month=int(m))
+        except (ValueError, AttributeError, Exception):
+            pass
 
     records = records.order_by('-date')
     return render(request, 'attendance/history.html', {
@@ -227,20 +256,13 @@ def attendance_history_view(request):
 
 @login_required
 def admin_attendance_view(request):
-    """
-    Admin-only: see all employees' attendance records.
-    Supports search by employee name/ID, date, or month.
-    """
     if not request.user.is_admin_role:
         messages.error(request, 'Admin access required.')
         return redirect('attendance:dashboard')
 
     records = AttendanceRecord.objects.select_related('employee').all()
-
-    # --- Filters ---
     employee_search = request.GET.get('employee', '').strip()
     date_filter = request.GET.get('date', '').strip()
-    month_filter = request.GET.get('month', '').strip()
 
     if employee_search:
         records = records.filter(
@@ -255,23 +277,11 @@ def admin_attendance_view(request):
         try:
             records = records.filter(date=date_filter)
         except Exception:
-            pass # Ignore invalid date format
-
-    if month_filter:
-        try:
-            year, month = month_filter.split('-')
-            records = records.filter(
-                date__year=int(year),
-                date__month=int(month)
-            )
-        except (ValueError, AttributeError, Exception):
             pass
 
     records = records.order_by('-date')
-
     return render(request, 'attendance/admin_attendance.html', {
         'records': records,
         'employee_search': employee_search,
         'date_filter': date_filter,
-        'month_filter': month_filter,
     })

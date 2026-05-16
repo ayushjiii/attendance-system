@@ -4,20 +4,14 @@ from django.conf import settings
 
 def get_client_ip(request):
     """
-    Get the real IP address of the user making the request.
-    
-    Why check X-Forwarded-For?
-    When a server sits behind a proxy or load balancer,
-    the real user IP is in this header, not REMOTE_ADDR.
+    Get the real IP address of the user.
+    Only trust X-Forwarded-For if a proxy is configured.
     """
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        # Can contain multiple IPs like "client, proxy1, proxy2"
-        # We want the first one (the real client)
-        ip = x_forwarded_for.split(',')[0].strip()
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    return ip
+    if getattr(settings, 'TRUST_PROXY', False):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            return x_forwarded_for.split(',')[0].strip()
+    return request.META.get('REMOTE_ADDR')
 
 
 def is_office_ip(ip_address):

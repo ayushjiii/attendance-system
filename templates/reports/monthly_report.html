@@ -24,6 +24,7 @@
     <thead class="table-dark">
         <tr>
             <th>Employee</th>
+            <th>Role</th>
             <th>Department</th>
             <th>Present</th>
             <th>Late</th>
@@ -36,10 +37,11 @@
         {% for row in report_data %}
         <tr>
             <td>
-    <a href="{% url 'reports:employee_detail' row.employee.id %}?month={{ month_str }}">
-        {{ row.employee.get_full_name }}
-    </a>
-</td>
+                <a href="{% url 'reports:employee_detail' row.employee.id %}?month={{ month_str }}">
+                    {{ row.employee.get_full_name }}
+                </a>
+            </td>
+            <td>{{ row.employee.get_role_display }}</td>
             <td>{{ row.employee.department }}</td>
             <td>{{ row.present_days }}</td>
             <td>{{ row.late_days }}</td>
@@ -49,7 +51,7 @@
         </tr>
         {% empty %}
         <tr>
-            <td colspan="7">No data for this month.</td>
+            <td colspan="8">No data for this month.</td>
         </tr>
         {% endfor %}
     </tbody>

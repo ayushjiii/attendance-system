@@ -13,7 +13,6 @@
     </div>
 </div>
 
-<!-- Today's attendance card -->
 <div class="card mb-4">
     <div class="card-header bg-primary text-white">
         <strong>Today's Attendance</strong>
@@ -23,43 +22,64 @@
         {% if today_record and today_record.is_checked_in %}
 
         <p>
-            ✅ <strong>Checked in at:</strong>
-            {{ today_record.check_in_time|time:"H:i A" }}
+            <strong>Checked in at:</strong>
+            {{ today_record.check_in_time|time:"h:i A" }}
+        </p>
+        <p>
+            <strong>Break time:</strong>
+            {{ today_record.total_break_hours|format_hours }}
+            {% if today_record.is_on_break %}
+                <span class="badge bg-info text-dark">On Break</span>
+            {% endif %}
         </p>
 
         {% if today_record.is_checked_out %}
         <p>
-            🏁 <strong>Checked out at:</strong>
-            {{ today_record.check_out_time|time:"H:i A" }}
+            <strong>Checked out at:</strong>
+            {{ today_record.check_out_time|time:"h:i A" }}
         </p>
         <p>
-            ⏱️ <strong>Total working hours:</strong>
+            <strong>Total working hours:</strong>
             {{ today_record.total_working_hours|format_hours }}
         </p>
         <p class="text-muted">Your attendance for today is complete.</p>
 
         {% else %}
-        <!-- Show checkout button -->
-        <form method="post" action="{% url 'attendance:check_out' %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-warning">
-                🚪 Check Out
-            </button>
-        </form>
+        <div class="d-flex flex-wrap gap-2">
+            {% if today_record.is_on_break %}
+            <form method="post" action="{% url 'attendance:end_break' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-info">
+                    End Break
+                </button>
+            </form>
+            {% else %}
+            <form method="post" action="{% url 'attendance:start_break' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-primary">
+                    Start Break
+                </button>
+            </form>
+            <form method="post" action="{% url 'attendance:check_out' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-warning">
+                    Check Out
+                </button>
+            </form>
+            {% endif %}
+        </div>
         {% endif %}
 
         {% else %}
-        <!-- Show check-in button with GPS capture -->
         <p class="text-muted">You have not checked in yet today.</p>
 
         <form method="post" action="{% url 'attendance:check_in' %}" id="checkin-form">
             {% csrf_token %}
-            <!-- Hidden fields for GPS coordinates (filled by JavaScript) -->
             <input type="hidden" name="latitude" id="latitude">
             <input type="hidden" name="longitude" id="longitude">
 
             <button type="button" class="btn btn-success btn-lg" onclick="getLocationAndSubmit()">
-                📍 Check In
+                Check In
             </button>
         </form>
         {% endif %}
@@ -67,7 +87,6 @@
     </div>
 </div>
 
-<!-- Recent attendance table -->
 <h5>Recent Attendance</h5>
 <table class="table table-bordered table-sm table-hover">
     <thead class="table-dark">
@@ -75,6 +94,7 @@
             <th>Date</th>
             <th>Check In</th>
             <th>Check Out</th>
+            <th>Break</th>
             <th>Hours</th>
             <th>Status</th>
         </tr>
@@ -83,8 +103,9 @@
         {% for record in recent_records %}
         <tr>
             <td>{{ record.date|date:"d M Y" }}</td>
-            <td>{{ record.check_in_time|time:"H:i A"|default:"-" }}</td>
-            <td>{{ record.check_out_time|time:"H:i A"|default:"-" }}</td>
+            <td>{{ record.check_in_time|time:"h:i A"|default:"-" }}</td>
+            <td>{{ record.check_out_time|time:"h:i A"|default:"-" }}</td>
+            <td>{{ record.total_break_hours|format_hours }}</td>
             <td>{{ record.total_working_hours|format_hours|default:"-" }}</td>
             <td>
                 <span class="badge
@@ -99,39 +120,32 @@
         </tr>
         {% empty %}
         <tr>
-            <td colspan="5" class="text-center text-muted">No attendance records yet.</td>
+            <td colspan="6" class="text-center text-muted">No attendance records yet.</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 
 <a href="{% url 'attendance:history' %}" class="btn btn-outline-secondary btn-sm">
-    View Full History →
+    View Full History
 </a>
 
 <script>
-    /**
-     * Request GPS location from the browser, then submit the check-in form.
-     * If the user denies GPS access, we still submit (server skips GPS check).
-     */
     function getLocationAndSubmit() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 function (position) {
-                    // Got GPS — fill hidden fields and submit
                     document.getElementById('latitude').value = position.coords.latitude;
                     document.getElementById('longitude').value = position.coords.longitude;
                     document.getElementById('checkin-form').submit();
                 },
                 function (error) {
-                    // User denied GPS or error — submit without GPS
                     console.log('GPS not available:', error.message);
                     document.getElementById('checkin-form').submit();
                 },
-                { timeout: 5000 }  // Give up after 5 seconds
+                { timeout: 5000 }
             );
         } else {
-            // Browser doesn't support GPS
             document.getElementById('checkin-form').submit();
         }
     }

@@ -2,8 +2,7 @@ from django import template
 
 register = template.Library()
 
-@register.filter
-def format_hours(value):
+def format_hours_value(value):
     """
     Converts decimal hours to human readable format.
     0.75 -> '45 min'
@@ -26,3 +25,8 @@ def format_hours(value):
             return f'{hours} hr {minutes} min'
     except (ValueError, TypeError):
         return '-'
+
+
+@register.filter
+def format_hours(value):
+    return format_hours_value(value)

@@ -91,7 +91,7 @@ Leave Date:   {leave_request.leave_date}
 Leave Type:   {leave_request.get_leave_type_display()}
 Reason:       {leave_request.reason}
 Note:         {leave_request.note or 'None'}
-Submitted At: {leave_request.submitted_at.strftime('%Y-%m-%d %H:%M')}
+Submitted At: {leave_request.submitted_at.strftime('%Y-%m-%d %I:%M %p')}
 
 Please log in to the admin dashboard to approve or reject this request.
 http://127.0.0.1:8000/leave/admin/leaves/

@@ -48,7 +48,7 @@
             <td>{{ leave.leave_date|date:"d M Y" }}</td>
             <td>{{ leave.get_leave_type_display }}</td>
             <td>{{ leave.reason }}</td>
-            <td>{{ leave.submitted_at|date:"d M H:i A" }}</td>
+            <td>{{ leave.submitted_at|date:"d M h:i A" }}</td>
             <td>
                 <span class="badge
                     {% if leave.status == 'approved' %}bg-success

@@ -14,9 +14,6 @@
         <input type="date" name="date" value="{{ date_filter }}" class="form-control">
     </div>
     <div class="col-auto">
-        <input type="month" name="month" value="{{ month_filter }}" class="form-control">
-    </div>
-    <div class="col-auto">
         <button type="submit" class="btn btn-primary">Filter</button>
         <a href="{% url 'attendance:admin_attendance' %}" class="btn btn-outline-secondary">Clear</a>
     </div>
@@ -30,6 +27,7 @@
             <th>Date</th>
             <th>Check In</th>
             <th>Check Out</th>
+            <th>Break</th>
             <th>Hours</th>
             <th>Status</th>
             <th>IP Address</th>
@@ -43,6 +41,7 @@
             <td>{{ record.date|date:"d M Y" }}</td>
             <td>{{ record.check_in_time|time:"h:i A"|default:"-" }}</td>
             <td>{{ record.check_out_time|time:"h:i A"|default:"-" }}</td>
+            <td>{{ record.total_break_hours|format_hours }}</td>
             <td>{{ record.total_working_hours|format_hours }}</td>
             <td>
                 {% if record.attendance_status == 'present' %}
@@ -58,7 +57,7 @@
             <td><small>{{ record.ip_address|default:"-" }}</small></td>
         </tr>
         {% empty %}
-        <tr><td colspan="8">No records found.</td></tr>
+        <tr><td colspan="9">No records found.</td></tr>
         {% endfor %}
     </tbody>
 </table>

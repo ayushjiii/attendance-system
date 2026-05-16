@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.db.models import Sum
 from django.utils import timezone
 from attendance.models import AttendanceRecord
+from attendance.templatetags.attendance_filters import format_hours_value
 from leave_management.models import LeaveRequest
 from accounts.models import Employee
 from holidays.models import Holiday
@@ -51,13 +52,16 @@ def monthly_report_view(request):
     except Exception:
         records = AttendanceRecord.objects.none()
 
-    employees = Employee.objects.filter(role='employee')
+    employees = Employee.objects.filter(role__in=['employee', 'admin']).order_by(
+        'role', 'department', 'first_name', 'last_name'
+    )
     report_data = []
 
     for emp in employees:
         emp_records = records.filter(employee=emp)
         present = emp_records.filter(attendance_status='present').count()
         late = emp_records.filter(attendance_status='late').count()
+        half_day = emp_records.filter(attendance_status='half_day').count()
         total_hours = emp_records.aggregate(total=Sum('total_working_hours'))['total'] or 0
         leaves_approved = LeaveRequest.objects.filter(
             employee=emp,
@@ -70,7 +74,7 @@ def monthly_report_view(request):
             'employee': emp,
             'present_days': present,
             'late_days': late,
-            'absent_days': working_days_count - present - leaves_approved,
+            'absent_days': max(working_days_count - (present + late + half_day) - leaves_approved, 0),
             'approved_leaves': leaves_approved,
             'total_hours': round(total_hours, 2),
         })
@@ -102,15 +106,19 @@ def export_csv_view(request):
     except (ValueError, AttributeError):
         records = AttendanceRecord.objects.none()
 
+    if not records.exists():
+        messages.warning(request, f'No attendance records found for {month_str}.')
+        return redirect('reports:monthly_report')
+
     for r in records:
         writer.writerow([
             r.employee.employee_id,
             r.employee.get_full_name(),
             r.employee.department,
             r.date,
-            r.check_in_time or '',
-            r.check_out_time or '',
-            r.total_working_hours or '',
+            r.check_in_time.strftime('%I:%M %p') if r.check_in_time else '-',
+            r.check_out_time.strftime('%I:%M %p') if r.check_out_time else '-',
+            format_hours_value(r.total_working_hours),
             r.get_attendance_status_display(),
             r.ip_address or '',
         ])
@@ -146,15 +154,19 @@ def export_excel_view(request):
     except (ValueError, AttributeError):
         records = AttendanceRecord.objects.none()
 
+    if not records.exists():
+        messages.warning(request, f'No attendance records found for {month_str}.')
+        return redirect('reports:monthly_report')
+
     for r in records:
         ws.append([
             r.employee.employee_id,
             r.employee.get_full_name(),
             r.employee.department,
             str(r.date),
-            str(r.check_in_time or ''),
-            str(r.check_out_time or ''),
-            float(r.total_working_hours or 0),
+            r.check_in_time.strftime('%I:%M %p') if r.check_in_time else '-',
+            r.check_out_time.strftime('%I:%M %p') if r.check_out_time else '-',
+            format_hours_value(r.total_working_hours),
             r.get_attendance_status_display(),
         ])
 
@@ -309,7 +321,7 @@ def employee_detail_report_view(request, employee_id):
             f"{employee.get_full_name()} was present for {present_count} out of "
             f"{len([d for d in daily_data if d['status'] != 'Upcoming'])} working days this month, "
             f"with {absent_count} absence(s) and {leave_count} approved leave(s). "
-            f"Average working hours per day: {avg_hours} hrs. "
+            f"Average working hours per day: {format_hours_value(avg_hours)}. "
             f"Average check-in time: {avg_checkin} — punctuality is {punctuality}."
         )
 
